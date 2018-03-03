@@ -1,6 +1,7 @@
 package model.tempRealization;
 
 import model.tempController.QueryFromYoutube;
+import model.youTubeDataContainer.GeneralDataContainer;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -8,11 +9,14 @@ import java.time.ZoneId;
 
 public class Main {
     private static String channelId = "UC8mndg3Tr2g9iMoJMI4ob5A";
+    private static String channelId2 = "UCXFxgPppcehs2LoiKhkakQg";
+    private static String channelId3 = "UCUoEWMvijAEn-hWTLUtfdoA";
     public static void main(String[] args) throws InterruptedException {
 //        test1();
 //        Thread.sleep(700);
-        System.out.println("\n=================================================\n");
-        test2();
+//        System.out.println("\n=================================================\n");
+//        test2();
+        test3(channelId, channelId2, channelId3);
     }
 
     /**
@@ -60,6 +64,7 @@ public class Main {
         Boolean subscriberHidden = query.getHiddenSubscriberCount();
         Instant published = query.getPublishedAt();
 
+
         System.out.println("Tittle            : \"" + tittle + "\"");
         Thread.sleep(900);
         System.out.println("View count        = " + viewCount);
@@ -72,9 +77,51 @@ public class Main {
         Thread.sleep(900);
         System.out.println("Published at      : " + new Main().publishedToString(published));
     }
+
+    /**
+     * Тест №3:
+     * Отримання массиву по декільком айді
+     */
+    private static void test3(String ...channelsId){
+        QueryFromYoutube youtubeQuery = new QueryFromYoutube();
+        GeneralDataContainer[] dataContainers = youtubeQuery.getAllDataContainers(channelsId);
+        int count = 0;
+        for (GeneralDataContainer gdc:
+             dataContainers) {
+            try {
+                System.out.println("Channel #" + ++count);
+                sysoutAll(gdc);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     private String publishedToString(Instant timestamp){
         LocalDateTime ldt = LocalDateTime.ofInstant(timestamp, ZoneId.systemDefault());
         return String.format("%s %d %d at %d:%d%n", ldt.getMonth(), ldt.getDayOfMonth(),
                 ldt.getYear(), ldt.getHour(), ldt.getMinute());
+    }
+
+    private static void sysoutAll(GeneralDataContainer generalDataContainer) throws InterruptedException{
+        String tittle = generalDataContainer.getTitle();
+        Integer viewCount = generalDataContainer.getViewCount();
+        Integer videoCount = generalDataContainer.getVideoCount();
+        Integer subscriberCount = generalDataContainer.getSubscriberCount();
+        Boolean subscriberHidden = generalDataContainer.getHiddenSubscriberCount();
+        Instant published = generalDataContainer.getPublishedAt();
+
+
+        System.out.println("Tittle            : \"" + tittle + "\"");
+        Thread.sleep(900);
+        System.out.println("View count        = " + viewCount);
+        Thread.sleep(900);
+        System.out.println("Video count       = " + videoCount);
+        Thread.sleep(900);
+        System.out.println("Subscriber hidden = " + subscriberHidden);
+        Thread.sleep(900);
+        System.out.println("Subscriber count  = " + subscriberCount);
+        Thread.sleep(900);
+        System.out.println("Published at      : \n\n" + new Main().publishedToString(published));
     }
 }
