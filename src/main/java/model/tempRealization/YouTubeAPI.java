@@ -3,10 +3,15 @@ package model.tempRealization;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
-import model.youTubeDataContiner.Responce;
+import model.youTubeDataContainer.Responce;
 
-import java.time.Instant;
-
+/**
+ * підкапотний простір запиту в АПІ
+ * Використовується методом makeQuery() в класі QueryFromYoutube
+ *
+ * Ініціалізує UnirestSerialization
+ * повертає "контейнер" джсона (пакет youTubeDataContainer) з сєрвака YouTubeAPI
+ */
 public class YouTubeAPI {
     private static final String API_KEY = "AIzaSyDBVpCaXdSwREU9b5UeervX2eCUbqYLTcU";
     public static Responce search(String queryChannelId) throws UnirestException {
