@@ -18,12 +18,13 @@ import java.time.Instant;
  *
  * 3) наприклад метод getTitle() повертає поле title (назва каналу)
  *
+ * + додав метод getGeneralDataContainer(String...channelsId) який повертає масив "контейнерів"
  * ============================================================
  * задачі:
  * -переробити логіку класу, щоб в конструктор передавалось channel id і відразу виконувався makeQuery()
  *  (**в цьому невеличеому питанні хочу порадитись - а поки не завершу реалізацію повністю так і залишу -
  *   можливо робити все відразу в конструкторі буде недоцільно)
- *
+ * - залишити одну реалізацію запиту і заповнення. І для запиту 1 айді і для масиву
  */
 public class QueryFromYoutube {
     /**
@@ -94,7 +95,10 @@ public class QueryFromYoutube {
                 Boolean hiddenSubscriberCount = items.statistics.hiddenSubscriberCount;
                 //якщо статистика прихована - статистика = 0
                 Integer subscriberCount = hiddenSubscriberCount ? 0 : items.statistics.subscriberCount;
+                Integer commentCount = items.statistics.commentCount;
                 Instant publishedAt = items.snippet.publishedAt;
+
+
                 containers[i] = new GeneralDataContainer();
                 containers[i].setTitle(title);
                 containers[i].setViewCount(viewCount);
@@ -102,6 +106,7 @@ public class QueryFromYoutube {
                 containers[i].setHiddenSubscriberCount(hiddenSubscriberCount);
                 containers[i].setSubscriberCount(subscriberCount);
                 containers[i].setPublishedAt(publishedAt);
+                containers[i].setCommentCount(commentCount);
             } catch (UnirestException e) {
                 e.printStackTrace();
                 return null;

@@ -18,7 +18,11 @@ public class GeneralDataContainer {
     private Integer subscriberCount;
     private Integer videoCount;
     private Instant publishedAt;
+    private Integer commentCount;
 
+    public void setCommentCount(Integer commentCount) {
+        this.commentCount = commentCount;
+    }
     public void setTitle(String title) {
         this.title = title;
     }
@@ -38,6 +42,9 @@ public class GeneralDataContainer {
         this.publishedAt = publishedAt;
     }
 
+    public Integer getCommentCount() {
+        return commentCount;
+    }
     public String getTitle() {
         return title;
     }

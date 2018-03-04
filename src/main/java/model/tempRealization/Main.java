@@ -109,6 +109,7 @@ public class Main {
         Integer videoCount = generalDataContainer.getVideoCount();
         Integer subscriberCount = generalDataContainer.getSubscriberCount();
         Boolean subscriberHidden = generalDataContainer.getHiddenSubscriberCount();
+        Integer comentCount = generalDataContainer.getCommentCount();
         Instant published = generalDataContainer.getPublishedAt();
 
 
@@ -122,6 +123,9 @@ public class Main {
         Thread.sleep(900);
         System.out.println("Subscriber count  = " + subscriberCount);
         Thread.sleep(900);
-        System.out.println("Published at      : \n\n" + new Main().publishedToString(published));
+        System.out.println("Coment count      = " + comentCount);
+        Thread.sleep(900);
+        System.out.println("Published at      : " + new Main().publishedToString(published));
+        Thread.sleep(900);
     }
 }
