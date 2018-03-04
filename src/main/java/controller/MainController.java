@@ -61,7 +61,7 @@ public class MainController {
                     if (o1.getSubscriberCount().compareTo(o2.getSubscriberCount()) == 0) {
                         if (o1.getVideoCount().compareTo(o2.getVideoCount()) == 0) {
                             if(o1.getViewCount().compareTo(o2.getViewCount()) == 0){
-                                return 0;
+                                return 1;
                             }
                         }
                     }
