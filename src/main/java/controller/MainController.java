@@ -1,17 +1,25 @@
 package controller;
 
+import enumerated.MapKeys;
 import model.tempController.QueryFromYoutube;
+import model.youTubeDataContainer.GeneralDataContainer;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.stream.Collectors;
+
+//TO DO: add realisation of cash reading in method makeRequest();
+
 
 /**
- * <code>MainController</code> використовуєтся для збіра данних з мережі чи кешу та відправки їх у <code>View</code>
+ * This Controller connects Model with View
  */
 public class MainController {
 
-    /**
-     * обьект який надходить з мережі чи кешу
-     */
     private QueryFromYoutube qfy = new QueryFromYoutube();
-
+    private GeneralDataContainer gdc = new GeneralDataContainer();
 
     public MainController() {
     }
@@ -19,54 +27,50 @@ public class MainController {
     /**
      * This method take channelId and make request for data in cash and youtube
      */
-    public void makeRequest(String channelId) {
-        //TO DO: add realisation of cash reading
+    private void makeRequest(String channelId) {
+
         qfy.setChannelId(channelId);
         qfy.makeQuary();
     }
 
     /**
-     * @return channel title as String
-     */
-    public String getChannelName() {
-        return qfy.getTitle();
-    }
-
-    /**
-     * @return count of views from all of videos on the channel as String
-     */
-    public String getViewCount() {
-        return qfy.getViewCount().toString();
-    }
-
-    /**
-     * @return count of videos on the channel as String
-     */
-    public String getVideoCount() {
-        return qfy.getVideoCount().toString();
-    }
-
-    /**
-     * This method returns the count of subscribers on the channel
-     * if subscribers are hidden - method returns the message "Subscriber are hidden"
+     * This method collects information about Channel and return it as HashMap<MapKeys,String>
+     * where Keys are from Enum MapKeys and string - are values of the fields of Channel
      *
-     * @return count of subscriber on the channel
+     * @param channelId
+     * @return
      */
-    public String getSubscriberCount() {
-        if (qfy.getHiddenSubscriberCount()) {
-            return "Subscriber are hidden";
-        }
-        return qfy.getSubscriberCount().toString();
+    public HashMap<MapKeys, String> showGlobalInformationAboutChannel(String channelId) {
+        makeRequest(channelId);
+        HashMap<MapKeys, String> output = new HashMap<>();
+        output.put(MapKeys.CHANNEL_NAME, gdc.getTitle());
+        output.put(MapKeys.COMMENTS_COUNT, gdc.getCommentCount().toString());
+        output.put(MapKeys.PUBLISHING_DATE, gdc.getPublishedAt().toString());
+        output.put(MapKeys.SUBSCRIBERS_COUNT, gdc.getSubscriberCount().toString());
+        output.put(MapKeys.VIDEOS_COUNT, gdc.getVideoCount().toString());
+        output.put(MapKeys.VIEWS_COUNT, gdc.getViewCount().toString());
+        return output;
     }
 
-    /**
-     * This method returns the publishing date of channel
-     *
-     * @return publishing date as String
-     */
-    public String getPublishingDate() {
-        return qfy.getPublishedAt().toString();
+    public ArrayList<GeneralDataContainer> sortChannels(String[] idArray) {
+        ArrayList<GeneralDataContainer> gdcArrayList = new ArrayList<>(Arrays.asList(qfy.getAllDataContainers(idArray)));
+
+        Comparator<GeneralDataContainer> containerComparator = (o1, o2) -> {
+            if (o1.getTitle().compareToIgnoreCase(o2.getTitle()) == 0) {
+                if (o1.getPublishedAt().compareTo(o2.getPublishedAt()) == 0) {
+                    if (o1.getSubscriberCount().compareTo(o2.getSubscriberCount()) == 0) {
+                        if (o1.getVideoCount().compareTo(o2.getVideoCount()) == 0) {
+                            if(o1.getViewCount().compareTo(o2.getViewCount()) == 0){
+                                return 0;
+                            }
+                        }
+                    }
+                }
+            }
+            return o1.getTitle().compareToIgnoreCase(o2.getTitle());
+        };
+
+        gdcArrayList.sort(containerComparator);
+        return gdcArrayList;
     }
-
-
 }

@@ -63,4 +63,17 @@ public class GeneralDataContainer {
     public Instant getPublishedAt() {
         return publishedAt;
     }
+
+    @Override
+    public String toString() {
+        return "GeneralDataContainer{" +
+                "title='" + title + '\'' +
+                ", viewCount=" + viewCount +
+                ", hiddenSubscriberCount=" + hiddenSubscriberCount +
+                ", subscriberCount=" + subscriberCount +
+                ", videoCount=" + videoCount +
+                ", publishedAt=" + publishedAt +
+                ", commentCount=" + commentCount +
+                '}';
+    }
 }

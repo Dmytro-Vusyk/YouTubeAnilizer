@@ -1,18 +1,19 @@
 package controller;
 
 
+import model.youTubeDataContainer.GeneralDataContainer;
+
 public class Test {
     private static String channelId = "UC8mndg3Tr2g9iMoJMI4ob5A";
+    private static String channelId2 = "UCXFxgPppcehs2LoiKhkakQg";
+    private static String channelId3 = "UCUoEWMvijAEn-hWTLUtfdoA";
 
     public static void main(String[] args) {
 
         MainController mc = new MainController();
-        mc.makeRequest(channelId);
-        System.out.println("Channel name: " + mc.getChannelName());
-        System.out.println("Channel views count: " + mc.getViewCount());
-        System.out.println("Channel videos count: " + mc.getVideoCount());
-        System.out.println("Channel subscribers count: " + mc.getSubscriberCount());
-        System.out.println("Channel date: " + mc.getPublishingDate());
+        String[] ids = {channelId,channelId2,channelId3};
+
+        System.out.println(mc.sortChannels(ids).toString());
     }
 
 }
