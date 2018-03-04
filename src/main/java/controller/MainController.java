@@ -7,8 +7,6 @@ import model.tempController.QueryFromYoutube;
  */
 public class MainController {
 
-    private String channelId;
-
     /**
      * обьект який надходить з мережі чи кешу
      */
@@ -63,6 +61,7 @@ public class MainController {
 
     /**
      * This method returns the publishing date of channel
+     *
      * @return publishing date as String
      */
     public String getPublishingDate() {
