@@ -1,0 +1,76 @@
+#basePane{
+-fx-background-color:#87ac9e;
+-fx-background-color:linear-gradient(to bottom, #193441 0%,#226070 47%,#193441 100%);
+}
+#documentPane{
+    -fx-background-color:#193340;
+}
+#textWelcome
+{
+-fx-text-fill:#FBFFF5;
+-fx-font-size: 72;
+-fx-font-family: "Times New Roman";
+-fx-font-weidth: bold;
+}
+#circle1
+{
+
+-fx-opacity:1;
+-fx-stroke-width:12;
+-fx-stroke-dash-array:40;
+}
+
+#circle2
+{
+-fx-opacity:1;
+-fx-stroke-width:13;
+-fx-stroke-dash-array:50;
+}
+
+#circle3
+{
+-fx-opacity:1;
+-fx-stroke-width:10;
+-fx-stroke-dash-array:30;
+}
+
+.circleMini
+{
+-fx-opacity:1;
+-fx-stroke-width:8;
+-fx-stroke-dash-array:25;
+}
+
+#MainPane{
+-fx-background-color:#00313F;
+
+}
+#btMainsSreenAnalitics{
+-fx-background-color:#CEDCBD;
+}
+#btMainsSreenAnalitics:hover{
+    -fx-background-color:#FCFFF6;
+    -fx-text-fill: #00313F;
+}
+
+#btMainsSreenSettings{
+     -fx-background-color:#226070;
+ }
+#btMainsSreenSettings:hover{
+    -fx-background-color:#FCFFF6;
+    -fx-text-fill: #00313F;
+}
+#btMainsSreenExit{
+-fx-background-color:#87AC9E;
+}
+#btMainsSreenExit:hover{
+    -fx-background-color:#FCFFF6;
+    -fx-text-fill: #00313F;
+}
+.bgcolor{
+-fx-background-color:#00313F;
+}
+
+.btnTasks{
+-fx-background-color:#FCFFF6;
+}
