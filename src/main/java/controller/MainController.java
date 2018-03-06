@@ -110,6 +110,6 @@ public class MainController {
 
     public HashMap<MapKeys, String> showMediaResonance(String channelId){
 
-        return output;
+        return null;
     }
 }
