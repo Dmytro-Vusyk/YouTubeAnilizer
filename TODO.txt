@@ -1,0 +1,12 @@
+
+TODO: MainController: добавить реализацию проверки кеша и чтения из кеша при запуске метода makeRequest();
+TODO: MainController: tasks 4,5,6 - переопределить наявные методы с другой логикой компаратора;
+
+
+
+TODO: QueryFromYoutube: убрать поля аналогичные с полями класса GeneralDataContainer
+и заменить их на обьект класса GDC. изменить соответствующим образом логику метода makeQuery
+
+TODO: QueryFromYoutube: по желанию сократить логику метода getAllDataContainers
+TODO: model: перенести tempController в папку контроллер
+TODO: model: нужен ли класс ResultContainer?
