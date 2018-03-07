@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.text.*?>
+<?import com.jfoenix.controls.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.shape.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<HBox id="MainPane" fx:id="hboxMainScreen" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="bgcolor" stylesheets="@../../../../../Desktop/Style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.FXMLMainScreenController">
+   <children>
+      <JFXDrawer fx:id="drawerLeftMain" alignment="CENTER_LEFT">
+         <children>
+            <StackPane prefHeight="400.0" prefWidth="354.0" styleClass="bgcolor" stylesheets="@../../../../../Desktop/Style.css">
+               <children>
+                  <Circle id="circle1" fx:id="circle1" fill="#1f93ff00" radius="100.0" stroke="#cedcbd" strokeDashOffset="10.0" strokeLineCap="ROUND" strokeType="INSIDE" />
+                  <Circle id="circle3" fx:id="circle2" fill="#1f93ff00" layoutX="110.0" layoutY="210.0" radius="30.0" stroke="#87ac9e" strokeDashOffset="10.0" strokeLineCap="ROUND" strokeType="INSIDE" />
+                  <Circle id="circle2" fx:id="circle3" fill="#1f93ff00" layoutX="110.0" layoutY="210.0" radius="65.0" stroke="#226070" strokeDashOffset="10.0" strokeLineCap="ROUND" strokeType="INSIDE" />
+               </children>
+               <padding>
+                  <Insets left="20.0" right="20.0" />
+               </padding>
+            </StackPane>
+         </children>
+      </JFXDrawer>
+      <JFXDrawer fx:id="drawerRightMain" alignment="CENTER_RIGHT" direction="RIGHT">
+         <children>
+            <StackPane prefHeight="150.0" prefWidth="200.0" styleClass="bgcolor" stylesheets="@../../../../../Desktop/Style.css">
+               <children>
+                  <VBox prefHeight="200.0" prefWidth="100.0" styleClass="bgcolor" stylesheets="@../../../../../Desktop/Style.css">
+                     <children>
+                        <JFXButton id="btMainsSreenAnalitics" fx:id="btnMainsSreenAnalitics" prefHeight="80.0" prefWidth="200.0" ripplerFill="#fbfff5" text="YouTube Analytics" textAlignment="CENTER" textFill="#00313f">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <VBox.margin>
+                              <Insets bottom="20.0" top="40.0" />
+                           </VBox.margin>
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </JFXButton>
+                        <JFXButton id="btMainsSreenSettings" fx:id="btnMainsSreenSettings" layoutX="10.0" layoutY="30.0" prefHeight="80.0" prefWidth="200.0" ripplerFill="#fbfff5" stylesheets="@../../../../../Desktop/Style.css" text="Settings" textAlignment="CENTER" textFill="#cedcbd">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <VBox.margin>
+                              <Insets bottom="20.0" top="20.0" />
+                           </VBox.margin>
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </JFXButton>
+                        <JFXButton id="btMainsSreenExit" fx:id="btnMainsSreenExit" layoutX="10.0" layoutY="30.0" prefHeight="80.0" prefWidth="200.0" ripplerFill="#fbfff5" stylesheets="@../../../../../Desktop/Style.css" text="Exit" textAlignment="CENTER" textFill="#00313f">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <VBox.margin>
+                              <Insets bottom="20.0" top="20.0" />
+                           </VBox.margin>
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </JFXButton>
+                     </children>
+                  </VBox>
+               </children>
+            </StackPane>
+         </children>
+      </JFXDrawer>
+   </children>
+   <opaqueInsets>
+      <Insets />
+   </opaqueInsets>
+</HBox>

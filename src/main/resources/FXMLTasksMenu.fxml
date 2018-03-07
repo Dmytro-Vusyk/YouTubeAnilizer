@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.*?>
+<?import javafx.geometry.*?>
+<?import java.net.*?>
+<?import javafx.scene.text.*?>
+<?import com.jfoenix.controls.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="140.0" style="-fx-background-color: #193340;" stylesheets="@Style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.FXMLTasksMenuController">
+   <children>
+      <Pane prefHeight="140.0" prefWidth="140.0">
+         <children>
+            <StackPane prefHeight="138.0" prefWidth="110.0" styleClass="bgcolor" stylesheets="@../../../../../Desktop/Style.css">
+               <children>
+                  <Circle fx:id="circleMini1" fill="#1f93ff00" radius="59.0" stroke="#cedcbd" strokeDashOffset="10.0" strokeLineCap="ROUND" strokeType="INSIDE" styleClass="circleMini" StackPane.alignment="CENTER_LEFT">
+                     <StackPane.margin>
+                        <Insets left="5.0" right="5.0" />
+                     </StackPane.margin>
+                  </Circle>
+                  <Circle fx:id="circleMini2" fill="#1f93ff00" layoutX="110.0" layoutY="210.0" radius="40.0" stroke="#87ac9e" strokeDashOffset="10.0" strokeLineCap="ROUND" strokeType="INSIDE" styleClass="circleMini" />
+                  <Circle fx:id="circleMini3" fill="#1f93ff00" layoutX="110.0" layoutY="210.0" radius="20.0" stroke="#226070" strokeDashOffset="10.0" strokeLineCap="ROUND" strokeType="INSIDE" styleClass="circleMini" />
+               </children>
+            </StackPane>
+         </children>
+         <VBox.margin>
+            <Insets left="6.0" />
+         </VBox.margin>
+      </Pane>
+      <JFXButton id="task1" fx:id="task1" alignment="CENTER" contentDisplay="CENTER" prefHeight="40.0" prefWidth="140.0" ripplerFill="#193340" styleClass="btnTasks" stylesheets="@Style.css" text="Task1" textFill="#193340">
+         <font>
+            <Font size="14.0" />
+         </font>
+         <VBox.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" />
+         </VBox.margin>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+      <JFXButton id="task2" fx:id="task2" alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="210.0" prefHeight="40.0" prefWidth="140.0" ripplerFill="#193340" styleClass="btnTasks" stylesheets="@Style.css" text="Task2" textFill="#193340">
+         <font>
+            <Font size="14.0" />
+         </font>
+         <VBox.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" />
+         </VBox.margin>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+      <JFXButton id="task3" fx:id="task3" alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="250.0" prefHeight="40.0" prefWidth="140.0" ripplerFill="#193340" styleClass="btnTasks" stylesheets="@Style.css" text="Task3" textFill="#193340">
+         <font>
+            <Font size="14.0" />
+         </font>
+         <VBox.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" />
+         </VBox.margin>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+      <JFXButton id="task4" fx:id="task4" alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="290.0" prefHeight="40.0" prefWidth="140.0" ripplerFill="#193340" styleClass="btnTasks" stylesheets="@Style.css" text="Task4" textFill="#193340">
+         <font>
+            <Font size="14.0" />
+         </font>
+         <VBox.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" />
+         </VBox.margin>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+      <JFXButton id="task5" fx:id="task5" alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="330.0" prefHeight="40.0" prefWidth="140.0" ripplerFill="#193340" styleClass="btnTasks" stylesheets="@Style.css" text="Task5" textFill="#193340">
+         <font>
+            <Font size="14.0" />
+         </font>
+         <VBox.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" />
+         </VBox.margin>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+      <JFXButton id="task6" fx:id="task6" alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="370.0" prefHeight="40.0" prefWidth="140.0" ripplerFill="#193340" styleClass="btnTasks" stylesheets="@Style.css" text="Task6" textFill="#193340">
+         <font>
+            <Font size="14.0" />
+         </font>
+         <VBox.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" />
+         </VBox.margin>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+   </children>
+</VBox>
