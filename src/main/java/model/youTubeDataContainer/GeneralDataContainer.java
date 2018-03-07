@@ -1,6 +1,7 @@
 package model.youTubeDataContainer;
 
 import java.time.Instant;
+import java.util.Arrays;
 
 /**
  * клас - контейнер результатів з API.
@@ -12,6 +13,7 @@ public class GeneralDataContainer {
     /**
      * поля, що отримуються з YouTube
      */
+    private String id;
     private String title;
     private Integer viewCount;
     private Boolean hiddenSubscriberCount;
@@ -19,7 +21,14 @@ public class GeneralDataContainer {
     private Integer videoCount;
     private Instant publishedAt;
     private Integer commentCount;
+    private String uploads;                 //TEMPORARY
+    private String[] playlists;             //TEMPORARY
 
+    public void setPlaylists(String[] playlists){this.playlists = Arrays.copyOf(playlists, playlists.length);} //TEMPORARY
+    public void setId(String id){this.id = id;}
+    public void setUploads(String uploads) {
+        this.uploads = uploads;
+    }       //TEMPORARY
     public void setCommentCount(Integer commentCount) {
         this.commentCount = commentCount;
     }
@@ -42,6 +51,13 @@ public class GeneralDataContainer {
         this.publishedAt = publishedAt;
     }
 
+    public String[] getPlaylists(){return playlists;}       //TEMPORARY
+    public String getId() {
+        return id;
+    }
+    public String getUploads() {
+        return uploads;
+    }       //temporary
     public Integer getCommentCount() {
         return commentCount;
     }

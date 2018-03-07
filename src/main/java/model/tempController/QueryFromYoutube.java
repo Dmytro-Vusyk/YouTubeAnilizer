@@ -2,7 +2,9 @@ package model.tempController;
 
 import com.mashape.unirest.http.exceptions.UnirestException;
 import model.tempRealization.YouTubeAPI;
-import model.youTubeDataContainer.*;
+import model.youTubeDataContainer.GeneralDataContainer;
+import model.youTubeDataContainer.Items;
+import model.youTubeDataContainer.Responce;
 
 import java.time.Instant;
 
@@ -45,6 +47,9 @@ public class QueryFromYoutube {
 
     /**
      * поля, що отримуються з YouTube
+     * !!! im already dont using this - all results i writes to GeneralDataContainer.
+     *     May be, for playlists and for array of videos we will make another (FE) PlaylistContainer/VideoContainer
+     *     But, may be, we generally dont will be use fields "playList" and "videos" - they not will used in model and view
      */
     private String title;
     private Integer viewCount;
@@ -52,12 +57,12 @@ public class QueryFromYoutube {
     private Integer subscriberCount;
     private Integer videoCount;
     private Instant publishedAt;
+    private String uploads;
 
     /**
      * і їхні геттери
      */
     public String getTitle() {
-        if (title == null) System.out.println("Channel title is null or there was any mistake, try another id");
         return title;
     }
     public Integer getViewCount() {
@@ -79,6 +84,7 @@ public class QueryFromYoutube {
     /**
      * головний метод - посилає запит, заповнює поля
      * @throws NullPointerException у випадку, коли поле channelId == null
+     *
      */
 
 
@@ -87,8 +93,8 @@ public class QueryFromYoutube {
         containers = new GeneralDataContainer[channelIdArray.length];
         for (int i = 0; i < channelIdArray.length; i++) {
             try {
-                Responce responce = YouTubeAPI.search(channelIdArray[i]);
-                Items<Snippet, Statistics> items = responce.items[0];
+                Responce responce = YouTubeAPI.search(channelIdArray[i]);//this old method
+                Items items = responce.items[0];
                 String title = items.snippet.title;
                 Integer viewCount = items.statistics.viewCount;
                 Integer videoCount = items.statistics.videoCount;
@@ -97,6 +103,11 @@ public class QueryFromYoutube {
                 Integer subscriberCount = hiddenSubscriberCount ? 0 : items.statistics.subscriberCount;
                 Integer commentCount = items.statistics.commentCount;
                 Instant publishedAt = items.snippet.publishedAt;
+                String id = items.id; //chanel id
+
+                String uploads = items.contentDetails.relatedPlaylists.uploads; //it is a alone playlist,
+                // who contains videos that are not part of any playlist
+                // I gave him this name (uploads) because it have him in the YouTube API)
 
 
                 containers[i] = new GeneralDataContainer();
@@ -107,6 +118,40 @@ public class QueryFromYoutube {
                 containers[i].setSubscriberCount(subscriberCount);
                 containers[i].setPublishedAt(publishedAt);
                 containers[i].setCommentCount(commentCount);
+                containers[i].setUploads(uploads);//it is temporary
+                containers[i].setId(id);
+
+                //and fill a playlists[] (temporary in GeneralDataContainer)
+                // 1) make new response, with new url and parameters
+
+                responce = YouTubeAPI.searchPlaylists(
+                        "https://www.googleapis.com/youtube/v3/playlists",
+                        "snippet,contentDetails",
+                        channelIdArray[i]);
+
+                // 2)we get array(json) of items[], field "id" contains string of our playlist
+
+                final int Len_PlayLists = responce.items.length;
+                String plailists[] = new String[Len_PlayLists + 1];
+                for (int j = 0; j < Len_PlayLists; j++) {
+                    plailists[i] = responce.items[i].id;
+                }
+
+                // 3) add the array of playlists to our main container
+                containers[i].setPlaylists(plailists); //look at the setter - I'm not sure about the code
+                                                       // where I'm copying the array to the array
+
+                // 4) - i think, that the field "String[] playlists" in GeneralDataContainer we can be delete.
+                //      We must just getting all video, and calculate all comments. So - you have a choice)
+
+                // Ou eah...just one - we must added some playlist) to playlists[])
+                // so....
+                plailists[Len_PlayLists] = uploads;
+
+
+                /*
+                 * im sorry, but i not testing a getting of playlists, becouse i sleeps....good luck!)
+                 */
             } catch (UnirestException e) {
                 e.printStackTrace();
                 return null;
@@ -122,7 +167,7 @@ public class QueryFromYoutube {
         }
         try {
             responce = YouTubeAPI.search(channelId);
-            Items<Snippet, Statistics> items = responce.items[0];
+            Items items = responce.items[0];
             title = items.snippet.title;
             viewCount = items.statistics.viewCount;
             videoCount = items.statistics.videoCount;

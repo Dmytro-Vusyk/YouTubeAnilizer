@@ -16,7 +16,21 @@ public class Main {
 //        Thread.sleep(700);
 //        System.out.println("\n=================================================\n");
 //        test2();
-        test3(channelId, channelId2, channelId3);
+//        test3(channelId, channelId2, channelId3);
+//        test4("UCcTsXM2XgBAZhS1VpnCd2_A");//out playlists
+        test4(channelId, channelId2);//out playlists (uploads)
+    }
+
+    /**
+     *
+     */
+    static void test4(String ...channelsId){
+        int length = channelsId.length;
+        QueryFromYoutube youtubeQuery = new QueryFromYoutube();
+        GeneralDataContainer[] containers = youtubeQuery.getAllDataContainers(channelsId);
+        for (int i = 0; i < length; i++) {
+            System.out.println(containers[i].getUploads());
+        }
     }
 
     /**
@@ -104,28 +118,33 @@ public class Main {
     }
 
     private static void sysoutAll(GeneralDataContainer generalDataContainer) throws InterruptedException{
+        int delay = 700;
+
         String tittle = generalDataContainer.getTitle();
         Integer viewCount = generalDataContainer.getViewCount();
         Integer videoCount = generalDataContainer.getVideoCount();
         Integer subscriberCount = generalDataContainer.getSubscriberCount();
         Boolean subscriberHidden = generalDataContainer.getHiddenSubscriberCount();
-        Integer comentCount = generalDataContainer.getCommentCount();
+        Integer commentCount = generalDataContainer.getCommentCount();
         Instant published = generalDataContainer.getPublishedAt();
+        String id = generalDataContainer.getId();
 
 
         System.out.println("Tittle            : \"" + tittle + "\"");
-        Thread.sleep(900);
+        Thread.sleep(delay);
+        System.out.println("ID                : \"" + id + "\"");
+        Thread.sleep(delay);
         System.out.println("View count        = " + viewCount);
-        Thread.sleep(900);
+        Thread.sleep(delay);
         System.out.println("Video count       = " + videoCount);
-        Thread.sleep(900);
+        Thread.sleep(delay);
         System.out.println("Subscriber hidden = " + subscriberHidden);
-        Thread.sleep(900);
+        Thread.sleep(delay);
         System.out.println("Subscriber count  = " + subscriberCount);
-        Thread.sleep(900);
-        System.out.println("Coment count      = " + comentCount);
-        Thread.sleep(900);
+        Thread.sleep(delay);
+        System.out.println("Coment count      = " + commentCount);
+        Thread.sleep(delay);
         System.out.println("Published at      : " + new Main().publishedToString(published));
-        Thread.sleep(900);
+        Thread.sleep(delay);
     }
 }

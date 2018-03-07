@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.stream.Collectors;
 
 //TO DO: add realisation of cash reading in method makeRequest();
 
