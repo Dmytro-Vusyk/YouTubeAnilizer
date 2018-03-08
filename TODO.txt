@@ -10,3 +10,4 @@ TODO: QueryFromYoutube: убрать поля аналогичные с поля
 TODO: QueryFromYoutube: по желанию сократить логику метода getAllDataContainers
 TODO: model: перенести tempController в папку контроллер
 TODO: model: нужен ли класс ResultContainer?
+

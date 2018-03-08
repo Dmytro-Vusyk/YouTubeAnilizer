@@ -3,6 +3,7 @@ package model.tempRealization;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
+import model.youTubeDataContainer.GeneralDataContainer;
 import model.youTubeDataContainer.Responce;
 
 /**
@@ -34,6 +35,30 @@ static {
                 .queryString("key", API_KEY)
                 .queryString("part", part)
                 .queryString("id", quaryChannelId)
+                .asObject(Responce.class);
+        return response.getBody();
+    }
+
+    /**
+     * Response for list of uploaded videos
+     * @param gdc object of GeneralDataContainer
+     * @return object of Recponce
+     * @throws UnirestException
+     */
+    public static Responce getVideoList(GeneralDataContainer gdc) throws UnirestException {
+        HttpResponse<Responce> response = Unirest.get("https://www.googleapis.com/youtube/v3/playlistItems")
+                .queryString("key", API_KEY)
+                .queryString("part", "contentDetails")
+                .queryString("id", gdc.getUploads())
+                .asObject(Responce.class);
+        return response.getBody();
+    }
+
+    public static Responce getVideoStatistic(String videoId) throws UnirestException {
+        HttpResponse<Responce> response = Unirest.get("https://www.googleapis.com/youtube/v3/videos")
+                .queryString("key", API_KEY)
+                .queryString("part", "statistics")
+                .queryString("id", videoId)
                 .asObject(Responce.class);
         return response.getBody();
     }

@@ -22,8 +22,7 @@ public class MainController {
      */
     private void makeRequest(String channelId) {
 
-        qfy.setChannelId(channelId);
-        qfy.makeQuary();
+        qfy.makeQuary(gdc,channelId);
     }
 
     /**
@@ -80,8 +79,8 @@ public class MainController {
 
         ArrayList<LinkedHashMap<MapKeys,String>> output = new ArrayList<>();
 
-        ArrayList<GeneralDataContainer> gdcArrayList =
-                new ArrayList<>(Arrays.asList(qfy.getAllDataContainers(idArray)));
+     //  ArrayList<GeneralDataContainer> gdcArrayList =
+     //           new ArrayList<>(Arrays.asList(qfy.setAllDataContainers(idArray)));
 
         Comparator<GeneralDataContainer> containerComparator = (o1, o2) -> {
             if (o1.getTitle().compareToIgnoreCase(o2.getTitle()) == 0) {
@@ -98,11 +97,11 @@ public class MainController {
             return o1.getTitle().compareToIgnoreCase(o2.getTitle());
         };
 
-        gdcArrayList.sort(containerComparator);
+        //gdcArrayList.sort(containerComparator);
 
-        for (GeneralDataContainer gdc: gdcArrayList) {
-            output.add(showGlobalInformationAboutChannel(gdc));
-        }
+        //for (GeneralDataContainer gdc: gdcArrayList) {
+        //    output.add(showGlobalInformationAboutChannel(gdc));
+        //}
 
         return output;
     }

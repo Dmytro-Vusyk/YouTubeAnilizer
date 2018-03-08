@@ -7,80 +7,94 @@ import model.youTubeDataContainer.Items;
 import model.youTubeDataContainer.Responce;
 
 import java.time.Instant;
+import java.util.ArrayList;
 
 /**
- *
  * Model logic:
- *
+ * <p>
  * - all result saves in GeneralDataContainer
  * - for set data in GeneralDataContainer:
- *       1) create variable of QueryFromYoutube class.
- *                  QueryFromYoutube youtubeQuery = new QueryFromYoutube();
- *       2) Make request.
- *       Method setAllDataContainer(String...channelsId)
- *              a) accepts channelId array,
- *              b) initialize and fill array GeneralDataContainer container;
- *              c) return true, if request is well, and false if not
- *      3) And get data:
- *                  GeneralDataContainer[] dataContainers = getContainer();
- *
- *      So, all data from YouTube channel are moving into dataContainer variable.
- *
- ****** All fields and methods to delete are marked with a comment // Delete
+ * 1) create variable of QueryFromYoutube class.
+ * QueryFromYoutube youtubeQuery = new QueryFromYoutube();
+ * 2) Make request.
+ * Method setAllDataContainer(String...channelsId)
+ * a) accepts channelId array,
+ * b) initialize and fill array GeneralDataContainer container;
+ * c) return true, if request is well, and false if not
+ * 3) And get data:
+ * GeneralDataContainer[] dataContainers = getContainer();
+ * <p>
+ * So, all data from YouTube channel are moving into dataContainer variable.
+ * <p>
+ * ***** All fields and methods to delete are marked with a comment // Delete
  */
 public class QueryFromYoutube {
     private Responce responce; // DELETE
-    private String channelId; // DELETE
-    private String[] channelIdArray;// DELETE
-    public void setChannelId(String channelId) {
-        this.channelId = channelId;
-    } // DELETE
+    // private String channelId; // DELETE
+    // private String[] channelIdArray;// DELETE
 
-    /**
-     * поля, що отримуються з YouTube
-     * !!! im already dont using this - all results i writes to GeneralDataContainer.
-     *     May be, for playlists and for array of videos we will make another (FE) PlaylistContainer/VideoContainer
-     *     But, may be, we generally dont will be use fields "playList" and "videos" - they not will used in model and view
-     */
-    private String title; // DELETE
-    private Integer viewCount; // DELETE
-    private Boolean hiddenSubscriberCount; // DELETE
-    private Integer subscriberCount; // DELETE
-    private Integer videoCount; // DELETE
-    private Instant publishedAt; // DELETE
-    private String uploads; // DELETE
+    // public void setChannelId(String channelId) {
+    //     this.channelId = channelId;
+    // } // DELETE
 
-    /**
-     * і їхні геттери
-     */
-    public String getTitle() {
-        return title;
-    } // DELETE
-    public Integer getViewCount() {
-        return viewCount;
-    } // DELETE
-    public Integer getVideoCount() {
-        return videoCount;
-    } // DELETE
-    public Integer getSubscriberCount() {
-        return subscriberCount;
-    } // DELETE
-    public Boolean getHiddenSubscriberCount() {
-        return hiddenSubscriberCount;
-    } // DELETE
-    public Instant getPublishedAt() {
-        return publishedAt;
-    } // DELETE
+    // /**
+    //  * поля, що отримуються з YouTube
+    //  * !!! im already dont using this - all results i writes to GeneralDataContainer.
+    //  * May be, for playlists and for array of videos we will make another (FE) PlaylistContainer/VideoContainer
+    //  * But, may be, we generally dont will be use fields "playList" and "videos" - they not will used in model and view
+    //  */
+    // private String title; // DELETE
+    // private Integer viewCount; // DELETE
+    // private Boolean hiddenSubscriberCount; // DELETE
+    // private Integer subscriberCount; // DELETE
+    // private Integer videoCount; // DELETE
+    // private Instant publishedAt; // DELETE
+    // private String uploads; // DELETE
+
+    // public String getUploads() {
+    //     return uploads;
+    // }
+
+    // /**
+    //  * і їхні геттери
+    //  */
+
+
+    // public String getTitle() {
+    //     return title;
+    // } // DELETE
+
+    // public Integer getViewCount() {
+    //     return viewCount;
+    // } // DELETE
+
+    // public Integer getVideoCount() {
+    //     return videoCount;
+    // } // DELETE
+
+    // public Integer getSubscriberCount() {
+    //     return subscriberCount;
+    // } // DELETE
+
+    // public Boolean getHiddenSubscriberCount() {
+    //     return hiddenSubscriberCount;
+    // } // DELETE
+
+    // public Instant getPublishedAt() {
+    //     return publishedAt;
+    // } // DELETE
 
     /**
      * головний метод - посилає запит, заповнює поля
      */
 
     private GeneralDataContainer[] containers;
+
     public GeneralDataContainer[] getContainers() {
         return containers;
     }
-    public Boolean setAllDataContainers(String ...channelIdArray){
+
+    public Boolean setAllDataContainers(String... channelIdArray) {
         containers = new GeneralDataContainer[channelIdArray.length];
         for (int i = 0; i < channelIdArray.length; i++) {
             try {
@@ -130,7 +144,7 @@ public class QueryFromYoutube {
 
                 // 3) add the array of playlists to our main container
                 containers[i].setPlaylists(plailists); //look at the setter - I'm not sure about the code
-                                                       // where I'm copying the array to the array
+                // where I'm copying the array to the array
 
                 // 4) - i think, that the field "String[] playlists" in GeneralDataContainer we can be delete.
                 //      We must just getting all video, and calculate all comments. So - you have a choice)
@@ -151,7 +165,8 @@ public class QueryFromYoutube {
         return true;
     }
 
-     public void makeQuary(){
+
+    public void makeQuary(GeneralDataContainer generalDataContainer, String channelId) {
         if (channelId == null) {
             System.out.println("Channel id is not assigned");
             throw new NullPointerException();
@@ -159,16 +174,36 @@ public class QueryFromYoutube {
         try {
             responce = YouTubeAPI.search(channelId);
             Items items = responce.items[0];
-            title = items.snippet.title;
-            viewCount = items.statistics.viewCount;
-            videoCount = items.statistics.videoCount;
-            hiddenSubscriberCount = items.statistics.hiddenSubscriberCount;
-            //якщо статистика прихована - статистика = 0
-            subscriberCount = hiddenSubscriberCount ? 0 : items.statistics.subscriberCount;
-            publishedAt = items.snippet.publishedAt;
+            generalDataContainer.setTitle(items.snippet.title);
+            generalDataContainer.setViewCount(items.statistics.viewCount);
+            generalDataContainer.setVideoCount(items.statistics.videoCount);
+            generalDataContainer.setHiddenSubscriberCount(items.statistics.hiddenSubscriberCount);
+            generalDataContainer.setSubscriberCount(items.statistics.subscriberCount);
+            generalDataContainer.setPublishedAt(items.snippet.publishedAt);
+            generalDataContainer.setUploads(items.contentDetails.relatedPlaylists.uploads);
         } catch (UnirestException e) {
             e.printStackTrace();
         }
     } //DELETE
+
+    public void makeQueryForChennelsID(GeneralDataContainer gdc, String playListID) {
+        if (playListID == null) {
+            System.out.println("Channel id is not assigned");
+            throw new NullPointerException();
+        }
+        try {
+            responce = YouTubeAPI.getVideoList(gdc);
+
+            ArrayList<String> videoIds = new ArrayList<>();
+            Items[] items = responce.items;
+
+            for (int i = 0; i < items.length; i++) {
+                videoIds.add(items[i].contentDetails.videoId);
+            }
+            gdc.setVideoIds(videoIds.toArray(new String[videoIds.size()]));
+        } catch (UnirestException e) {
+            e.printStackTrace();
+        }
+    }
 
 }
