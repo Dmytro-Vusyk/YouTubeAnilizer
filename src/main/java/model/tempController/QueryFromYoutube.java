@@ -9,41 +9,32 @@ import model.youTubeDataContainer.Responce;
 import java.time.Instant;
 
 /**
- * Тимчасова реалізація класу, який реалізує запити.
  *
- * для роботи з класом необхідно
- * 1) встановити поле
- * @channelId методом setChannelId
+ * Model logic:
  *
- * 2) метод makeQuery виконує запит, створює "контейнер класів" (парсить json) в пакеті youTubeDataContainer
- *   і запонює поля цього (QueryFromYoutube) класу для подальшого використання.
+ * - all result saves in GeneralDataContainer
+ * - for set data in GeneralDataContainer:
+ *       1) create variable of QueryFromYoutube class.
+ *                  QueryFromYoutube youtubeQuery = new QueryFromYoutube();
+ *       2) Make request.
+ *       Method setAllDataContainer(String...channelsId)
+ *              a) accepts channelId array,
+ *              b) initialize and fill array GeneralDataContainer container;
+ *              c) return true, if request is well, and false if not
+ *      3) And get data:
+ *                  GeneralDataContainer[] dataContainers = getContainer();
  *
- * 3) наприклад метод getTitle() повертає поле title (назва каналу)
+ *      So, all data from YouTube channel are moving into dataContainer variable.
  *
- * + додав метод getGeneralDataContainer(String...channelsId) який повертає масив "контейнерів"
- * ============================================================
- * задачі:
- * -переробити логіку класу, щоб в конструктор передавалось channel id і відразу виконувався makeQuery()
- *  (**в цьому невеличеому питанні хочу порадитись - а поки не завершу реалізацію повністю так і залишу -
- *   можливо робити все відразу в конструкторі буде недоцільно)
- * - залишити одну реалізацію запиту і заповнення. І для запиту 1 айді і для масиву
+ ****** All fields and methods to delete are marked with a comment // Delete
  */
 public class QueryFromYoutube {
-    /**
-     * "головне" поле. Встановлюється в методі makeQuery(). (краще зробити локальним)
-     */
-    private Responce responce;
-
-    /**
-     * поле
-     * @channelId для роботи з класом повинно обов’язково
-     * ініціалізуватись - тому впевнений, що вбудую в конструктор
-     */
-    private String channelId;
-    private String[] channelIdArray;
+    private Responce responce; // DELETE
+    private String channelId; // DELETE
+    private String[] channelIdArray;// DELETE
     public void setChannelId(String channelId) {
         this.channelId = channelId;
-    }
+    } // DELETE
 
     /**
      * поля, що отримуються з YouTube
@@ -51,45 +42,45 @@ public class QueryFromYoutube {
      *     May be, for playlists and for array of videos we will make another (FE) PlaylistContainer/VideoContainer
      *     But, may be, we generally dont will be use fields "playList" and "videos" - they not will used in model and view
      */
-    private String title;
-    private Integer viewCount;
-    private Boolean hiddenSubscriberCount;
-    private Integer subscriberCount;
-    private Integer videoCount;
-    private Instant publishedAt;
-    private String uploads;
+    private String title; // DELETE
+    private Integer viewCount; // DELETE
+    private Boolean hiddenSubscriberCount; // DELETE
+    private Integer subscriberCount; // DELETE
+    private Integer videoCount; // DELETE
+    private Instant publishedAt; // DELETE
+    private String uploads; // DELETE
 
     /**
      * і їхні геттери
      */
     public String getTitle() {
         return title;
-    }
+    } // DELETE
     public Integer getViewCount() {
         return viewCount;
-    }
+    } // DELETE
     public Integer getVideoCount() {
         return videoCount;
-    }
+    } // DELETE
     public Integer getSubscriberCount() {
         return subscriberCount;
-    }
+    } // DELETE
     public Boolean getHiddenSubscriberCount() {
         return hiddenSubscriberCount;
-    }
+    } // DELETE
     public Instant getPublishedAt() {
         return publishedAt;
-    }
+    } // DELETE
 
     /**
      * головний метод - посилає запит, заповнює поля
-     * @throws NullPointerException у випадку, коли поле channelId == null
-     *
      */
 
-
     private GeneralDataContainer[] containers;
-    public GeneralDataContainer[] getAllDataContainers(String ...channelIdArray){
+    public GeneralDataContainer[] getContainers() {
+        return containers;
+    }
+    public Boolean setAllDataContainers(String ...channelIdArray){
         containers = new GeneralDataContainer[channelIdArray.length];
         for (int i = 0; i < channelIdArray.length; i++) {
             try {
@@ -154,10 +145,10 @@ public class QueryFromYoutube {
                  */
             } catch (UnirestException e) {
                 e.printStackTrace();
-                return null;
+                return false;
             }
         }
-        return containers;
+        return true;
     }
 
      public void makeQuary(){
@@ -178,6 +169,6 @@ public class QueryFromYoutube {
         } catch (UnirestException e) {
             e.printStackTrace();
         }
-    }
+    } //DELETE
 
 }
