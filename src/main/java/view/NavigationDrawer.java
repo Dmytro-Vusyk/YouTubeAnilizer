@@ -17,13 +17,9 @@ public class NavigationDrawer extends Application {
 
         primaryStage.setScene(scene);
         primaryStage.setTitle("Main screen");
-      //  primaryStage.setOpacity(0.2);
         primaryStage.show();
     }
 
-
     /**Start program*/
     public static void main(String[] args) {launch(args);}
-
-
-}
+    }

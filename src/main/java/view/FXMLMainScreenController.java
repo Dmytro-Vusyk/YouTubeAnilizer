@@ -3,20 +3,19 @@ package view;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDrawer;
 import javafx.animation.RotateTransition;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 import javafx.util.Duration;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class FXMLMainScreenController implements Initializable {
-
-    @FXML
-    private HBox hboxMainScreen;
+public class FXMLMainScreenController extends FXMLDocumentController implements Initializable {
 
     @FXML
     private JFXButton btnMainsSreenSettings;
@@ -46,17 +45,13 @@ public class FXMLMainScreenController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        setRotate(circle1, true, 360,10);
-        setRotate(circle2, true, 180,18);
-        setRotate(circle3, true, 145,24);
-
-        btnMainsSreenAnalitics.addEventHandler(MouseEvent.MOUSE_PRESSED,(e)->{
-            // подія зміни вікна
-        });
+        setRotate(circle1, true, 360, 10);
+        setRotate(circle2, true, 180, 18);
+        setRotate(circle3, true, 145, 24);
     }
 
-    /**пока временно побудет статическим*/
-     static void setRotate(Circle c, boolean reverse, int angle, int duration ) {
+
+    static void setRotate(Circle c, boolean reverse, int angle, int duration ) {
         RotateTransition rotateTransition = new RotateTransition(Duration.seconds(duration),c);
 
         rotateTransition.setAutoReverse(reverse);
@@ -67,6 +62,36 @@ public class FXMLMainScreenController implements Initializable {
         rotateTransition.setCycleCount(18);
         rotateTransition.play();
     }
+
+    @FXML
+    void onActionbtnMainsSreenAnalitics(ActionEvent event) {
+        try {
+          Pane taskController = FXMLLoader.load(getClass().getResource("/FXMLTasks.fxml"));
+          documentPane.getChildren().setAll(taskController);
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+    }
+
+
+    @FXML
+    void onActionBtnMainsSreenSettings(ActionEvent event) {
+        try {
+            Pane taskController = FXMLLoader.load(getClass().getResource("/FXMLSettings.fxml"));
+            documentPane.getChildren().setAll(taskController);
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+
+    }
+
+    @FXML
+    void onActionBtnMainsSreenExit(ActionEvent event) {
+         System.exit(1);
+    }
+
+
+
 
 
 
