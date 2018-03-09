@@ -3,8 +3,9 @@ package model.tempRealization;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
+import enumerated.TypeQuery;
 import model.youTubeDataContainer.GeneralDataContainer;
-import model.youTubeDataContainer.Responce;
+import model.youTubeDataContainer.Response;
 
 /**
  * підкапотний простір запиту в АПІ
@@ -18,24 +19,30 @@ static {
     new UnirestSerialization();
 }
     private static final String API_KEY = "AIzaSyDBVpCaXdSwREU9b5UeervX2eCUbqYLTcU";
-    public static Responce search(String queryChannelId) throws UnirestException {
-//        new UnirestSerialization();
-        HttpResponse<Responce> response = Unirest.get("https://www.googleapis.com/youtube/v3/channels")
+    public static Response search(TypeQuery typeQuery, String part, String queryId) throws UnirestException {
+        String url = (typeQuery == TypeQuery.CHANNEL) ? "https://www.googleapis.com/youtube/v3/channels" :
+                     (typeQuery == TypeQuery.PLAYLIST) ? "https://www.googleapis.com/youtube/v3/playlistItems" :
+                     (typeQuery == TypeQuery.VIDEO) ? "https://www.googleapis.com/youtube/v3/videos" : null;
+
+        String id = (typeQuery == TypeQuery.CHANNEL) ? "id" :
+                (typeQuery == TypeQuery.PLAYLIST) ? "playlistId" :
+                        (typeQuery == TypeQuery.VIDEO) ? "id" : null;
+
+        HttpResponse<Response> response = Unirest.get(url)
                 .queryString("key", API_KEY)
-                .queryString("part", "snippet,contentDetails,statistics")
-//                .queryString("maxResults", maxResult)
-//                .queryString(published, instant)
-                .queryString("id", queryChannelId)
-                .asObject(Responce.class);
+                .queryString("part", part)
+                .queryString(id, queryId)
+                .asObject(Response.class);
         return response.getBody();
     }
 
-    public static Responce searchPlaylists(String unirestURL, String part, String quaryChannelId) throws UnirestException{
-        HttpResponse<Responce> response = Unirest.get(unirestURL)
+
+    public static Response searchPlaylists(String unirestURL, String part, String quaryChannelId) throws UnirestException{
+        HttpResponse<Response> response = Unirest.get(unirestURL)
                 .queryString("key", API_KEY)
                 .queryString("part", part)
                 .queryString("id", quaryChannelId)
-                .asObject(Responce.class);
+                .asObject(Response.class);
         return response.getBody();
     }
 
@@ -45,21 +52,21 @@ static {
      * @return object of Recponce
      * @throws UnirestException
      */
-    public static Responce getVideoList(GeneralDataContainer gdc) throws UnirestException {
-        HttpResponse<Responce> response = Unirest.get("https://www.googleapis.com/youtube/v3/playlistItems")
+    public static Response getVideoList(GeneralDataContainer gdc) throws UnirestException {
+        HttpResponse<Response> response = Unirest.get("https://www.googleapis.com/youtube/v3/playlistItems")
                 .queryString("key", API_KEY)
                 .queryString("part", "contentDetails")
                 .queryString("id", gdc.getUploads())
-                .asObject(Responce.class);
+                .asObject(Response.class);
         return response.getBody();
     }
 
-    public static Responce getVideoStatistic(String videoId) throws UnirestException {
-        HttpResponse<Responce> response = Unirest.get("https://www.googleapis.com/youtube/v3/videos")
+    public static Response getVideoStatistic(String videoId) throws UnirestException {
+        HttpResponse<Response> response = Unirest.get("https://www.googleapis.com/youtube/v3/videos")
                 .queryString("key", API_KEY)
                 .queryString("part", "statistics")
                 .queryString("id", videoId)
-                .asObject(Responce.class);
+                .asObject(Response.class);
         return response.getBody();
     }
 }

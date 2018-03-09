@@ -1,5 +1,5 @@
 package model.youTubeDataContainer;
 
-public class Responce {
+public class Response {
     public Items[] items;
 }

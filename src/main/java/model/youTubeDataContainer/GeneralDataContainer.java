@@ -28,7 +28,6 @@ public class GeneralDataContainer {
     public void setVideoIds(String[] videoIds) {
         this.videoIds = videoIds;
     }
-
     public void setPlaylists(String[] playlists){this.playlists = Arrays.copyOf(playlists, playlists.length);} //TEMPORARY
     public void setId(String id){this.id = id;}
     public void setUploads(String uploads) {

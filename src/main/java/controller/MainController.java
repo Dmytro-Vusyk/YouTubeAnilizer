@@ -21,7 +21,6 @@ public class MainController {
      * This method take channelId and make request for data in cash and youtube
      */
     private void makeRequest(String channelId) {
-
         qfy.makeQuary(gdc,channelId);
     }
 
