@@ -28,7 +28,6 @@ public class YouTubeAPI {
 
     public static Response search(TypeQuery typeQuery, String part, String queryId) throws UnirestException {
         String url = null;
-        String id = "id";
 
         switch (typeQuery) {
             case CHANNEL:
@@ -42,7 +41,7 @@ public class YouTubeAPI {
         HttpResponse<Response> response = Unirest.get(url)
                 .queryString("key", API_KEY)
                 .queryString("part", part)
-                .queryString(id, queryId)
+                .queryString("id", queryId)
                 .asObject(Response.class);
         return response.getBody();
 
