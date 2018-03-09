@@ -110,4 +110,16 @@ public class MainController {
 
         return null;
     }
+
+    public LinkedHashMap<MapKeys, String> tesTshowGlobalInformationAboutChannel(String channelId) {
+        makeRequest(channelId);
+        LinkedHashMap<MapKeys, String> output = new LinkedHashMap<>();
+        output.put(MapKeys.CHANNEL_NAME, "ChannelName");
+        output.put(MapKeys.COMMENTS_COUNT, "100500");
+        output.put(MapKeys.PUBLISHING_DATE, "Tyt Data");
+        output.put(MapKeys.SUBSCRIBERS_COUNT, "101");
+        output.put(MapKeys.VIDEOS_COUNT, "1000000");
+        output.put(MapKeys.VIEWS_COUNT, "101010101");
+        return output;
+    }
 }

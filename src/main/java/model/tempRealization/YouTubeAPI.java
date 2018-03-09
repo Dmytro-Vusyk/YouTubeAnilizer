@@ -10,23 +10,38 @@ import model.youTubeDataContainer.Response;
 /**
  * підкапотний простір запиту в АПІ
  * Використовується методом makeQuery() в класі QueryFromYoutube
- *
+ * <p>
  * Ініціалізує UnirestSerialization
  * повертає "контейнер" джсона (пакет youTubeDataContainer) з сєрвака YouTubeAPI
  */
 public class YouTubeAPI {
-static {
-    new UnirestSerialization();
-}
-    private static final String API_KEY = "AIzaSyDBVpCaXdSwREU9b5UeervX2eCUbqYLTcU";
-    public static Response search(TypeQuery typeQuery, String part, String queryId) throws UnirestException {
-        String url = (typeQuery == TypeQuery.CHANNEL) ? "https://www.googleapis.com/youtube/v3/channels" :
-                     (typeQuery == TypeQuery.PLAYLIST) ? "https://www.googleapis.com/youtube/v3/playlistItems" :
-                     (typeQuery == TypeQuery.VIDEO) ? "https://www.googleapis.com/youtube/v3/videos" : null;
 
-        String id = (typeQuery == TypeQuery.CHANNEL) ? "id" :
-                (typeQuery == TypeQuery.PLAYLIST) ? "playlistId" :
-                        (typeQuery == TypeQuery.VIDEO) ? "id" : null;
+    private static final String API_KEY = "AIzaSyDBVpCaXdSwREU9b5UeervX2eCUbqYLTcU";
+    private static final String CHANNEL_URL = "https://www.googleapis.com/youtube/v3/channels";
+    private static final String PLAYLIST_URL = "https://www.googleapis.com/youtube/v3/playlistItems";
+    private static final String VIDEO_URL = "https://www.googleapis.com/youtube/v3/videos";
+
+    static {
+        new UnirestSerialization();
+    }
+
+
+    public static Response search(TypeQuery typeQuery, String part, String queryId) throws UnirestException {
+        String url = null;
+        String id = "id";
+
+        switch (typeQuery) {
+            case CHANNEL:
+                url = CHANNEL_URL;
+                break;
+            case PLAYLIST:
+                url = PLAYLIST_URL;
+                id = "playlistId";
+                break;
+            case VIDEO:
+                url = PLAYLIST_URL;
+                break;
+        }
 
         HttpResponse<Response> response = Unirest.get(url)
                 .queryString("key", API_KEY)
@@ -34,39 +49,18 @@ static {
                 .queryString(id, queryId)
                 .asObject(Response.class);
         return response.getBody();
+
+
     }
 
-
-    public static Response searchPlaylists(String unirestURL, String part, String quaryChannelId) throws UnirestException{
-        HttpResponse<Response> response = Unirest.get(unirestURL)
+    public static Response searchVideoIdsInPlayList(String part, String queryId, int maxResult) throws UnirestException{
+        HttpResponse<Response> response = Unirest.get(PLAYLIST_URL)
                 .queryString("key", API_KEY)
                 .queryString("part", part)
-                .queryString("id", quaryChannelId)
+                .queryString("maxResults", maxResult)
+                .queryString("playlistId", queryId)
                 .asObject(Response.class);
         return response.getBody();
     }
 
-    /**
-     * Response for list of uploaded videos
-     * @param gdc object of GeneralDataContainer
-     * @return object of Recponce
-     * @throws UnirestException
-     */
-    public static Response getVideoList(GeneralDataContainer gdc) throws UnirestException {
-        HttpResponse<Response> response = Unirest.get("https://www.googleapis.com/youtube/v3/playlistItems")
-                .queryString("key", API_KEY)
-                .queryString("part", "contentDetails")
-                .queryString("id", gdc.getUploads())
-                .asObject(Response.class);
-        return response.getBody();
-    }
-
-    public static Response getVideoStatistic(String videoId) throws UnirestException {
-        HttpResponse<Response> response = Unirest.get("https://www.googleapis.com/youtube/v3/videos")
-                .queryString("key", API_KEY)
-                .queryString("part", "statistics")
-                .queryString("id", videoId)
-                .asObject(Response.class);
-        return response.getBody();
-    }
 }

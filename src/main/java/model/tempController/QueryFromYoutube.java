@@ -60,10 +60,9 @@ public class QueryFromYoutube {
     }
     private void setVideosIds(GeneralDataContainer gdc) {
         try {
-            Response responce = YouTubeAPI.search(
-                    TypeQuery.PLAYLIST,
+            Response responce = YouTubeAPI.searchVideoIdsInPlayList(
                     "contentDetails",
-                    gdc.getUploads());
+                    gdc.getUploads(),50);
             ArrayList<String> videoIds = new ArrayList<>();
             Items[] items = responce.items;
             for (int i = 0; i < items.length; i++) {
