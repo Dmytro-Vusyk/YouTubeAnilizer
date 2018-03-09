@@ -34,10 +34,6 @@ public class YouTubeAPI {
             case CHANNEL:
                 url = CHANNEL_URL;
                 break;
-            case PLAYLIST:
-                url = PLAYLIST_URL;
-                id = "playlistId";
-                break;
             case VIDEO:
                 url = PLAYLIST_URL;
                 break;
