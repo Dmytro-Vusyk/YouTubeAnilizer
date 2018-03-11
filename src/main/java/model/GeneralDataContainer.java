@@ -1,4 +1,4 @@
-package model.youTubeDataContainer;
+package model;
 
 import java.time.Instant;
 import java.util.Arrays;
@@ -87,19 +87,6 @@ public class GeneralDataContainer {
         return videoIds;
     }
 
-    public GeneralDataContainer(String id, String title, Integer viewCount, Boolean hiddenSubscriberCount, Integer subscriberCount, Integer videoCount, Instant publishedAt, Integer commentCount, String uploads, String[] playlists, String[] videoIds) {
-        this.id = id;
-        this.title = title;
-        this.viewCount = viewCount;
-        this.hiddenSubscriberCount = hiddenSubscriberCount;
-        this.subscriberCount = subscriberCount;
-        this.videoCount = videoCount;
-        this.publishedAt = publishedAt;
-        this.commentCount = commentCount;
-        this.uploads = uploads;
-        this.playlists = playlists;
-        this.videoIds = videoIds;
-    }
 
     @Override
     public String toString() {

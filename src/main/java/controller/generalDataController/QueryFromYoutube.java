@@ -4,7 +4,7 @@ import com.mashape.unirest.http.exceptions.UnirestException;
 //import model.GeneralDataContainer;
 import model.Items;
 import model.Response;
-import model.youTubeDataContainer.GeneralDataContainer;
+import model.GeneralDataContainer;
 
 /**
  * Model logic:

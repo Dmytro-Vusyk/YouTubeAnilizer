@@ -2,70 +2,38 @@ package controller;
 
 
 import com.alibaba.fastjson.JSON;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.StringProperty;
-import model.youTubeDataContainer.GeneralDataContainer;
-import model.youTubeDataContainer.GeneralDataContainer;
+import model.GeneralDataContainer;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.time.Instant;
-import org.json.JSONArray;
-import org.json.JSONObject;
-import java.io.File;
-import java.util.Formatter;
 
 
 public class SettingsController {
-    private BooleanProperty saveCash;
-    private BooleanProperty showTime;
-    private StringProperty urlOfCash;
+    private String pathToCash;
+    private boolean saveCash;
+    private boolean showTime;
 
-    public SettingsController(String urlOfCash, boolean saveCash, boolean showTime) {
+private static final String DEFAULT_PATH = "cash\\saveCash.txt";
+
+public SettingsController(boolean saveCash, boolean showTime, String pathToCash) {
+    if( pathToCash == ""){
+        this.pathToCash = DEFAULT_PATH;
+
+    }
+    this.pathToCash = pathToCash;
+    this.saveCash = saveCash;
+    this.showTime = showTime;
     }
 
 
-
-    private static void ShowTime() {
-        long startTime = System.currentTimeMillis();
-
-        long timeSpent = System.currentTimeMillis()%55;
-
-        System.out.println("программа выполнялась " + timeSpent + " миллисекунд");
-    }
-
-
-    static Object SaveCash(GeneralDataContainer object) {
-        Object json = new Object();
+    public static void saveCash(GeneralDataContainer object) {
+        //Object json = new Object();
         String input = JSON.toJSONString(object);
 
-        System.out.println(input + "json");
 
-        return json;
-    }
-
-    static GeneralDataContainer parseFromJson(String json){
-        GeneralDataContainer object = JSON.parseObject(json, GeneralDataContainer.class);
-
-        return object;
-    }
-
-
-    public static void main(String[] args) {
-
-        String json = SaveCash(new GeneralDataContainer("id", "title", 10, true, "", "", 20,"","","",));
-
-        GeneralDataContainer json1  = parseFromJson(json);
-
-
-        System.out.println(json1);
-
-        try (FileWriter file = new FileWriter("/Users/<username>/Documents/savedCash.txt")) {
-            File file1 = new File("JsonFile.json");
-            file.write(json1.toJSONString());
+        try (FileWriter file = new FileWriter(getDefaultPath())) {
+            file.write(input);
             FileWriter fileWriter = new FileWriter(String.valueOf(file));
-            System.out.println("Successfully Copied JSON Object to File...");
-            System.out.println("\nJSON Object: " + json1);
 
 
             fileWriter.flush();
@@ -75,14 +43,39 @@ public class SettingsController {
             e.printStackTrace();
         }
 
-
-
-
-
-
-
-        ShowTime();
-        SaveCash(json1);
     }
 
+    static GeneralDataContainer parseFromJson(String json){
+        GeneralDataContainer object = JSON.parseObject(json, GeneralDataContainer.class);
+
+        return object;
+    }
+
+    public String getPathToCash() {
+        return pathToCash;
+    }
+
+    public void setPathToCash(String pathToCash) {
+        this.pathToCash = pathToCash;
+    }
+
+    public boolean isSaveCash() {
+        return saveCash;
+    }
+
+    public void setSaveCash(boolean saveCash) {
+        this.saveCash = saveCash;
+    }
+
+    public boolean isShowTime() {
+        return showTime;
+    }
+
+    public void setShowTime(boolean showTime) {
+        this.showTime = showTime;
+    }
+
+    public static String getDefaultPath() {
+        return DEFAULT_PATH;
+    }
 }
