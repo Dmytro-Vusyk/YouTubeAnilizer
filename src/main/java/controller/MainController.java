@@ -42,7 +42,7 @@ public class MainController {
             LinkedHashMap<MapKeys, String> linkedHashMap = showGlobalInformationAboutChannel(gdc);
             channelsDataArray.add(linkedHashMap);
         }
-        return null;
+        return channelsDataArray;
     }
     /**
      * This method collects information about Channel and return it as HashMap<MapKeys,String>
@@ -90,7 +90,9 @@ public class MainController {
         ArrayList<GeneralDataContainer> channelsList = new ArrayList<>();
         for (int i = 0; i < idArray.length; i++) {
             GeneralDataContainer gdc = makeGlobalRequest(idArray[i]);
-            if (gdc.getTitle() != null) channelsList.add(gdc);
+            if (gdc.getTitle() != null) {
+                channelsList.add(gdc);
+            }
         }
 
         Comparator<GeneralDataContainer> containerComparator = (o1, o2) -> {
@@ -133,6 +135,9 @@ public class MainController {
         return output;
     }
 
+    public String printError(){
+        return "Wrong input";
+    }
 //==============================================================================================
 //--------------------------------------------private ------------------------------------------
 
@@ -182,15 +187,21 @@ public class MainController {
             qfy.makeBaseQuery(gdc, channelId);
         } catch (UnirestException e) {
             e.printStackTrace();
+        } catch (IndexOutOfBoundsException i){
+            printError();
         }
         return gdc;
     }
+
+
     private GeneralDataContainer makeGlobalRequest(String channelId) {
         GeneralDataContainer gdc = new GeneralDataContainer();
         try {
             qfy.makeQuery(gdc, channelId);
         } catch (UnirestException e) {
             e.printStackTrace();
+        } catch (IndexOutOfBoundsException i){
+            printError();
         }
         return gdc;
     }

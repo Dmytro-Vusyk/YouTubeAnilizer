@@ -30,7 +30,6 @@ public SettingsController(boolean saveCash, boolean showTime, String pathToCash)
         //Object json = new Object();
         String input = JSON.toJSONString(object);
 
-
         try (FileWriter file = new FileWriter(getDefaultPath())) {
             file.write(input);
             FileWriter fileWriter = new FileWriter(String.valueOf(file));

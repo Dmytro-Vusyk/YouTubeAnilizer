@@ -34,6 +34,7 @@ public class QueryFromYoutube {
         gdc.setHiddenSubscriberCount(items.statistics.hiddenSubscriberCount);
         gdc.setSubscriberCount(items.statistics.subscriberCount);
         gdc.setUploads(items.contentDetails.relatedPlaylists.uploads);
+        gdc.setId(response.items[0].id);
     }
     public void makeQuery(GeneralDataContainer gdc, String channelName) throws UnirestException {
         makeBaseQuery(gdc, channelName);

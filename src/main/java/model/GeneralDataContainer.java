@@ -21,9 +21,7 @@ public class GeneralDataContainer {
     private String[] videoIds;
 
     public GeneralDataContainer() {
-
     }
-
 
     public void setVideoIds(String[] videoIds) {
         this.videoIds = videoIds;
