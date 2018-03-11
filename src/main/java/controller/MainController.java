@@ -18,12 +18,13 @@ public class MainController {
     public MainController() {
     }
 
+//====================================== get list with data of channels ===================================
     /**
      * This method collects information about Channel and return it as HashMap<MapKeys,String>
      * where Keys are from Enum MapKeys and string - are values of the fields of Channel
      * **all without comment count
      * **comment count calculate and initialize in
-     * showGlobalInformationAboutChannel() -> makeRequest() -> queryFromYoutube.makeQuery() -> calculateAllComment()
+     * showGlobalInformationAboutChannel() -> makeGlobalRequest() -> queryFromYoutube.makeQuery() -> calculateAllComment()
      * @param channelId ChannelName
      * @return HashMap where MapKeys are from Enum and String - are channel data in
      * String form
@@ -31,6 +32,17 @@ public class MainController {
     public LinkedHashMap<MapKeys, String> showBaseInformationAboutChannel(String channelId){
         GeneralDataContainer gdc = makeBaseRequest(channelId);
         return showGlobalInformationAboutChannel(gdc);
+    }
+    // + Array
+    public ArrayList<LinkedHashMap<MapKeys, String>> showBaseInformationAboutChannel(String...channelId){
+        final int LENGTH_CHANNEL = channelId.length;
+        ArrayList<LinkedHashMap<MapKeys, String>> channelsDataArray = new ArrayList<>(LENGTH_CHANNEL);
+        for (int i = 0; i < LENGTH_CHANNEL; i++) {
+            GeneralDataContainer gdc = makeBaseRequest(channelId[i]);
+            LinkedHashMap<MapKeys, String> linkedHashMap = showGlobalInformationAboutChannel(gdc);
+            channelsDataArray.add(linkedHashMap);
+        }
+        return null;
     }
     /**
      * This method collects information about Channel and return it as HashMap<MapKeys,String>
@@ -43,22 +55,24 @@ public class MainController {
 
 
     public LinkedHashMap<MapKeys, String> showGlobalInformationAboutChannel(String channelId) {
-        GeneralDataContainer gdc = makeRequest(channelId);
+        GeneralDataContainer gdc = makeGlobalRequest(channelId);
         return showGlobalInformationAboutChannel(gdc);
     }
 
-    private LinkedHashMap<MapKeys, String> showGlobalInformationAboutChannel(GeneralDataContainer gdc) {
-        LinkedHashMap<MapKeys, String> output = new LinkedHashMap<>();
-        try {
-            output.put(MapKeys.CHANNEL_NAME, gdc.getTitle());
-            output.put(MapKeys.PUBLISHING_DATE, gdc.getPublishedAt().toString());
-            output.put(MapKeys.SUBSCRIBERS_COUNT, gdc.getSubscriberCount().toString());
-            output.put(MapKeys.VIDEOS_COUNT, gdc.getVideoCount().toString());
-            output.put(MapKeys.VIEWS_COUNT, gdc.getViewCount().toString());
-            output.put(MapKeys.COMMENTS_COUNT, gdc.getCommentCount().toString());
-        } catch (NullPointerException e) {}
-        return output;
+    // + Array
+    public ArrayList<LinkedHashMap<MapKeys, String>> showGlobalInformationAboutChannel(String...channelId) {
+        final int LENGTH_CHANNEL = channelId.length;
+        ArrayList<LinkedHashMap<MapKeys, String>> channelsDataArray = new ArrayList<>(LENGTH_CHANNEL);
+        for (int i = 0; i < LENGTH_CHANNEL; i++) {
+            GeneralDataContainer gdc = makeGlobalRequest(channelId[i]);
+            LinkedHashMap<MapKeys, String> linkedHashMap = showGlobalInformationAboutChannel(gdc);
+            channelsDataArray.add(linkedHashMap);
+        }
+        return channelsDataArray;
     }
+
+
+//=========================================== Sort ============================================
 
     /**
      * This method sort array of channels in order:
@@ -75,10 +89,8 @@ public class MainController {
         ArrayList<LinkedHashMap<MapKeys, String>> output = new ArrayList<>();
         ArrayList<GeneralDataContainer> channelsList = new ArrayList<>();
         for (int i = 0; i < idArray.length; i++) {
-            GeneralDataContainer gdc = makeRequest(idArray[i]);
-            if (gdc.getTitle() != null) {
-                channelsList.add(gdc);
-            }
+            GeneralDataContainer gdc = makeGlobalRequest(idArray[i]);
+            if (gdc.getTitle() != null) channelsList.add(gdc);
         }
 
         Comparator<GeneralDataContainer> containerComparator = (o1, o2) -> {
@@ -95,14 +107,10 @@ public class MainController {
             }
             return o1.getTitle().compareToIgnoreCase(o2.getTitle());
         };
-
         channelsList.sort(containerComparator);
 
         for (GeneralDataContainer gdc :
-                channelsList) {
-            output.add(showGlobalInformationAboutChannel(gdc));
-        }
-
+                channelsList) { output.add(showGlobalInformationAboutChannel(gdc));}
         return output;
     }
 
@@ -125,7 +133,27 @@ public class MainController {
         return output;
     }
 
-//--------------------------------------------private zone--------------------------------------
+//==============================================================================================
+//--------------------------------------------private ------------------------------------------
+
+    /**
+     * put all data from gdc into linkedMap
+     * @param gdc
+     * @return LinkedMap
+     */
+    private LinkedHashMap<MapKeys, String> showGlobalInformationAboutChannel(GeneralDataContainer gdc) {
+        LinkedHashMap<MapKeys, String> output = new LinkedHashMap<>();
+        try {
+            output.put(MapKeys.CHANNEL_NAME, gdc.getTitle());
+            output.put(MapKeys.PUBLISHING_DATE, gdc.getPublishedAt().toString());
+            output.put(MapKeys.SUBSCRIBERS_COUNT, gdc.getSubscriberCount().toString());
+            output.put(MapKeys.VIDEOS_COUNT, gdc.getVideoCount().toString());
+            output.put(MapKeys.VIEWS_COUNT, gdc.getViewCount().toString());
+            output.put(MapKeys.COMMENTS_COUNT, gdc.getCommentCount().toString());
+            output.put(MapKeys.CHANNEL_ID, gdc.getId());
+        } catch (NullPointerException e) {}
+        return output;
+    }
 
     /**
      * accepts
@@ -137,7 +165,7 @@ public class MainController {
     private ArrayList<GeneralDataContainer> arrayGDCmaker(String[] idArray){
         ArrayList<GeneralDataContainer> channelsList = new ArrayList<>();
         for (int i = 0; i < idArray.length; i++) {
-            GeneralDataContainer gdc = makeRequest(idArray[i]);
+            GeneralDataContainer gdc = makeGlobalRequest(idArray[i]);
             if (gdc.getTitle() != null) {
                 channelsList.add(gdc);
             }
@@ -157,7 +185,7 @@ public class MainController {
         }
         return gdc;
     }
-    private GeneralDataContainer makeRequest(String channelId) {
+    private GeneralDataContainer makeGlobalRequest(String channelId) {
         GeneralDataContainer gdc = new GeneralDataContainer();
         try {
             qfy.makeQuery(gdc, channelId);

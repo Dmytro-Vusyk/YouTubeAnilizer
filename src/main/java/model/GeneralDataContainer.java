@@ -4,15 +4,10 @@ import java.time.Instant;
 import java.util.Arrays;
 
 /**
- * клас - контейнер результатів з API.
- * Результати запиту поміщаються в відповідні поля
- * Доданий для можливості створення масиву.
- *     - використовується класом QueryFromYoutube.
+ * class - container of results from YoutubeAPI
+ * Results of query set to fields.
  */
 public class GeneralDataContainer {
-    /**
-     * поля, що отримуються з YouTube
-     */
     private String id;
     private String title;
     private Integer viewCount;
