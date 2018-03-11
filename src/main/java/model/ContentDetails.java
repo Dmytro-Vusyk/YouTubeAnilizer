@@ -1,4 +1,4 @@
-package model.youTubeDataContainer;
+package model;
 
 public class ContentDetails {
     public RelatedPlaylists relatedPlaylists;

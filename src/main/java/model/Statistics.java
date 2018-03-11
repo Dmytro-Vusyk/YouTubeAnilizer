@@ -1,4 +1,4 @@
-package model.youTubeDataContainer;
+package model;
 
 public class Statistics {
     public Integer viewCount;

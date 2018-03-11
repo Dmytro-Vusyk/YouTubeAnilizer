@@ -1,4 +1,4 @@
-package model.youTubeDataContainer;
+package model;
 
 import java.time.Instant;
 

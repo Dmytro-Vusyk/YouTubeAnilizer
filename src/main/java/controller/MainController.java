@@ -1,8 +1,9 @@
 package controller;
 
+import com.mashape.unirest.http.exceptions.UnirestException;
 import enumerated.MapKeys;
-import model.tempController.QueryFromYoutube;
-import model.youTubeDataContainer.GeneralDataContainer;
+import controller.generalDataController.QueryFromYoutube;
+import model.GeneralDataContainer;
 
 import java.util.*;
 
@@ -21,7 +22,11 @@ public class MainController {
      * This method take channelId and make request for data in cash and youtube
      */
     private void makeRequest(String channelId) {
-        qfy.makeQuary(gdc,channelId);
+        try {
+            qfy.makeQuary(gdc,channelId);
+        } catch (UnirestException e) {
+            e.printStackTrace();
+        }
     }
 
     /**

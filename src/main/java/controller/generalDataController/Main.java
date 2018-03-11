@@ -1,11 +1,4 @@
-package model.tempRealization;
-
-import model.tempController.QueryFromYoutube;
-import model.youTubeDataContainer.GeneralDataContainer;
-
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
+package controller.generalDataController;
 
 public class Main {
     private static String channelId = "UC8mndg3Tr2g9iMoJMI4ob5A";
