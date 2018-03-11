@@ -1,18 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.image.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
 
-
-<Pane id="splashPane" fx:id="splashPane" prefHeight="400.0" prefWidth="600.0" stylesheets="@Style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.FXMLSplashWindowController">
+<VBox fx:id="splashPane"  alignment="CENTER" prefHeight="600.0" prefWidth="800.0" spacing="0.0" style="-fx-background-color:#193340;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.FXMLSplashWindowController">
    <children>
-      <ImageView id="splashImg" fx:id="splashImg" fitHeight="400.0" fitWidth="600.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="splashImg" fitHeight="600.0" fitWidth="800.0" preserveRatio="true" style="-fx-background-color:#ffffcc;">
          <image>
-            <Image url="@StartWindowIMG.png" />
+            <Image smooth="false" url="@StartWindowIMG.png" />
          </image>
       </ImageView>
    </children>
-</Pane>
+   <padding>
+      <Insets bottom="0.0" left="0.0" right="0.0" top="0.0" />
+   </padding>
+</VBox>

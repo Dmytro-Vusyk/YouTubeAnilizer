@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 
 import java.io.IOException;
@@ -21,6 +22,15 @@ public class FXMLTasksController extends FXMLDocumentController  implements Init
 
     @FXML
     private JFXButton btnPrev;
+
+    @FXML
+    private JFXButton testBtn;
+
+    @FXML
+    private GridPane testGrid;
+
+    @FXML
+    private Pane paine11;
 
     @FXML
     void onActionBtnPrev(ActionEvent event) {
@@ -51,6 +61,14 @@ public class FXMLTasksController extends FXMLDocumentController  implements Init
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        testBtn.addEventHandler(ActionEvent.ACTION, (e) ->{
+            //testGrid.getChildren().remove( 1);
+         //   paine11.setVisible(false);
+        });
+
+
+
     }
 
 

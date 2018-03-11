@@ -61,7 +61,7 @@ public class FXMLMainScreenController extends FXMLDocumentController implements 
         rotateTransition.setRate(3);
         rotateTransition.setCycleCount(18);
         rotateTransition.play();
-    }
+}
 
     @FXML
     void onActionbtnMainsSreenAnalitics(ActionEvent event) {

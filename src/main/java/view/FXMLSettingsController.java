@@ -1,6 +1,7 @@
 package view;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,10 +15,16 @@ import java.util.ResourceBundle;
 public class FXMLSettingsController extends FXMLDocumentController implements Initializable  {
 
     @FXML
-    private JFXButton btnSaveAndClose;
+    private JFXButton btnBrowse;
 
     @FXML
-    void onActionBtnSaveAndClose(ActionEvent event) {
+    private JFXButton btnGoToMain;
+
+    @FXML
+    private JFXTextField textFieldAdress;
+
+    @FXML
+    void onActionBtnGoToMain(ActionEvent event) {
 
         try {
             Pane mainPane = FXMLLoader.load(getClass().getResource("/FXMLMainScreen.fxml"));

@@ -1,23 +1,38 @@
-#basePane{
--fx-background-color:#87ac9e;
--fx-background-color:linear-gradient(to bottom, #193441 0%,#226070 47%,#193441 100%);
+#documentPane, .bgcolor{
+    -fx-background-color:#18313D;
 }
-#documentPane{
-    -fx-background-color:#193340;
+
+
+#btMainsSreenAnalitics{
+	-fx-background-color:#CEDCBD;
 }
-#textWelcome
+
+#btMainsSreenSettings{
+    -fx-background-color:#226070;
+ }
+
+#btMainsSreenExit{
+	-fx-background-color:#87AC9E;
+}
+
+
+#btMainsSreenAnalitics:hover,
+#btMainsSreenSettings:hover,
+#btMainsSreenExit:hover
 {
--fx-text-fill:#FBFFF5;
--fx-font-size: 72;
--fx-font-family: "Times New Roman";
--fx-font-weidth: bold;
+    -fx-background-color:#FCFFF5;
+    -fx-text-fill: #18313D;
 }
+
+
+
+
 #circle1
 {
-
 -fx-opacity:1;
 -fx-stroke-width:12;
 -fx-stroke-dash-array:40;
+
 }
 
 #circle2
@@ -34,6 +49,7 @@
 -fx-stroke-dash-array:30;
 }
 
+
 .circleMini
 {
 -fx-opacity:1;
@@ -41,50 +57,16 @@
 -fx-stroke-dash-array:25;
 }
 
-#MainPane{
--fx-background-color:#00313F;
-
-}
-#btMainsSreenAnalitics{
--fx-background-color:#CEDCBD;
-}
-#btMainsSreenAnalitics:hover{
-    -fx-background-color:#FCFFF6;
-    -fx-text-fill: #00313F;
-}
-
-#btMainsSreenSettings{
-     -fx-background-color:#226070;
- }
-#btMainsSreenSettings:hover{
-    -fx-background-color:#FCFFF6;
-    -fx-text-fill: #00313F;
-}
-
-#btMainsSreenExit{
--fx-background-color:#87AC9E;
-}
-#btMainsSreenExit:hover{
-    -fx-background-color:#FCFFF6;
-    -fx-text-fill: #00313F;
-}
-.bgcolor{
--fx-background-color:#00313F;
-}
-
 .btnTasks{
 -fx-background-color:#FCFFF6;
 }
 
-.btnSettings{
--fx-background-color:#3F606F;
-    -fx-text-fill: #FCFFF6;
+.btnRequests{
+-fx-background-color:#18313D;
+-fx-text-fill:#FCFFF6;
 }
 
-#tasksTop{
--fx-background-color:#193340;
+.textLabel{
+-fx-text-fill:#183ccD;
 }
 
-tasksTop ImageView:hover{
--fx-opacity:0.5;
-}

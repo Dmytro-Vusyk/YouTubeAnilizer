@@ -18,6 +18,7 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     protected AnchorPane documentPane;
 
+    /** Splash Effect*/
     private void loadSplashScreen() {
         try {
             NavigationDrawer.isSplashLoaded=true;
@@ -25,11 +26,11 @@ public class FXMLDocumentController implements Initializable {
             Pane splashPane = FXMLLoader.load(getClass().getResource("/FXMLSplashWindow.fxml"));
             documentPane.getChildren().setAll(splashPane);
 
-            FadeTransition fadeTransitionIn = new FadeTransition(Duration.seconds(1), splashPane);
+            FadeTransition fadeTransitionIn = new FadeTransition(Duration.seconds(2), splashPane);
             fadeTransitionIn.setFromValue(0);
             fadeTransitionIn.setToValue(1);
 
-            FadeTransition fadeTransitionOut = new FadeTransition(Duration.seconds(1), splashPane);
+            FadeTransition fadeTransitionOut = new FadeTransition(Duration.seconds(2), splashPane);
             fadeTransitionOut.setFromValue(1);
             fadeTransitionOut.setToValue(0);
 
