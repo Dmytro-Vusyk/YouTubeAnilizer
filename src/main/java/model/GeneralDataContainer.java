@@ -22,8 +22,6 @@ public class GeneralDataContainer {
     private Instant publishedAt;
     private Integer commentCount;
     private String uploads;
-    private String[] playlists;
-
 
     public void setId(String id){this.id = id;}
     public void setUploads(String uploads) {
