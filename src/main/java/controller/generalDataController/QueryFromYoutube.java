@@ -16,7 +16,14 @@ import model.Response;
  */
 public class QueryFromYoutube {
 
-    public void makeQuary(GeneralDataContainer gdc, String channelName) throws UnirestException {
+
+    /**
+     *
+     * @param gdc
+     * @param channelName
+     * @throws UnirestException
+     */
+    public void makeQuery(GeneralDataContainer gdc, String channelName) throws UnirestException {
 
         Response response = YouTubeAPI.searchByChannelName(
                 channelName);
@@ -31,6 +38,12 @@ public class QueryFromYoutube {
         gdc.setCommentCount(calculateAllCommentCount(gdc.getUploads()));
     }
 
+    /**
+     *  Принимает строку айди видео и подсчитывает коментарии под видео не может принять более чем 25 айди
+     * @param videosId
+     * @return
+     * @throws UnirestException
+     */
     private int calculateCommentCount(String videosId) throws UnirestException {
 
         Response response = YouTubeAPI.searchByVideoId(videosId);
@@ -44,6 +57,13 @@ public class QueryFromYoutube {
         return count;
     }
 
+
+    /**
+     *  принимает ссылку на плейлист всех загрузок канала и считает коментарии
+     * @param playlistId
+     * @return
+     * @throws UnirestException
+     */
     private int calculateAllCommentCount(String playlistId) throws UnirestException {
 
         String nextPage = "";
