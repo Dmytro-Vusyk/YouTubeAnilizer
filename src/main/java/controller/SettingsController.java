@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSON;
 import model.GeneralDataContainer;
 
 import java.io.*;
+import java.util.Arrays;
 
 
 public class SettingsController {
@@ -12,14 +13,14 @@ public class SettingsController {
     private boolean saveCash;
     private boolean showTime;
 
-    private static final String DEFAULT_PATH = "src\\main\\java\\cash\\saveCash.txt";
+    private static final String DEFAULT_PATH = "src/main/java/cash/saveCash.txt";
 
     public SettingsController(boolean saveCash, boolean showTime, String pathToCash) {
-        if (pathToCash == "") {
+        if (pathToCash == null|| pathToCash.equals("")) {
             this.pathToCash = DEFAULT_PATH;
-
+        } else {
+            this.pathToCash = pathToCash;
         }
-        this.pathToCash = pathToCash;
         this.saveCash = saveCash;
         this.showTime = showTime;
     }
@@ -30,7 +31,7 @@ public class SettingsController {
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             StringBuilder sb = new StringBuilder();
             String line = reader.readLine();
-            while (line != null){
+            while (line != null) {
                 sb.append(line);
                 sb.append(System.lineSeparator());
                 line = reader.readLine();
@@ -38,7 +39,7 @@ public class SettingsController {
             json = sb.toString();
 
         } catch (FileNotFoundException e) {
-            System.err.print(e.getStackTrace());
+            System.err.print(Arrays.toString(e.getStackTrace()));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -51,7 +52,7 @@ public class SettingsController {
 
         String input = JSON.toJSONString(object);
 
-        try (FileWriter file = new FileWriter(getDefaultPath())) {
+        try (FileWriter file = new FileWriter(getPathToCash())) {
             file.write(input);
 
             file.flush();
@@ -64,9 +65,7 @@ public class SettingsController {
 
     public GeneralDataContainer parseFromJson() {
 
-        GeneralDataContainer object = JSON.parseObject(readCash(), GeneralDataContainer.class);
-
-        return object;
+        return JSON.parseObject(readCash(), GeneralDataContainer.class);
     }
 
     public String getPathToCash() {
