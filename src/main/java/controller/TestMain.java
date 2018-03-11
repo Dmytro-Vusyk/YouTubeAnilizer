@@ -1,22 +1,20 @@
 package controller;
 
+
 import model.GeneralDataContainer;
 
-import java.io.FileWriter;
-import java.io.IOException;
+public class TestMain {
+    public static void main(String[] args) {
 
-import static controller.SettingsController.parseFromJson;
+    SettingsController sc = new SettingsController(true,true,"");
+    MainController mc = new MainController();
 
-public class TestMain { public static void main(String[] args) {
+    GeneralDataContainer gdc = mc.makeBaseRequest("BlackSilverUFA");
 
-    SettingsController controller = new SettingsController(true,true,"");
-
-    controller.saveCash(new GeneralDataContainer());
-
-   // GeneralDataContainer json1  = parseFromJson(json);
-
-
-   // System.out.println(json1);
+    System.out.println("пишем в файл");
+    sc.saveCash(gdc);
+    System.out.println("читаем из файла");
+    System.out.println(sc.parseFromJson().toString());
 
 }
 

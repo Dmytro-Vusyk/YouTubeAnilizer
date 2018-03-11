@@ -181,7 +181,7 @@ public class MainController {
     /**
      * This method take channelId and make request for data in cash and youtube
      */
-    private GeneralDataContainer makeBaseRequest(String channelId)  {
+    public GeneralDataContainer makeBaseRequest(String channelId)  {
         GeneralDataContainer gdc = new GeneralDataContainer();
         try {
             qfy.makeBaseQuery(gdc, channelId);
