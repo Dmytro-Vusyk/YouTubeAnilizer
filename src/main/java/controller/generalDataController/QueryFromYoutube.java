@@ -23,10 +23,8 @@ public class QueryFromYoutube {
      * @param channelName
      * @throws UnirestException
      */
-    public void makeQuery(GeneralDataContainer gdc, String channelName) throws UnirestException {
-
-        Response response = YouTubeAPI.searchByChannelName(
-                channelName);
+    public void makeBaseQuery(GeneralDataContainer gdc, String channelName) throws UnirestException{
+        Response response = YouTubeAPI.searchByChannelName(channelName);
         Items items = response.items[0];
         gdc.setTitle(items.snippet.title);
         gdc.setPublishedAt(items.snippet.publishedAt);
@@ -35,6 +33,9 @@ public class QueryFromYoutube {
         gdc.setHiddenSubscriberCount(items.statistics.hiddenSubscriberCount);
         gdc.setSubscriberCount(items.statistics.subscriberCount);
         gdc.setUploads(items.contentDetails.relatedPlaylists.uploads);
+    }
+    public void makeQuery(GeneralDataContainer gdc, String channelName) throws UnirestException {
+        makeBaseQuery(gdc, channelName);
         gdc.setCommentCount(calculateAllCommentCount(gdc.getUploads()));
     }
 

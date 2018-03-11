@@ -19,21 +19,28 @@ public class Test {
         String[] ids = {channelId,channelId2,channelId3};
 
         //Test of first task
-        System.out.println("test task1");
-       LinkedHashMap<MapKeys,String> ar = mc.showGlobalInformationAboutChannel(channelId);
-       System.out.println(ar.toString());
+        System.out.println("test task1 - fill base data");
+        LinkedHashMap<MapKeys,String> ar = mc.showBaseInformationAboutChannel(channelId);
+        System.out.println(ar.toString());
+        System.out.println("-------------");
+        //Test second task
+        System.out.println("test task2 - fill all");
+        ar = mc.showGlobalInformationAboutChannel(channelId);
+        System.out.println(ar.toString());
         System.out.println("-------------");
 
-        //Test of third task
-        System.out.println("test of task 3");
-        ArrayList<LinkedHashMap<MapKeys, String>> listOfChannels = mc.sortChannels(ids);
-        System.out.println(listOfChannels);
-        System.out.println("--------------");
 
-        //Test of fourth task
-        System.out.println("test of task 4");
-        System.out.println(mc.sortChannelsByMediaResonance(ids));
-        System.out.println("--------------");
+
+        //Test of third task
+//        System.out.println("test of task 3");
+//        ArrayList<LinkedHashMap<MapKeys, String>> listOfChannels = mc.sortChannels(ids);
+//        System.out.println(listOfChannels);
+//        System.out.println("--------------");
+//
+//        //Test of fourth task
+//        System.out.println("test of task 4");
+//        System.out.println(mc.sortChannelsByMediaResonance(ids));
+//        System.out.println("--------------");
     }
 
 }
