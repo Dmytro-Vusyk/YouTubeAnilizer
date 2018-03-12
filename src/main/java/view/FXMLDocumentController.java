@@ -1,5 +1,6 @@
 package view;
 
+import enumerated.MapKeys;
 import javafx.animation.FadeTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,6 +11,9 @@ import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.ResourceBundle;
 
 /**MainController*/
@@ -17,6 +21,25 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     protected AnchorPane documentPane;
+    protected ArrayList<String> channelNames = new ArrayList<String>();
+    protected ArrayList<LinkedHashMap<MapKeys, String>> channels = new ArrayList<LinkedHashMap<MapKeys, String> >();
+
+
+        private LinkedHashMap<MapKeys, String> TESTshowGlobalInformationAboutChannel() {
+        LinkedHashMap<MapKeys, String> output = new LinkedHashMap<>();
+        try {
+            output.put(MapKeys.CHANNEL_NAME, "nhzv");
+            output.put(MapKeys.PUBLISHING_DATE, String.valueOf(new Date()));
+            output.put(MapKeys.SUBSCRIBERS_COUNT,"5" );
+            output.put(MapKeys.VIDEOS_COUNT, "2");
+            output.put(MapKeys.VIEWS_COUNT, "100");
+            output.put(MapKeys.COMMENTS_COUNT, "10");
+            output.put(MapKeys.CHANNEL_ID, "ky-ky");
+        } catch (NullPointerException e) {}
+        return output;
+    }
+
+
 
     /** Splash Effect*/
     private void loadSplashScreen() {
@@ -26,11 +49,11 @@ public class FXMLDocumentController implements Initializable {
             Pane splashPane = FXMLLoader.load(getClass().getResource("/FXMLSplashWindow.fxml"));
             documentPane.getChildren().setAll(splashPane);
 
-            FadeTransition fadeTransitionIn = new FadeTransition(Duration.seconds(2), splashPane);
+            FadeTransition fadeTransitionIn = new FadeTransition(Duration.seconds(0.5), splashPane);
             fadeTransitionIn.setFromValue(0);
             fadeTransitionIn.setToValue(1);
 
-            FadeTransition fadeTransitionOut = new FadeTransition(Duration.seconds(2), splashPane);
+            FadeTransition fadeTransitionOut = new FadeTransition(Duration.seconds(0.5), splashPane);
             fadeTransitionOut.setFromValue(1);
             fadeTransitionOut.setToValue(0);
 
@@ -56,7 +79,11 @@ public class FXMLDocumentController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        channels.add(TESTshowGlobalInformationAboutChannel());
+
         if (!NavigationDrawer.isSplashLoaded)
             loadSplashScreen();
+
     }
 }

@@ -10,7 +10,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="140.0" style="-fx-background-color: #193340;" stylesheets="@Style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.FXMLTasksMenuController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="200.0" style="-fx-background-color: #193340;" stylesheets="@Style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.FXMLTasksMenuController">
    <children>
       <Pane prefHeight="114.0" prefWidth="129.0">
          <children>
@@ -28,7 +28,7 @@
                      </StackPane.margin></Circle>
                </children>
                <padding>
-                  <Insets left="15.0" top="8.0" />
+                  <Insets left="46.0" top="8.0" />
                </padding>
             </StackPane>
          </children>
@@ -36,7 +36,7 @@
             <Insets left="6.0" />
          </VBox.margin>
       </Pane>
-      <JFXButton id="task1" fx:id="task1" alignment="CENTER" contentDisplay="CENTER" prefHeight="40.0" prefWidth="140.0" ripplerFill="#193340" styleClass="btnTasks" stylesheets="@Style.css" text="Task1" textFill="#193340">
+      <JFXButton id="task1" fx:id="task1" accessibleText="task1"  alignment="CENTER" contentDisplay="CENTER" prefHeight="50.0" prefWidth="200.0" ripplerFill="#193340" styleClass="btnTasks" stylesheets="@Style.css" text="Display global information &#10;about the channel" textAlignment="CENTER" textFill="#193340">
          <font>
             <Font size="14.0" />
          </font>
@@ -47,7 +47,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </JFXButton>
-      <JFXButton id="task2" fx:id="task2" alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="210.0" prefHeight="40.0" prefWidth="140.0" ripplerFill="#193340" styleClass="btnTasks" stylesheets="@Style.css" text="Task2" textFill="#193340">
+      <JFXButton id="task2" fx:id="task2"  accessibleText="task2"  alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="210.0" prefHeight="50.0" prefWidth="200.0" ripplerFill="#193340" styleClass="btnTasks" stylesheets="@Style.css" text="Compare global information &#10;about channels" textAlignment="CENTER" textFill="#193340">
          <font>
             <Font size="14.0" />
          </font>
@@ -58,7 +58,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </JFXButton>
-      <JFXButton id="task3" fx:id="task3" alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="250.0" prefHeight="40.0" prefWidth="140.0" ripplerFill="#193340" styleClass="btnTasks" stylesheets="@Style.css" text="Task3" textFill="#193340">
+      <JFXButton id="task3" fx:id="task3" accessibleText="task3"  alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="250.0" prefHeight="50.0" prefWidth="200.0" ripplerFill="#193340" styleClass="btnTasks" stylesheets="@Style.css" text="Sort channels by their data" textFill="#193340">
          <font>
             <Font size="14.0" />
          </font>
@@ -69,7 +69,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </JFXButton>
-      <JFXButton id="task4" fx:id="task4" alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="290.0" prefHeight="40.0" prefWidth="140.0" ripplerFill="#193340" styleClass="btnTasks" stylesheets="@Style.css" text="Task4" textFill="#193340">
+      <JFXButton id="task4" fx:id="task4" accessibleText="task4"  alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="290.0" prefHeight="50.0" prefWidth="200.0" ripplerFill="#193340" styleClass="btnTasks" stylesheets="@Style.css" text="Media Resonance" textFill="#193340">
          <font>
             <Font size="14.0" />
          </font>
@@ -80,7 +80,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </JFXButton>
-      <JFXButton id="task5" fx:id="task5" alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="330.0" prefHeight="40.0" prefWidth="140.0" ripplerFill="#193340" styleClass="btnTasks" stylesheets="@Style.css" text="Task5" textFill="#193340">
+      <JFXButton id="task5" fx:id="task5"  accessibleText="task5" alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="330.0" prefHeight="50.0" prefWidth="200.0" ripplerFill="#193340" styleClass="btnTasks" stylesheets="@Style.css" text="Compare Media Resonance" textFill="#193340">
          <font>
             <Font size="14.0" />
          </font>
@@ -91,7 +91,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </JFXButton>
-      <JFXButton id="task6" fx:id="task6" alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="370.0" prefHeight="40.0" prefWidth="140.0" ripplerFill="#193340" styleClass="btnTasks" stylesheets="@Style.css" text="Task6" textFill="#193340">
+      <JFXButton id="task6" fx:id="task6"  accessibleText="task6" alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="370.0" prefHeight="50.0" prefWidth="200.0" ripplerFill="#193340" styleClass="btnTasks" stylesheets="@Style.css" text="Sort by Media Resonance" textFill="#193340">
          <font>
             <Font size="14.0" />
          </font>
