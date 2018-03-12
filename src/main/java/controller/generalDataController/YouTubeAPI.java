@@ -24,12 +24,12 @@ public class YouTubeAPI {
     }
 
 
-    public static Response searchByChannelName(String channelId) throws UnirestException {
+    public static Response searchByChannelId(String channelId) throws UnirestException {
 
         HttpResponse<Response> response = Unirest.get(CHANNEL_URL)
                 .queryString("key", API_KEY)
                 .queryString("part", "snippet,statistics,contentDetails")
-                .queryString("forUsername", channelId)
+                .queryString("id", channelId)
                 .asObject(Response.class);
         return response.getBody();
 

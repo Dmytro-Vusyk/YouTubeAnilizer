@@ -25,7 +25,7 @@ public class QueryFromYoutube {
      * @throws UnirestException
      */
     public void makeBaseQuery(GeneralDataContainer gdc, String channelName) throws UnirestException{
-        Response response = YouTubeAPI.searchByChannelName(channelName);
+        Response response = YouTubeAPI.searchByChannelId(channelName);
         Items items = response.items[0];
         gdc.setTitle(items.snippet.title);
         gdc.setPublishedAt(items.snippet.publishedAt);

@@ -1,0 +1,5 @@
+package enumerated;
+
+public enum Comparators {
+    CHANNEL_NAME,PUBLISHING_DATE,SUBSCRIBERS_COUNT,VIDEOS_COUNT,VIEWS_COUNT,COMMENTS_COUNT
+}

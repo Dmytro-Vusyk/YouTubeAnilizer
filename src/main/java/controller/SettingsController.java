@@ -9,20 +9,16 @@ import java.util.Arrays;
 
 
 public class SettingsController {
-    private String pathToCash;
-    private boolean saveCash;
-    private boolean showTime;
 
+    private String pathToCash;
     private static final String DEFAULT_PATH = "src/main/java/cash/saveCash.txt";
 
-    public SettingsController(boolean saveCash, boolean showTime, String pathToCash) {
-        if (pathToCash == null|| pathToCash.equals("")) {
+    public SettingsController(String pathToCash) {
+        if (pathToCash == null || pathToCash.equals("")) {
             this.pathToCash = DEFAULT_PATH;
         } else {
             this.pathToCash = pathToCash;
         }
-        this.saveCash = saveCash;
-        this.showTime = showTime;
     }
 
     private String readCash() {
@@ -52,11 +48,13 @@ public class SettingsController {
 
         String input = JSON.toJSONString(object);
 
-        try (FileWriter file = new FileWriter(getPathToCash())) {
-            file.write(input);
+        try (FileWriter fileWriter = new FileWriter(pathToCash, true);
+             BufferedWriter bw = new BufferedWriter(fileWriter);
+             PrintWriter out = new PrintWriter(bw)) {
+            out.write(input);
+            out.flush();
+            out.close();
 
-            file.flush();
-            file.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -74,25 +72,5 @@ public class SettingsController {
 
     public void setPathToCash(String pathToCash) {
         this.pathToCash = pathToCash;
-    }
-
-    public boolean isSaveCash() {
-        return saveCash;
-    }
-
-    public void setSaveCash(boolean saveCash) {
-        this.saveCash = saveCash;
-    }
-
-    public boolean isShowTime() {
-        return showTime;
-    }
-
-    public void setShowTime(boolean showTime) {
-        this.showTime = showTime;
-    }
-
-    public static String getDefaultPath() {
-        return DEFAULT_PATH;
     }
 }

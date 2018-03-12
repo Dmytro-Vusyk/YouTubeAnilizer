@@ -1,18 +1,16 @@
 package controller;
 
 
-import model.GeneralDataContainer;
-
-public class TestMain {
+public class TestSettingsController {
     public static void main(String[] args) {
 
-    SettingsController sc = new SettingsController(true,true,"");
+    SettingsController sc = new SettingsController("");
     MainController mc = new MainController();
 
-    GeneralDataContainer gdc = mc.makeBaseRequest("BlackSilverUFA");
 
     System.out.println("пишем в файл");
-    sc.saveCash(gdc);
+  //  sc.saveCash(mc.);
+  //  sc.saveCash();
     System.out.println("читаем из файла");
     System.out.println(sc.parseFromJson().toString());
 
