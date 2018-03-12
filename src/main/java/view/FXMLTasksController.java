@@ -89,18 +89,44 @@ public class FXMLTasksController extends FXMLDocumentController  implements Init
 
     @FXML
         void onActionBtnClear(ActionEvent event) {
-
+            textAreaChannels.clear();
         }
 
 
         @FXML
         void onActionBtnAdd(ActionEvent event) {
 
+            if (textChannelName.getText().equals("") || textChannelName.getText()==null)
+                return;
+
+            if((task == 1||task==4)){
+                channelNames.clear();
+                channelNames.add(textChannelName.getText());
+            }
+            if((task == 2||task==5)&&channelNames.size()==2){
+                channelNames.remove(0);}
+
+            channelNames.add(textChannelName.getText());
+
+            textAreaChannels.clear();
+
+            for (String s: channelNames) {
+                textAreaChannels.setText(textAreaChannels.getText() + s+"| ");
+            }
         }
 
 
         @FXML
         void onActionBtnStart(ActionEvent event) {
+
+          /*
+            if (!(textChannelName.getText().equals("") || textChannelName.getText()==null))
+                channelNames.add(textChannelName.getText());
+            else
+                channelNames.add("RedFoc");
+
+            textAreaChannels.clear();
+*/
 
         //JFXTreeTableView<?> tableView;
 //            protected ArrayList<LinkedHashMap<MapKeys, String>> channels = new ArrayList<LinkedHashMap<MapKeys, String> >();
@@ -156,48 +182,36 @@ public class FXMLTasksController extends FXMLDocumentController  implements Init
                         case "task1":
                             lblNameOfTasks.setText("Display global information about the channel");
                             btnClear.setVisible(false);
-                            btnAdd.setVisible(false);
-                            textAreaChannels.setVisible(false);
                             gridPaneSorting.setVisible(false);
                             task=1;
                             break;
                         case "task2":
                             lblNameOfTasks.setText("Compare global information about channels");
                             btnClear.setVisible(true);
-                            btnAdd.setVisible(true);
-                            textAreaChannels.setVisible(true);
                             gridPaneSorting.setVisible(false);
                             task=2;
                             break;
                         case "task3":
                             lblNameOfTasks.setText("Sort channels by their data");
                             btnClear.setVisible(true);
-                            btnAdd.setVisible(true);
-                            textAreaChannels.setVisible(true);
                             gridPaneSorting.setVisible(true);
                             task=3;
                             break;
                         case "task4":
                             lblNameOfTasks.setText("Media Resonance");
                             btnClear.setVisible(false);
-                            btnAdd.setVisible(false);
-                            textAreaChannels.setVisible(false);
                             gridPaneSorting.setVisible(false);
                             task=4;
                             break;
                         case "task5":
                             lblNameOfTasks.setText("Compare Media Resonance");
                             btnClear.setVisible(true);
-                            btnAdd.setVisible(true);
-                            textAreaChannels.setVisible(true);
                             gridPaneSorting.setVisible(false);
                             task=5;
                             break;
                         case "task6":
                             lblNameOfTasks.setText("Sort by Media Resonance");
                             btnClear.setVisible(true);
-                            btnAdd.setVisible(true);
-                            textAreaChannels.setVisible(true);
                             gridPaneSorting.setVisible(true);
                             task=6;
                             break;

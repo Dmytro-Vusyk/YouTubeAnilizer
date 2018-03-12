@@ -11,20 +11,22 @@ import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.LinkedHashMap;
-import java.util.ResourceBundle;
+import java.util.*;
 
 /**MainController*/
 public class FXMLDocumentController implements Initializable {
 
     @FXML
     protected AnchorPane documentPane;
-    protected ArrayList<String> channelNames = new ArrayList<String>();
+    protected HashSet<String> channelNames = new HashSet<String>();
+
+    public HashSet<String> getChannelNames() {
+        return channelNames;
+    }
+
     protected ArrayList<LinkedHashMap<MapKeys, String>> channels = new ArrayList<LinkedHashMap<MapKeys, String> >();
 
-
+/* ТЕСТ НЕ ТРОГАТЬ*/
         private LinkedHashMap<MapKeys, String> TESTshowGlobalInformationAboutChannel() {
         LinkedHashMap<MapKeys, String> output = new LinkedHashMap<>();
         try {

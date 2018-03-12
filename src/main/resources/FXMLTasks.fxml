@@ -84,7 +84,7 @@
                                     <Insets left="50.0" />
                                  </HBox.margin>
                               </JFXButton>
-                              <JFXButton fx:id="btnStart" alignment="CENTER" contentDisplay="RIGHT" onAction="#onActionBtnStart" prefWidth="150.0" style="-fx-background-color: #193340;" text="Start" textFill="#fcfff5">
+                              <JFXButton fx:id="btnStart" alignment="CENTER" contentDisplay="RIGHT" onAction="#onActionBtnStart" prefWidth="150.0" style="-fx-background-color: #22606F;" text="Start" textFill="#fcfff5">
                                  <HBox.margin>
                                     <Insets left="50.0" />
                                  </HBox.margin>
