@@ -14,26 +14,16 @@ import model.GeneralDataContainer;
 import java.util.concurrent.*;
 
 public class NavigationDrawer extends Application {
+    static ExecutorService service = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
     @Override
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("/FXMLDocumentPane.fxml"));
         Scene scene = new Scene(root);
 
-        ExecutorService service = Executors.newFixedThreadPool(1);
-
-        //tesTshowGlobalInformationAboutChannel
-
-        System.out.println("checkPoint1");
-        long chackpoint = System.currentTimeMillis();
-
         startThreadInCash();
 
 //        GeneralDataContainer gdc = dataContainerFutureTask.get();
-        chackpoint = System.currentTimeMillis() - chackpoint;
-        System.out.println(chackpoint);
-
-        System.out.println("chackPoint2");
 
         primaryStage.setScene(scene);
         primaryStage.setWidth(800);
@@ -44,10 +34,12 @@ public class NavigationDrawer extends Application {
         primaryStage.show();
     }
 
-    GeneralDataContainer cash = new GeneralDataContainer();
+    String cashString = new String();
+
     static private Future<GeneralDataContainer> dataContainerFutureTask;
 
     public GeneralDataContainer getCash() {
+        GeneralDataContainer cash = new GeneralDataContainer();
         try {
             cash = dataContainerFutureTask.get();
         } catch (InterruptedException e) {
@@ -58,8 +50,7 @@ public class NavigationDrawer extends Application {
         return cash;
     }
 
-    public void startThreadInCash(){
-        ExecutorService service = Executors.newFixedThreadPool(1);
+    private void startThreadInCash(){
         SettingsController sc = new SettingsController("");
         Callable<GeneralDataContainer> takeDataFromCash = ()-> sc.parseFromJson();
         dataContainerFutureTask = service.submit(takeDataFromCash);
