@@ -54,6 +54,11 @@ public class FXMLMainScreenController extends FXMLDocumentController implements 
     @FXML
     void onActionbtnMainsSreenAnalitics(ActionEvent event) {
         try {
+            //test thread
+//            long checkPoint = System.currentTimeMillis();
+//            System.out.println(new NavigationDrawer().getCash());
+//            checkPoint = System.currentTimeMillis() - checkPoint;
+//            System.out.println(checkPoint);
           Pane taskController = FXMLLoader.load(getClass().getResource("/FXMLTasks.fxml"));
           documentPane.getChildren().setAll(taskController);
         } catch (IOException e1) {

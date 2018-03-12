@@ -11,7 +11,8 @@ import java.util.Arrays;
 public class SettingsController {
 
     private String pathToCash;
-    private static final String DEFAULT_PATH = "src/main/java/cash/saveCash.txt";
+    private static final char SEPAR = File.separatorChar;
+    private static final String DEFAULT_PATH = String.format("src%cmain%cjava%ccash%csaveCash.txt", SEPAR,SEPAR,SEPAR,SEPAR);
 
     public SettingsController(String pathToCash) {
         if (pathToCash == null || pathToCash.equals("")) {
