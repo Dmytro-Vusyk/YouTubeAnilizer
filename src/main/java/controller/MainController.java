@@ -265,4 +265,12 @@ public class MainController {
     public void setShowTime(boolean showTime) {
         this.showTime = showTime;
     }
+
+    public void setCash(LinkedHashMap<String, GeneralDataContainer> cash) {
+        this.cash = cash;
+    }
+
+    public LinkedHashMap<String, GeneralDataContainer> getCash() {
+        return cash;
+    }
 }

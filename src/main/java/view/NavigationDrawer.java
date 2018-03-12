@@ -11,6 +11,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import model.GeneralDataContainer;
 
+import java.util.LinkedHashMap;
 import java.util.concurrent.*;
 
 public class NavigationDrawer extends Application {
@@ -20,8 +21,8 @@ public class NavigationDrawer extends Application {
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("/FXMLDocumentPane.fxml"));
         Scene scene = new Scene(root);
-
         startThreadInCash();
+
 
 //        GeneralDataContainer gdc = dataContainerFutureTask.get();
 
@@ -36,10 +37,10 @@ public class NavigationDrawer extends Application {
 
     String cashString = new String();
 
-    static private Future<GeneralDataContainer> dataContainerFutureTask;
+    static private Future<LinkedHashMap<String, GeneralDataContainer>> dataContainerFutureTask;
 
-    public GeneralDataContainer getCash() {
-        GeneralDataContainer cash = new GeneralDataContainer();
+    public LinkedHashMap<String, GeneralDataContainer> getCash() {
+        LinkedHashMap<String, GeneralDataContainer> cash = new LinkedHashMap<>();
         try {
             cash = dataContainerFutureTask.get();
         } catch (InterruptedException e) {
@@ -52,12 +53,13 @@ public class NavigationDrawer extends Application {
 
     private void startThreadInCash(){
         SettingsController sc = new SettingsController("");
-        Callable<GeneralDataContainer> takeDataFromCash = ()-> sc.parseFromJson();
+        Callable<LinkedHashMap<String, GeneralDataContainer>> takeDataFromCash = ()-> sc.parseFromJson();
         dataContainerFutureTask = service.submit(takeDataFromCash);
     }
 
     /**Start program*/
     public static void main(String[] args) {
         launch(args);
+
     }
     }

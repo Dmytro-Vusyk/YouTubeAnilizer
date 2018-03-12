@@ -5,7 +5,9 @@ import com.alibaba.fastjson.JSON;
 import model.GeneralDataContainer;
 
 import java.io.*;
+import java.lang.reflect.GenericArrayType;
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 
 
 public class SettingsController {
@@ -73,8 +75,8 @@ public class SettingsController {
 
     }
 
-    public GeneralDataContainer parseFromJson() {
-        return JSON.parseObject(readCash(), GeneralDataContainer.class);
+    public LinkedHashMap<String, GeneralDataContainer> parseFromJson()  {
+        return JSON.parseObject(readCash(), LinkedHashMap.class);
     }
 
     public String getPathToCash() {

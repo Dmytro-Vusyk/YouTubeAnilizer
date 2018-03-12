@@ -1,6 +1,7 @@
 package view;
 
 import com.jfoenix.controls.JFXDrawer;
+import controller.MainController;
 import controller.SettingsController;
 import javafx.animation.RotateTransition;
 import javafx.event.ActionEvent;
@@ -10,6 +11,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 import javafx.util.Duration;
+import sun.applet.Main;
 
 import java.io.IOException;
 import java.net.URL;
@@ -51,14 +53,22 @@ public class FXMLMainScreenController extends FXMLDocumentController implements 
         rotateTransition.setCycleCount(18);
         rotateTransition.play();
 }
+
+    /**
+     *
+     */
+    MainController mc = new MainController();
     @FXML
     void onActionbtnMainsSreenAnalitics(ActionEvent event) {
         try {
             //test thread
-//            long checkPoint = System.currentTimeMillis();
-            SettingsController.setCash(new NavigationDrawer().getCash());
-//            checkPoint = System.currentTimeMillis() - checkPoint;
-//            System.out.println(checkPoint);
+            long checkPoint = System.currentTimeMillis();
+            if (mc.getCash() == null)
+            mc.setCash(new NavigationDrawer().getCash());
+//            SettingsController.setCash(new NavigationDrawer().getCash());
+            System.out.println(SettingsController.getCash());
+            checkPoint = System.currentTimeMillis() - checkPoint;
+            System.out.println(checkPoint);
           Pane taskController = FXMLLoader.load(getClass().getResource("/FXMLTasks.fxml"));
           documentPane.getChildren().setAll(taskController);
         } catch (IOException e1) {
