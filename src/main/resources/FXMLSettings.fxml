@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import java.net.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import com.jfoenix.controls.*?>
-<?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane fx:id="documentPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #FCFFF6;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.FXMLSettingsController">
+<AnchorPane fx:id="documentPane" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #FCFFF6;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.FXMLSettingsController">
    <children>
       <GridPane layoutX="20.0" layoutY="20.0" styleClass="textLabel" stylesheets="@Style.css" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
         <columnConstraints>
@@ -54,7 +54,7 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label id="textLabel" style="-fx-text-fill: ;" stylesheets="@Style.css" text="Path of folder" textFill="#18313d" GridPane.rowIndex="4">
+            <Label id="textLabel" stylesheets="@Style.css" text="Path of folder" textFill="#18313d" GridPane.rowIndex="4">
                <GridPane.margin>
                   <Insets left="20.0" />
                </GridPane.margin>
@@ -88,7 +88,7 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <JFXCheckBox checkedColor="#87ac9e" text="is time visible" textFill="#18313d" unCheckedColor="#226070" GridPane.rowIndex="8">
+            <JFXCheckBox fx:id="isTimeVisible" checkedColor="#87ac9e" onAction="#onActionTimeVisible" text="is time visible" textFill="#18313d" unCheckedColor="#226070" GridPane.rowIndex="8">
                <GridPane.margin>
                   <Insets left="40.0" />
                </GridPane.margin>

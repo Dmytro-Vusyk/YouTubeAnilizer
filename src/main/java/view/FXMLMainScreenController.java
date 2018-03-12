@@ -1,6 +1,5 @@
 package view;
 
-import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDrawer;
 import javafx.animation.RotateTransition;
 import javafx.event.ActionEvent;
@@ -18,15 +17,6 @@ import java.util.ResourceBundle;
 public class FXMLMainScreenController extends FXMLDocumentController implements Initializable {
 
     @FXML
-    private JFXButton btnMainsSreenSettings;
-
-    @FXML
-    private JFXButton btnMainsSreenAnalitics;
-
-    @FXML
-    private JFXButton btnMainsSreenExit;
-
-    @FXML
     private Circle circle1;
 
     @FXML
@@ -40,8 +30,6 @@ public class FXMLMainScreenController extends FXMLDocumentController implements 
 
     @FXML
     private JFXDrawer drawerRightMain;
-
-    private int rotate=0;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

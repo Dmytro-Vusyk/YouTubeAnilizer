@@ -1,17 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.net.*?>
+<?import javafx.scene.effect.*?>
 <?import javafx.scene.control.*?>
+<?import java.lang.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.text.*?>
 <?import com.jfoenix.controls.*?>
-<?import javafx.scene.image.*?>
 <?import javafx.geometry.*?>
-<?import javafx.scene.effect.*?>
 <?import javafx.scene.shape.*?>
-<?import java.lang.*?>
 <?import javafx.scene.layout.*?>
-
 
 <AnchorPane fx:id="documentPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.FXMLMainScreenController">
    <children>
@@ -21,10 +18,12 @@
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="695.0" minWidth="10.0" prefWidth="400.0" />
          </columnConstraints>
          <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <StackPane prefHeight="400.0" prefWidth="354.0" styleClass="bgcolor" stylesheets="@Style.css">
+            <StackPane prefHeight="400.0" prefWidth="354.0" styleClass="bgcolor" stylesheets="@Style.css" GridPane.rowIndex="1">
                <children>
                   <Circle id="circle1" fx:id="circle1" fill="#1f93ff00" radius="100.0" stroke="#cedcbd" strokeDashOffset="10.0" strokeLineCap="ROUND" strokeType="INSIDE" />
                   <Circle id="circle3" fx:id="circle2" fill="#1f93ff00" layoutX="110.0" layoutY="210.0" radius="30.0" stroke="#87ac9e" strokeDashOffset="10.0" strokeLineCap="ROUND" strokeType="INSIDE" />
@@ -37,7 +36,7 @@
                   <Insets />
                </GridPane.margin>
             </StackPane>
-            <StackPane prefHeight="150.0" prefWidth="200.0" styleClass="bgcolor" stylesheets="@Style.css" GridPane.columnIndex="1">
+            <StackPane prefHeight="150.0" prefWidth="200.0" styleClass="bgcolor" stylesheets="@Style.css" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <children>
                   <VBox alignment="CENTER" styleClass="bgcolor" stylesheets="@Style.css">
                      <children>
@@ -78,6 +77,19 @@
                   </VBox>
                </children>
             </StackPane>
+            <Label contentDisplay="CENTER" prefHeight="35.0" prefWidth="321.0" text="Youtube Analytics Manager" textAlignment="CENTER" textFill="#fcfff6" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+               <effect>
+                  <Reflection />
+               </effect>
+            </Label>
+            <Label alignment="BOTTOM_RIGHT" contentDisplay="BOTTOM" text="Version : 12 Apr 2018" textAlignment="RIGHT" textFill="#fcfff6" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+               <GridPane.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </GridPane.margin>
+            </Label>
          </children>
          <padding>
             <Insets left="20.0" right="20.0" />

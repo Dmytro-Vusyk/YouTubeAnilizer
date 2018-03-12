@@ -1,9 +1,13 @@
 package view;
 
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXRadioButton;
-import com.jfoenix.controls.JFXTextField;
-import com.jfoenix.controls.JFXTreeTableView;
+import com.jfoenix.controls.*;
+import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
+import enumerated.MapKeys;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,20 +15,34 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeTableColumn;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.util.Callback;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.ResourceBundle;
 
 public class FXMLTasksController extends FXMLDocumentController  implements Initializable {
 
     private static int task=1;
+    private static int columns=6;
+    private Date dateNow = new Date();
+    private SimpleDateFormat formatForTime = new SimpleDateFormat("hh:mm");
+    private SimpleDateFormat formatForDateTime = new SimpleDateFormat("dd:yy hh:mm");
 
-        @FXML
+    private ObservableList<Json> json_lines = FXCollections.observableArrayList();
+
+
+    @FXML
         private JFXButton btnStart;
 
         @FXML
@@ -40,34 +58,19 @@ public class FXMLTasksController extends FXMLDocumentController  implements Init
         private GridPane testGrid;
 
         @FXML
-        private JFXTreeTableView<?> tableView;
-
-        @FXML
-        private JFXRadioButton cbSubscribesrs;
+        private JFXTreeTableView<Json> tableView;
 
         @FXML
         private JFXButton btnClear;
 
         @FXML
-        private JFXRadioButton cbName;
-
-        @FXML
         private JFXButton btnAdd;
-
-        @FXML
-        private JFXRadioButton cbDate;
 
         @FXML
         private Label lblNameOfTasks;
 
         @FXML
-        private JFXRadioButton cbVideos;
-
-        @FXML
         private AnchorPane leftAnchorPaneTasks;
-
-        @FXML
-        private JFXRadioButton cbViews;
 
         @FXML
         private JFXTextField textChannelName;
@@ -81,6 +84,10 @@ public class FXMLTasksController extends FXMLDocumentController  implements Init
     @FXML
     private TextArea textAreaChannels;
 
+    @FXML
+    private HBox timePane;
+
+
 
     @FXML
     void onActionBtnExit2(ActionEvent event)  {
@@ -88,13 +95,14 @@ public class FXMLTasksController extends FXMLDocumentController  implements Init
     }
 
     @FXML
-        void onActionBtnClear(ActionEvent event) {
+    void onActionBtnClear(ActionEvent event) {
             textAreaChannels.clear();
+            textChannelName.clear();
         }
 
 
-        @FXML
-        void onActionBtnAdd(ActionEvent event) {
+    @FXML
+    void onActionBtnAdd(ActionEvent event) {
 
             if (textChannelName.getText().equals("") || textChannelName.getText()==null)
                 return;
@@ -111,38 +119,138 @@ public class FXMLTasksController extends FXMLDocumentController  implements Init
             textAreaChannels.clear();
 
             for (String s: channelNames) {
-                textAreaChannels.setText(textAreaChannels.getText() + s+"| ");
+                textAreaChannels.setText(textAreaChannels.getText() + s+"   |   ");
+            }
+        }
+
+        class Json extends RecursiveTreeObject<Json>{
+            StringProperty channelName;
+            StringProperty publishing_date;
+            StringProperty subscribers_count;
+            StringProperty videos_count;
+            StringProperty views_count;
+            StringProperty comments_count;
+            StringProperty channel_ID;
+
+            public Json(String channelName, String publishing_date, String subscribers_count, String videos_count, String views_count, String comments_count, String channel_ID) {
+                this.channelName = new SimpleStringProperty(channelName);
+                this.publishing_date = new SimpleStringProperty(publishing_date);
+                this.subscribers_count = new SimpleStringProperty(subscribers_count);
+                this.videos_count =new SimpleStringProperty(videos_count);
+                this.views_count = new SimpleStringProperty(views_count);
+                this.comments_count = new SimpleStringProperty(comments_count);
+                this.channel_ID = new SimpleStringProperty(channel_ID);
             }
         }
 
 
+
+    /* ТЕСТ НЕ ТРОГАТЬ*/
+    private LinkedHashMap<MapKeys, String> TESTshowGlobalInformationAboutChannel() {
+        LinkedHashMap<MapKeys, String> output = new LinkedHashMap<>();
+
+        output.put(MapKeys.CHANNEL_NAME, "nhzv");
+        output.put(MapKeys.PUBLISHING_DATE, formatForDateTime.format(dateNow));
+        output.put(MapKeys.SUBSCRIBERS_COUNT,"5" );
+        output.put(MapKeys.VIDEOS_COUNT, "2");
+        output.put(MapKeys.VIEWS_COUNT, "100");
+        output.put(MapKeys.COMMENTS_COUNT, "10");
+        output.put(MapKeys.CHANNEL_ID, "ky-ky");
+
+        return output;
+    }
+
         @FXML
         void onActionBtnStart(ActionEvent event) {
 
-          /*
-            if (!(textChannelName.getText().equals("") || textChannelName.getText()==null))
-                channelNames.add(textChannelName.getText());
-            else
-                channelNames.add("RedFoc");
+            JFXTreeTableColumn<Json, String> deptChannelName = new JFXTreeTableColumn<>("Name");
+            deptChannelName.setPrefWidth(100);
+            deptChannelName.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<Json, String>, ObservableValue<String>>() {
+                @Override
+                public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<Json, String> param) {
+                    return param.getValue().getValue().channelName;
+                }
+            });
+            JFXTreeTableColumn<Json, String> deptPublishing_date = new JFXTreeTableColumn<>("Publishing");
+            deptPublishing_date.setPrefWidth(128);
+            deptPublishing_date.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<Json, String>, ObservableValue<String>>() {
+                @Override
+                public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<Json, String> param) {
+                    return param.getValue().getValue().publishing_date;
+                }
+            });
+            JFXTreeTableColumn<Json, String> deptSubscribers_count = new JFXTreeTableColumn<>("Subscribers");
+            deptSubscribers_count.setPrefWidth(130);
+            deptSubscribers_count.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<Json, String>, ObservableValue<String>>() {
+                @Override
+                public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<Json, String> param) {
+                    return param.getValue().getValue().subscribers_count;
+                }
+            });
+            JFXTreeTableColumn<Json, String> deptVideos_count = new JFXTreeTableColumn<>("Videos");
+            deptVideos_count.setPrefWidth(105);
+            deptVideos_count.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<Json, String>, ObservableValue<String>>() {
+                @Override
+                public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<Json, String> param) {
+                    return param.getValue().getValue().videos_count;
+                }
+            });
+            JFXTreeTableColumn<Json, String> deptViews_count  = new JFXTreeTableColumn<>("Views");
+            deptViews_count.setPrefWidth(100);
+            deptViews_count.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<Json, String>, ObservableValue<String>>() {
+                @Override
+                public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<Json, String> param) {
+                    return param.getValue().getValue().views_count;
+                }
+            });
 
-            textAreaChannels.clear();
-*/
 
-        //JFXTreeTableView<?> tableView;
-//            protected ArrayList<LinkedHashMap<MapKeys, String>> channels = new ArrayList<LinkedHashMap<MapKeys, String> >();
+            if (task>=4){
+                JFXTreeTableColumn<Json, String> deptComments_count = new JFXTreeTableColumn<>("Comments");
+                deptComments_count.setPrefWidth(110);
+                deptComments_count.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<Json, String>, ObservableValue<String>>() {
+                    @Override
+                    public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<Json, String> param) {
+                        return param.getValue().getValue().comments_count;
+                    }
+                });
 
-
-            // Create three columns
-          // tableView.setRoot(channels.get(0));
-
-         /*   TreeItem<String> root = new TreeItem<>("Functions");
-            for (QNameMap.Entry<String, String> entryRow : dc.getSortedfuncAll().entrySet()) {
-                root.getChildren().add(new TreeItem<String>(entryRow.getValue()));
-
+                tableView.getColumns().setAll(deptChannelName, deptPublishing_date, deptSubscribers_count, deptVideos_count, deptViews_count, deptComments_count);
+            }else
+            {
+                tableView.getColumns().setAll(deptChannelName, deptPublishing_date, deptSubscribers_count, deptVideos_count, deptViews_count);
             }
-            tableView = new JFXTreeTableView<> (root);
-*/
-            // Create three columns
+
+            setTableCollectionValue();
+            final TreeItem<Json> root = new RecursiveTreeItem<Json>(json_lines,RecursiveTreeObject::getChildren);
+
+            tableView.setRoot(root);
+            tableView.setShowRoot(false);
+
+        }
+
+        private void setTableCollectionValue(){
+
+            json_lines.clear();
+            channels.clear();
+
+            //// TODO: 3/12/2018 Сюда коллекцию, или елементы для вывода в таблицу
+            channels.add(TESTshowGlobalInformationAboutChannel());
+
+            for (LinkedHashMap<MapKeys, String> ch:channels)
+            {
+                json_lines.add(new Json(
+                        ch.get(MapKeys.CHANNEL_NAME),
+                        ch.get(MapKeys.PUBLISHING_DATE),
+                        ch.get(MapKeys.SUBSCRIBERS_COUNT),
+                        ch.get(MapKeys.VIDEOS_COUNT),
+                        ch.get(MapKeys.VIEWS_COUNT),
+                        ch.get(MapKeys.COMMENTS_COUNT),
+                        ch.get(MapKeys.CHANNEL_ID)
+
+
+                ));
+            }
         }
 
 
@@ -173,6 +281,19 @@ public class FXMLTasksController extends FXMLDocumentController  implements Init
             Pane menuPane = FXMLLoader.load(getClass().getResource("/FXMLTasksMenu.fxml"));
             leftAnchorPaneTasks.getChildren().addAll(menuPane);
 
+            if (isTimeCheked){
+                timePane.setVisible(false);
+                }
+                else{
+                timePane.setVisible(true);
+            }
+
+            lableTime.setText(formatForTime.format(dateNow));
+            lblNameOfTasks.setText("Display global information about the channel");
+            btnClear.setVisible(false);
+            task=1;
+
+
             for (Node node: menuPane.getChildren()){
                 if (node.getAccessibleText() !=null)
                 { node.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
@@ -182,40 +303,33 @@ public class FXMLTasksController extends FXMLDocumentController  implements Init
                         case "task1":
                             lblNameOfTasks.setText("Display global information about the channel");
                             btnClear.setVisible(false);
-                            gridPaneSorting.setVisible(false);
                             task=1;
                             break;
                         case "task2":
                             lblNameOfTasks.setText("Compare global information about channels");
                             btnClear.setVisible(true);
-                            gridPaneSorting.setVisible(false);
                             task=2;
                             break;
                         case "task3":
                             lblNameOfTasks.setText("Sort channels by their data");
                             btnClear.setVisible(true);
-                            gridPaneSorting.setVisible(true);
                             task=3;
                             break;
                         case "task4":
                             lblNameOfTasks.setText("Media Resonance");
                             btnClear.setVisible(false);
-                            gridPaneSorting.setVisible(false);
                             task=4;
                             break;
                         case "task5":
                             lblNameOfTasks.setText("Compare Media Resonance");
                             btnClear.setVisible(true);
-                            gridPaneSorting.setVisible(false);
                             task=5;
                             break;
                         case "task6":
                             lblNameOfTasks.setText("Sort by Media Resonance");
                             btnClear.setVisible(true);
-                            gridPaneSorting.setVisible(true);
                             task=6;
                             break;
-
                     }
                 });
                 }
@@ -226,10 +340,6 @@ public class FXMLTasksController extends FXMLDocumentController  implements Init
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-      //  testBtn.addEventHandler(ActionEvent.ACTION, (e) ->{
-            //testGrid.getChildren().remove( 1);
-         //   paine11.setVisible(false);
 
 
 

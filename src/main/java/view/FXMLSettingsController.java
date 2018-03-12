@@ -1,6 +1,7 @@
 package view;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -18,10 +19,27 @@ public class FXMLSettingsController extends FXMLDocumentController implements In
     private JFXButton btnBrowse;
 
     @FXML
-    private JFXButton btnGoToMain;
+    private JFXTextField textFieldAdress;
+
 
     @FXML
-    private JFXTextField textFieldAdress;
+    private JFXCheckBox isTimeVisible;
+
+
+
+
+    @FXML
+    void onActionTimeVisible(ActionEvent event) {
+        if (isTimeVisible.allowIndeterminateProperty().getValue())
+        {
+            isTimeCheked=true;
+        }
+        else
+            {
+                isTimeCheked=false;
+            }
+    }
+
 
     @FXML
     void onActionBtnGoToMain(ActionEvent event) {
@@ -35,8 +53,6 @@ public class FXMLSettingsController extends FXMLDocumentController implements In
     }
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
-
-    }
+    public void initialize(URL location, ResourceBundle resources) {}
 
 }

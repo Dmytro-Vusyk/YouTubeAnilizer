@@ -9,8 +9,6 @@ import javafx.stage.StageStyle;
 
 public class NavigationDrawer extends Application {
 
-    public static boolean isSplashLoaded = false;
-
     @Override
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("/FXMLDocumentPane.fxml"));
