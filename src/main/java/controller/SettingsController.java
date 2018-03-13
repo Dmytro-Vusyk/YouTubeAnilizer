@@ -19,9 +19,9 @@ public class SettingsController {
     private String pathToCash;
     private static final char SEPAR = File.separatorChar;
     private static final String DEFAULT_PATH = String.format("src%cmain%cjava%ccash%csaveCash.txt", SEPAR, SEPAR, SEPAR, SEPAR);
-    private static final String PATH_TO_PATH_FOLDER = String.format("src%cmain%cjava%cstore%cpath.txt",SEPAR,SEPAR,SEPAR,SEPAR);
+    private static final String PATH_TO_PATH_FOLDER = String.format("src%cmain%cjava%cstore%cpath.txt", SEPAR, SEPAR, SEPAR, SEPAR);
 
-    private SettingsController(String pathToCash) {
+    private SettingsController() {
         if (pathToCash == null || pathToCash.equals("")) {
             this.pathToCash = DEFAULT_PATH;
         } else {
@@ -29,11 +29,11 @@ public class SettingsController {
         }
     }
 
-    public static synchronized SettingsController getInstance(String pathToCash){
-        if(instance == null){
-            synchronized (MainController.class){
-                if (instance == null){
-                    instance = new SettingsController(pathToCash);
+    public static synchronized SettingsController getInstance() {
+        if (instance == null) {
+            synchronized (MainController.class) {
+                if (instance == null) {
+                    instance = new SettingsController();
                 }
             }
         }

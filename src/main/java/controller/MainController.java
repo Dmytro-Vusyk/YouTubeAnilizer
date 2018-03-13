@@ -15,7 +15,7 @@ import java.util.*;
 public class MainController {
     private static MainController instance;
 
-    private boolean saveCash = true;
+    private boolean saveCash;
     private boolean showTime;
     private LinkedHashMap<String, GeneralDataContainer> cash = new LinkedHashMap<>(); //1st level cash
 
@@ -24,10 +24,10 @@ public class MainController {
     private MainController() {
     }
 
-    public static synchronized MainController getInstance(){
-        if(instance == null){
-            synchronized (MainController.class){
-                if (instance == null){
+    public static synchronized MainController getInstance() {
+        if (instance == null) {
+            synchronized (MainController.class) {
+                if (instance == null) {
                     instance = new MainController();
                 }
             }
@@ -35,6 +35,19 @@ public class MainController {
         return instance;
     }
 //====================================== get list with data of channels ===================================
+
+    public long startTimeMeasurement() {
+        return System.currentTimeMillis();
+    }
+
+    public long stopTimeMeasurement() {
+        return System.currentTimeMillis();
+    }
+
+    public long showTimeMeasurement(long start, long stop) {
+        System.out.println("time test using");
+        return (stop - start)/1000;
+    }
 
     /**
      * This method collects information about Channel and return it as HashMap<MapKeys,String>
@@ -163,14 +176,14 @@ public class MainController {
     private LinkedHashMap<MapKeys, String> showGlobalInformationAboutChannel(GeneralDataContainer gdc) {
         LinkedHashMap<MapKeys, String> output = new LinkedHashMap<>();
         if (gdc.getTitle() == null) return output;
-            output.put(MapKeys.CHANNEL_NAME, gdc.getTitle());
-            output.put(MapKeys.PUBLISHING_DATE, gdc.getPublishedAt().toString());
-            output.put(MapKeys.SUBSCRIBERS_COUNT, gdc.getSubscriberCount().toString());
-            output.put(MapKeys.VIDEOS_COUNT, gdc.getVideoCount().toString());
-            output.put(MapKeys.VIEWS_COUNT, gdc.getViewCount().toString());
-            output.put(MapKeys.CHANNEL_ID, gdc.getId());
-            if (gdc.getCommentCount() != null)
-                output.put(MapKeys.COMMENTS_COUNT, gdc.getCommentCount().toString());
+        output.put(MapKeys.CHANNEL_NAME, gdc.getTitle());
+        output.put(MapKeys.PUBLISHING_DATE, gdc.getPublishedAt().toString());
+        output.put(MapKeys.SUBSCRIBERS_COUNT, gdc.getSubscriberCount().toString());
+        output.put(MapKeys.VIDEOS_COUNT, gdc.getVideoCount().toString());
+        output.put(MapKeys.VIEWS_COUNT, gdc.getViewCount().toString());
+        output.put(MapKeys.CHANNEL_ID, gdc.getId());
+        if (gdc.getCommentCount() != null)
+            output.put(MapKeys.COMMENTS_COUNT, gdc.getCommentCount().toString());
         return output;
     }
 

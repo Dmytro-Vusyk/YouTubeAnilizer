@@ -40,14 +40,12 @@ public class FXMLTasksMenuController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        FXMLMainScreenController.setRotate(circleMini1, true, 360,10);
-        FXMLMainScreenController.setRotate(circleMini2, true, 180,18);
-        FXMLMainScreenController.setRotate(circleMini3, true, 145,24);
+        FXMLMainScreenController.setRotate(circleMini1, true, 360, 10);
+        FXMLMainScreenController.setRotate(circleMini2, true, 180, 18);
+        FXMLMainScreenController.setRotate(circleMini3, true, 145, 24);
 
 
     }
-
-
 
 
 }

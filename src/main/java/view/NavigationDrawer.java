@@ -51,15 +51,17 @@ public class NavigationDrawer extends Application {
         return cash;
     }
 
-    private void startThreadInCash(){
-        SettingsController sc = SettingsController.getInstance("");
-        Callable<LinkedHashMap<String, GeneralDataContainer>> takeDataFromCash = ()-> sc.parseFromJson();
+    private void startThreadInCash() {
+        SettingsController sc = SettingsController.getInstance();
+        Callable<LinkedHashMap<String, GeneralDataContainer>> takeDataFromCash = () -> sc.parseFromJson();
         dataContainerFutureTask = service.submit(takeDataFromCash);
     }
 
-    /**Start program*/
+    /**
+     * Start program
+     */
     public static void main(String[] args) {
         launch(args);
 
     }
-    }
+}

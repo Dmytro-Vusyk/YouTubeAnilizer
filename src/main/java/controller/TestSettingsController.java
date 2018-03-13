@@ -5,7 +5,7 @@ import java.util.LinkedHashMap;
 public class TestSettingsController {
     public static void main(String[] args) {
 
-    SettingsController sc = SettingsController.getInstance("");
+    SettingsController sc = SettingsController.getInstance();
     MainController mc = MainController.getInstance();
         LinkedHashMap cash = mc.getCash();
 
