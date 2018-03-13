@@ -35,7 +35,7 @@ public class FXMLSettingsController extends FXMLDocumentController implements In
 
     //create object of directory chooser
     final DirectoryChooser directoryChooser = new DirectoryChooser();
-    //configurate
+    //configu
     private void configuringDirectoryChooser(DirectoryChooser directoryChooser) {
         // Set title for DirectoryChooser
         directoryChooser.setTitle("Select Directories");

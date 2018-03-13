@@ -154,7 +154,7 @@ public class FXMLTasksController extends FXMLDocumentController implements Initi
     private MainController mainController = MainController.getInstance();
 
     private ArrayList<LinkedHashMap<MapKeys, String>> TESTshowGlobalInformationAboutChannel() {
-        long start = mainController.startTimeMeasurement();
+        long start = System.currentTimeMillis();
         ArrayList<LinkedHashMap<MapKeys, String>> out = new ArrayList<>();
         if (task == 1) {
             for (String s :
@@ -186,9 +186,8 @@ public class FXMLTasksController extends FXMLDocumentController implements Initi
         if (task == 6) {
             out = mainController.showGlobalInformationAboutChannels(channelNames.toArray(new String[channelNames.size()]));
         }
-        long finish = mainController.stopTimeMeasurement();
+        long finish = System.currentTimeMillis();
         if (!mainController.isShowTime()) {
-            System.out.println(start + " " + finish);
             lableTime.setText(Long.toString(mainController.showTimeMeasurement(start, finish)) + "s");
         }
 

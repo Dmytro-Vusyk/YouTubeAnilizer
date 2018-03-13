@@ -36,17 +36,8 @@ public class MainController {
     }
 //====================================== get list with data of channels ===================================
 
-    public long startTimeMeasurement() {
-        return System.currentTimeMillis();
-    }
-
-    public long stopTimeMeasurement() {
-        return System.currentTimeMillis();
-    }
-
     public long showTimeMeasurement(long start, long stop) {
-        System.out.println("time test using");
-        return (stop - start)/1000;
+        return (stop - start);
     }
 
     /**
