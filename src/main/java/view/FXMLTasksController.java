@@ -4,6 +4,7 @@ import com.jfoenix.controls.*;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import controller.MainController;
 import enumerated.MapKeys;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ObservableValue;
@@ -265,28 +266,30 @@ public class FXMLTasksController extends FXMLDocumentController  implements Init
             Callable<ArrayList<LinkedHashMap<MapKeys, String>>> callable = () -> TESTshowGlobalInformationAboutChannel();
             Future<ArrayList<LinkedHashMap<MapKeys, String>>> future = service.submit(callable);
 
-            try {
-                channels = future.get();//TESTshowGlobalInformationAboutChannel();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (ExecutionException e) {
-                e.printStackTrace();
-            }
 
-            for (LinkedHashMap<MapKeys, String> ch:channels)
-            {
-                json_lines.add(new Json(
-                        ch.get(MapKeys.CHANNEL_NAME),
-                        ch.get(MapKeys.PUBLISHING_DATE),
-                        ch.get(MapKeys.SUBSCRIBERS_COUNT),
-                        ch.get(MapKeys.VIDEOS_COUNT),
-                        ch.get(MapKeys.VIEWS_COUNT),
-                        ch.get(MapKeys.COMMENTS_COUNT),
-                        ch.get(MapKeys.CHANNEL_ID)
+            Platform.runLater(() -> {
+                try {
+                    channels = future.get();//TESTshowGlobalInformationAboutChannel();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
+
+                for (LinkedHashMap<MapKeys, String> ch : channels) {
+                    json_lines.add(new Json(
+                            ch.get(MapKeys.CHANNEL_NAME),
+                            ch.get(MapKeys.PUBLISHING_DATE),
+                            ch.get(MapKeys.SUBSCRIBERS_COUNT),
+                            ch.get(MapKeys.VIDEOS_COUNT),
+                            ch.get(MapKeys.VIEWS_COUNT),
+                            ch.get(MapKeys.COMMENTS_COUNT),
+                            ch.get(MapKeys.CHANNEL_ID)
 
 
-                ));
-            }
+                    ));
+                }
+            });
         }
 
 
