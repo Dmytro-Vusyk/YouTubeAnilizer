@@ -2,12 +2,14 @@ package controller;
 
 
 import com.alibaba.fastjson.JSON;
+import enumerated.MapKeys;
 import model.GeneralDataContainer;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -44,6 +46,10 @@ public class SettingsController {
         String json = "";
 
         try {
+            File file = new File(Paths.get(PATH_TO_PATH_FOLDER).toString());
+            if (!file.exists()) {
+                file.createNewFile();
+            }
             List<String> list = Files.lines(Paths.get(PATH_TO_PATH_FOLDER), StandardCharsets.UTF_8)
                     .collect(Collectors.toList());
             setPathToCash(list.get(0));

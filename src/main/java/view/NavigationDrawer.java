@@ -53,7 +53,11 @@ public class NavigationDrawer extends Application {
 
     private void startThreadInCash() {
         SettingsController sc = SettingsController.getInstance();
-        Callable<LinkedHashMap<String, GeneralDataContainer>> takeDataFromCash = () -> sc.parseFromJson();
+        Callable<LinkedHashMap<String, GeneralDataContainer>> takeDataFromCash = () -> {
+            System.out.println("From startThreadInCash -> Callable. Thread: " + Thread.currentThread());
+            System.out.println(sc.getPathToCash());
+            return sc.parseFromJson();
+        };
         dataContainerFutureTask = service.submit(takeDataFromCash);
     }
 

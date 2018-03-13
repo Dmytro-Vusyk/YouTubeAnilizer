@@ -151,8 +151,7 @@ public class FXMLTasksController extends FXMLDocumentController implements Initi
 
 
     /* ТЕСТ НЕ ТРОГАТЬ*/  //позно! мухахахахах
-    private ArrayList<LinkedHashMap<MapKeys, String>> TESTshowGlobalInformationAboutChannel() {
-        long start = System.currentTimeMillis();
+    protected ArrayList<LinkedHashMap<MapKeys, String>> TESTshowGlobalInformationAboutChannel() {
         ArrayList<LinkedHashMap<MapKeys, String>> out = new ArrayList<>();
         if (task == 1) {
             for (String s :
@@ -183,10 +182,6 @@ public class FXMLTasksController extends FXMLDocumentController implements Initi
         }
         if (task == 6) {
             out = mainController.showGlobalInformationAboutChannels(channelNames.toArray(new String[channelNames.size()]));
-        }
-        long finish = System.currentTimeMillis();
-        if (!mainController.isShowTime()) {
-            lableTime.setText(Long.toString(mainController.showTimeMeasurement(start, finish)) + "s");
         }
 
         return out;
@@ -260,7 +255,7 @@ public class FXMLTasksController extends FXMLDocumentController implements Initi
 
     }
 
-    static ExecutorService service = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+    private static ExecutorService service = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
     private void setTableCollectionValue() {
 //            ExecutorService service = Executors.newFixedThreadPool(1);
@@ -269,13 +264,20 @@ public class FXMLTasksController extends FXMLDocumentController implements Initi
         channels.clear();
 
         //// TODO: 3/12/2018 Сюда коллекцию, или елементы для вывода в таблицу
-        Callable<ArrayList<LinkedHashMap<MapKeys, String>>> callable = () -> TESTshowGlobalInformationAboutChannel();
-        Future<ArrayList<LinkedHashMap<MapKeys, String>>> future = service.submit(callable);
+
+        QueryThread queryThread = new QueryThread(System.currentTimeMillis(), this);
+
+        Future<ArrayList<LinkedHashMap<MapKeys, String>>> future = service.submit(queryThread);
 
 
         Platform.runLater(() -> {
             try {
                 channels = future.get();//TESTshowGlobalInformationAboutChannel();
+                System.out.println("11111111111111111111111111111111111");
+                final long checkPointFinish = System.currentTimeMillis();
+                lableTime.setText(Long.toString(mainController.showTimeMeasurement(queryThread.getCheckPoint(), checkPointFinish)) + "ms");
+
+                System.out.println(System.currentTimeMillis() - queryThread.getCheckPoint());
             } catch (InterruptedException e) {
                 e.printStackTrace();
             } catch (ExecutionException e) {
@@ -291,10 +293,9 @@ public class FXMLTasksController extends FXMLDocumentController implements Initi
                         ch.get(MapKeys.VIEWS_COUNT),
                         ch.get(MapKeys.COMMENTS_COUNT),
                         ch.get(MapKeys.CHANNEL_ID)
-
-
                 ));
             }
+            System.out.println("222222222222222222222222222222222222222");
         });
     }
 
