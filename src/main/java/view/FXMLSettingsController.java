@@ -25,7 +25,18 @@ public class FXMLSettingsController extends FXMLDocumentController implements In
     @FXML
     private JFXCheckBox isTimeVisible;
 
+    @FXML
+    private JFXCheckBox isUsingCash;
 
+    @FXML
+    void onActionBtnBrowse(ActionEvent event) {
+
+    }
+
+    @FXML
+    void ionActionUsingCash(ActionEvent event) {
+
+    }
 
 
     @FXML

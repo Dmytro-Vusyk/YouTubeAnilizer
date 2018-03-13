@@ -24,12 +24,14 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.util.Callback;
-import model.GeneralDataContainer;
 
 import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.LinkedHashMap;
+import java.util.ResourceBundle;
 import java.util.concurrent.*;
 
 public class FXMLTasksController extends FXMLDocumentController  implements Initializable {
