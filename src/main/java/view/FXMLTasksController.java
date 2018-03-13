@@ -256,8 +256,9 @@ public class FXMLTasksController extends FXMLDocumentController  implements Init
 
         }
 
+        static ExecutorService service = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
         private void setTableCollectionValue(){
-            ExecutorService service = Executors.newFixedThreadPool(1);
+//            ExecutorService service = Executors.newFixedThreadPool(1);
 
             json_lines.clear();
             channels.clear();
