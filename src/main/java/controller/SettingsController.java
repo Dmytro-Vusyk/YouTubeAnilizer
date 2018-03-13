@@ -23,6 +23,8 @@ public class SettingsController {
     private static final String DEFAULT_PATH = String.format("src%cmain%cjava%ccash%csaveCash.txt", SEPAR, SEPAR, SEPAR, SEPAR);
     private static final String PATH_TO_PATH_FOLDER = String.format("src%cmain%cjava%cstore%cpath.txt", SEPAR, SEPAR, SEPAR, SEPAR);
 
+
+    // This method initializes the path to the file//
     private SettingsController() {
         if (pathToCash == null || pathToCash.equals("")) {
             this.pathToCash = DEFAULT_PATH;
@@ -30,6 +32,7 @@ public class SettingsController {
             this.pathToCash = pathToCash;
         }
     }
+
 
     public static synchronized SettingsController getInstance() {
         if (instance == null) {
@@ -42,6 +45,8 @@ public class SettingsController {
         return instance;
     }
 
+
+//This method reads the cache from the folder and returns it as a String//
     private String readCash() {
         String json = "";
 
@@ -77,6 +82,7 @@ public class SettingsController {
     }
 
 
+//This method saves the cache to the specified folder//
     public void saveCash(LinkedHashMap<String, GeneralDataContainer> cash) {
         String input = JSON.toJSONString(cash);
 
@@ -94,6 +100,8 @@ public class SettingsController {
 
     }
 
+
+// This method is parsed from a file using readCash and returns LinkedHashMap//
     public LinkedHashMap<String, GeneralDataContainer> parseFromJson() {
         return JSON.parseObject(readCash(), LinkedHashMap.class);
     }

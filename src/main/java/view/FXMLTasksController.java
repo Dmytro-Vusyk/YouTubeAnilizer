@@ -2,7 +2,6 @@ package view;
 
 import com.jfoenix.controls.*;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
-import controller.MainController;
 import controller.SettingsController;
 import enumerated.MapKeys;
 import javafx.application.Platform;
@@ -16,10 +15,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeTableColumn;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
@@ -103,15 +99,24 @@ public class FXMLTasksController extends FXMLDocumentController implements Initi
     void onActionBtnClear(ActionEvent event) {
         textAreaChannels.clear();
         textChannelName.clear();
+        btnStart.setDisable(true);
     }
 
 
     @FXML
     void onActionBtnAdd(ActionEvent event) {
 
-        if (textChannelName.getText().equals("") || textChannelName.getText() == null)
-            return;
+        if (textChannelName.getText().equals("") || textChannelName.getText() == null) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Field is empty");
+            alert.setHeaderText(null);
+            alert.setContentText("Enter the ID of the channel");
 
+            alert.showAndWait();
+            return;
+        }
+
+        btnStart.setDisable(false);
         if ((task == 1 || task == 4)) {
             channelNames.clear();
             channelNames.add(textChannelName.getText());
@@ -187,6 +192,7 @@ public class FXMLTasksController extends FXMLDocumentController implements Initi
         return out;
     }
 
+    //// TODO: 3/13/2018 цей метод в потік
     @FXML
     void onActionBtnStart(ActionEvent event) {
 
@@ -323,6 +329,13 @@ public class FXMLTasksController extends FXMLDocumentController implements Initi
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+
+        if (channelNames.isEmpty()){
+            btnStart.setDisable(true);
+        }
+
+
         try {
             Pane menuPane = FXMLLoader.load(getClass().getResource("/FXMLTasksMenu.fxml"));
             leftAnchorPaneTasks.getChildren().addAll(menuPane);
