@@ -26,7 +26,7 @@ public class FXMLDocumentController implements Initializable {
 
     protected static boolean isTimeChecked = true;
     protected static boolean isUsingCashChecked = true;
-    protected MainController mc = MainController.getInstance();
+    protected MainController mainController = MainController.getInstance();
 
 
     @FXML

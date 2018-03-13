@@ -151,8 +151,6 @@ public class FXMLTasksController extends FXMLDocumentController implements Initi
 
 
     /* ТЕСТ НЕ ТРОГАТЬ*/  //позно! мухахахахах
-    private MainController mainController = MainController.getInstance();
-
     private ArrayList<LinkedHashMap<MapKeys, String>> TESTshowGlobalInformationAboutChannel() {
         long start = System.currentTimeMillis();
         ArrayList<LinkedHashMap<MapKeys, String>> out = new ArrayList<>();

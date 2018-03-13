@@ -15,24 +15,24 @@ public class Test {
     private static String channelId3 = "dangervidention";
 
     public static void main(String[] args) throws UnirestException {
-        //  MainController mc = new MainController();
+        //  MainController mainController = new MainController();
         //  String[] ids = {channelId,channelId2,channelId3};
 
         //  //Test of first task
         //  System.out.println("test task1");
-        // LinkedHashMap<MapKeys,String> ar = mc.showGlobalInformationAboutChannel(channelId);
+        // LinkedHashMap<MapKeys,String> ar = mainController.showGlobalInformationAboutChannel(channelId);
         // System.out.println(ar.toString());
         //  System.out.println("-------------");
 
         //  //Test of third task
         //  System.out.println("test of task 3");
-        //  ArrayList<LinkedHashMap<MapKeys, String>> listOfChannels = mc.sortChannels(ids);
+        //  ArrayList<LinkedHashMap<MapKeys, String>> listOfChannels = mainController.sortChannels(ids);
         //  System.out.println(listOfChannels);
         //  System.out.println("--------------");
 
         //  //Test of fourth task
         //  System.out.println("test of task 4");
-        //  System.out.println(mc.sortChannelsByMediaResonance(ids));
+        //  System.out.println(mainController.sortChannelsByMediaResonance(ids));
         //  System.out.println("--------------");
     }
 

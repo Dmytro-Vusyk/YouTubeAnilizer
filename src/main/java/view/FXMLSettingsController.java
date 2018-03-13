@@ -3,7 +3,6 @@ package view;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXTextField;
-import controller.MainController;
 import controller.SettingsController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -65,7 +64,7 @@ public class FXMLSettingsController extends FXMLDocumentController implements In
         } else {
          isUsingCashChecked = false;
         }
-        mc.setSaveCash(isUsingCashChecked);
+        mainController.setSaveCash(isUsingCashChecked);
     }
 
 
@@ -79,7 +78,7 @@ public class FXMLSettingsController extends FXMLDocumentController implements In
             {
                 isTimeChecked =false;
             }
-            mc.setShowTime(isTimeChecked);
+            mainController.setShowTime(isTimeChecked);
     }
 
 
