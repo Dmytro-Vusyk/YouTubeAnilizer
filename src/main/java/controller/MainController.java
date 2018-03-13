@@ -13,6 +13,7 @@ import java.util.*;
  * This Controller connects Model with View
  */
 public class MainController {
+    private static MainController instance;
 
     private boolean saveCash = true;
     private boolean showTime;
@@ -20,9 +21,19 @@ public class MainController {
 
     private QueryFromYoutube qfy = new QueryFromYoutube();
 
-    public MainController() {
+    private MainController() {
     }
 
+    public static synchronized MainController getInstance(){
+        if(instance == null){
+            synchronized (MainController.class){
+                if (instance == null){
+                    instance = new MainController();
+                }
+            }
+        }
+        return instance;
+    }
 //====================================== get list with data of channels ===================================
 
     /**

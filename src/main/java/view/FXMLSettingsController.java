@@ -3,6 +3,8 @@ package view;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXTextField;
+import controller.MainController;
+import controller.SettingsController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -50,6 +52,7 @@ public class FXMLSettingsController extends FXMLDocumentController implements In
         File dir = directoryChooser.showDialog(new Stage().getOwner());
         if (dir != null) {
             textFieldAdress.setText(dir.getAbsolutePath());
+            SettingsController.getInstance("").setPathToCash(textFieldAdress.toString());
         } else {
             textFieldAdress.setText(null);
         }
@@ -74,6 +77,7 @@ public class FXMLSettingsController extends FXMLDocumentController implements In
             {
                 isTimeCheked=false;
             }
+            MainController.getInstance().setSaveCash(isTimeCheked);
     }
 
 

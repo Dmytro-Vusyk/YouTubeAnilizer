@@ -23,7 +23,7 @@ public class FXMLDocumentController implements Initializable {
     private static boolean isSplashLoaded = false;
 
     protected static boolean isTimeCheked = true;
-    protected MainController mc = new MainController();
+    protected MainController mc = MainController.getInstance();
 
 
     @FXML

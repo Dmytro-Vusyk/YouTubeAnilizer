@@ -15,18 +15,29 @@ import java.util.stream.Collectors;
 
 
 public class SettingsController {
-
+    private static SettingsController instance;
     private String pathToCash;
     private static final char SEPAR = File.separatorChar;
     private static final String DEFAULT_PATH = String.format("src%cmain%cjava%ccash%csaveCash.txt", SEPAR, SEPAR, SEPAR, SEPAR);
     private static final String PATH_TO_PATH_FOLDER = String.format("src%cmain%cjava%cstore%cpath.txt",SEPAR,SEPAR,SEPAR,SEPAR);
 
-    public SettingsController(String pathToCash) {
+    private SettingsController(String pathToCash) {
         if (pathToCash == null || pathToCash.equals("")) {
             this.pathToCash = DEFAULT_PATH;
         } else {
             this.pathToCash = pathToCash;
         }
+    }
+
+    public static synchronized SettingsController getInstance(String pathToCash){
+        if(instance == null){
+            synchronized (MainController.class){
+                if (instance == null){
+                    instance = new SettingsController(pathToCash);
+                }
+            }
+        }
+        return instance;
     }
 
     private String readCash() {

@@ -150,7 +150,7 @@ public class FXMLTasksController extends FXMLDocumentController  implements Init
 
 
     /* ТЕСТ НЕ ТРОГАТЬ*/
-    MainController mainController = new MainController();
+    MainController mainController = MainController.getInstance();
     private ArrayList<LinkedHashMap<MapKeys, String>> TESTshowGlobalInformationAboutChannel() {
         ArrayList<LinkedHashMap<MapKeys, String>> out = new ArrayList<>();
         if (task == 1) {
