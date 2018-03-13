@@ -21,18 +21,6 @@ public class SettingsController {
     private static final String DEFAULT_PATH = String.format("src%cmain%cjava%ccash%csaveCash.txt", SEPAR, SEPAR, SEPAR, SEPAR);
     private static final String PATH_TO_PATH_FOLDER = String.format("src%cmain%cjava%cstore%cpath.txt",SEPAR,SEPAR,SEPAR,SEPAR);
 
-//-----------------------------------------------------------------------
-    /**
-     * add cash, getCash(), setCash ----------------------TEMPORARY
-     * try using in thread from FXMLMainScreenController class
-     */
-    private static GeneralDataContainer cash;
-
-    public static GeneralDataContainer getCash() {
-        return cash;
-    }
-//-----------------------------------------------------------------------
-
     public SettingsController(String pathToCash) {
         if (pathToCash == null || pathToCash.equals("")) {
             this.pathToCash = DEFAULT_PATH;
