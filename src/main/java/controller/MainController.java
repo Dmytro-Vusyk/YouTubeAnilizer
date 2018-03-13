@@ -19,9 +19,9 @@ public class MainController {
     private boolean showTime;
     private LinkedHashMap<String, GeneralDataContainer> cash = new LinkedHashMap<>(); //1st level cash
 
-    public LinkedHashMap<String, GeneralDataContainer> getCash() {
-        return cash;
-    }
+//    public LinkedHashMap<String, GeneralDataContainer> getCash() {
+//        return cash;
+//    }
 
     private QueryFromYoutube qfy = new QueryFromYoutube();
 
