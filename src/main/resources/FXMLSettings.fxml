@@ -46,7 +46,7 @@
                   </ImageView>
                </children>
             </HBox>
-            <Label text="Json" textFill="#18313d" GridPane.rowIndex="1">
+            <Label text="Cash" textFill="#18313d" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets left="20.0" />
                </GridPane.margin>
@@ -65,7 +65,7 @@
             <HBox GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER">
                <children>
                   <JFXTextField fx:id="textFieldAdress" focusColor="#87ac9e" maxWidth="681.0" minWidth="655.0" prefHeight="31.0" prefWidth="681.0" promptText="C://" unFocusColor="#193340" />
-                  <JFXButton fx:id="btnBrowse" prefHeight="30.0" prefWidth="120.0" style="-fx-background-color: #18313D;" styleClass="btnRequests" stylesheets="@Style.css" text="Browse ..." textFill="#fcfff5">
+                  <JFXButton fx:id="btnBrowse" onAction="#onActionBtnBrowse" prefHeight="30.0" prefWidth="120.0" style="-fx-background-color: #18313D;" styleClass="btnRequests" stylesheets="@Style.css" text="Browse ..." textFill="#fcfff5">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -93,7 +93,7 @@
                   <Insets left="40.0" />
                </GridPane.margin>
             </JFXCheckBox>
-            <JFXCheckBox checkedColor="#87ac9e" text="is  Json save" textFill="#18313d" unCheckedColor="#226070" GridPane.rowIndex="2">
+            <JFXCheckBox fx:id="isUsingCash" checkedColor="#87ac9e" onAction="#ionActionUsingCash" text=" is using cash" textFill="#18313d" unCheckedColor="#226070" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets left="40.0" />
                </GridPane.margin>

@@ -25,15 +25,37 @@ public class FXMLSettingsController extends FXMLDocumentController implements In
     @FXML
     private JFXTextField textFieldAdress;
 
-
     @FXML
     private JFXCheckBox isTimeVisible;
 
     @FXML
     private JFXCheckBox isUsingCash;
 
+    public void Cheked() {
+        if(isTimeChecked)
+        {
+            isTimeVisible.setSelected(true);
+
+        }else
+            {
+                isTimeVisible.setSelected(false);
+
+            }
+        if (isUsingCashChecked)
+        {
+            isUsingCash.setSelected(true);
+        }
+
+        if (directoryChooser.getInitialDirectory()==null)
+            directoryChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+
+        textFieldAdress.setText(directoryChooser.getInitialDirectory().getAbsolutePath());
+    }
+
+
     //create object of directory chooser
     final DirectoryChooser directoryChooser = new DirectoryChooser();
+
     //configu
     private void configuringDirectoryChooser(DirectoryChooser directoryChooser) {
         // Set title for DirectoryChooser
@@ -59,7 +81,7 @@ public class FXMLSettingsController extends FXMLDocumentController implements In
     @FXML
     void ionActionUsingCash(ActionEvent event) {
 
-        if(isUsingCash.allowIndeterminateProperty().getValue()){
+        if(isTimeVisible.isSelected()){
          isUsingCashChecked = true;
         } else {
          isUsingCashChecked = false;
@@ -70,15 +92,15 @@ public class FXMLSettingsController extends FXMLDocumentController implements In
 
     @FXML
     void onActionTimeVisible(ActionEvent event) {
-        if (isTimeVisible.allowIndeterminateProperty().getValue())
+        if (isTimeVisible.isSelected())
         {
             isTimeChecked =true;
         }
         else
-            {
-                isTimeChecked =false;
-            }
-            mainController.setShowTime(isTimeChecked);
+        {
+           isTimeChecked =false;
+        }
+        mainController.setShowTime(isTimeChecked);
     }
 
 
@@ -93,7 +115,10 @@ public class FXMLSettingsController extends FXMLDocumentController implements In
         }
     }
 
+
     @Override
-    public void initialize(URL location, ResourceBundle resources) {}
+    public void initialize(URL location, ResourceBundle resources) {
+        Cheked();
+    }
 
 }

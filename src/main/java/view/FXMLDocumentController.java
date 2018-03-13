@@ -29,6 +29,7 @@ public class FXMLDocumentController implements Initializable {
     protected MainController mainController = MainController.getInstance();
 
 
+
     @FXML
     protected AnchorPane documentPane;
     protected HashSet<String> channelNames = new HashSet<String>();
@@ -49,11 +50,11 @@ public class FXMLDocumentController implements Initializable {
             Pane splashPane = FXMLLoader.load(getClass().getResource("/FXMLSplashWindow.fxml"));
             documentPane.getChildren().setAll(splashPane);
 
-            FadeTransition fadeTransitionIn = new FadeTransition(Duration.seconds(1), splashPane);
+            FadeTransition fadeTransitionIn = new FadeTransition(Duration.seconds(0.2), splashPane);
             fadeTransitionIn.setFromValue(0);
             fadeTransitionIn.setToValue(1);
 
-            FadeTransition fadeTransitionOut = new FadeTransition(Duration.seconds(1), splashPane);
+            FadeTransition fadeTransitionOut = new FadeTransition(Duration.seconds(0.2), splashPane);
             fadeTransitionOut.setFromValue(1);
             fadeTransitionOut.setToValue(0);
 
