@@ -19,7 +19,7 @@ public class SettingsController {
     private String pathToCash;
     private static final char SEPAR = File.separatorChar;
     private static final String DEFAULT_PATH = String.format("src%cmain%cjava%ccash%csaveCash.txt", SEPAR, SEPAR, SEPAR, SEPAR);
-    private static final String PATH_TO_PATH_FOLDER = "src/main/java/store/path.txt";
+    private static final String PATH_TO_PATH_FOLDER = String.format("src%cmain%cjava%cstore%cpath.txt",SEPAR,SEPAR,SEPAR,SEPAR);
 
 //-----------------------------------------------------------------------
     /**
@@ -31,9 +31,6 @@ public class SettingsController {
     public static GeneralDataContainer getCash() {
         return cash;
     }
-    //  public static void setCash(GeneralDataContainer cashFromThread) {
-    //      cash = cashFromThread;
-    //  }
 //-----------------------------------------------------------------------
 
     public SettingsController(String pathToCash) {
@@ -103,4 +100,5 @@ public class SettingsController {
     public void setPathToCash(String pathToCash) {
         this.pathToCash = pathToCash;
     }
+
 }
