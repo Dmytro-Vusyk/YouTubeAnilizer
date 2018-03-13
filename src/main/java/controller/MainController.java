@@ -14,7 +14,7 @@ import java.util.*;
  */
 public class MainController {
 
-    private boolean saveCash;
+    private boolean saveCash = true;
     private boolean showTime;
     private LinkedHashMap<String, GeneralDataContainer> cash = new LinkedHashMap<>(); //1st level cash
 
@@ -151,17 +151,15 @@ public class MainController {
      */
     private LinkedHashMap<MapKeys, String> showGlobalInformationAboutChannel(GeneralDataContainer gdc) {
         LinkedHashMap<MapKeys, String> output = new LinkedHashMap<>();
-        try {
+        if (gdc.getTitle() == null) return output;
             output.put(MapKeys.CHANNEL_NAME, gdc.getTitle());
             output.put(MapKeys.PUBLISHING_DATE, gdc.getPublishedAt().toString());
             output.put(MapKeys.SUBSCRIBERS_COUNT, gdc.getSubscriberCount().toString());
             output.put(MapKeys.VIDEOS_COUNT, gdc.getVideoCount().toString());
             output.put(MapKeys.VIEWS_COUNT, gdc.getViewCount().toString());
-            output.put(MapKeys.COMMENTS_COUNT, gdc.getCommentCount().toString());
             output.put(MapKeys.CHANNEL_ID, gdc.getId());
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-        }
+            if (gdc.getCommentCount() != null)
+                output.put(MapKeys.COMMENTS_COUNT, gdc.getCommentCount().toString());
         return output;
     }
 
@@ -245,7 +243,7 @@ public class MainController {
         if (cash.keySet().contains(channelId)) {
             return cash.get(channelId);
         }
-        return null;
+        return new GeneralDataContainer();
     }
     //=========================================== Getters Setters ============================================
 

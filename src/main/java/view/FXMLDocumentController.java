@@ -1,5 +1,6 @@
 package view;
 
+import controller.MainController;
 import enumerated.MapKeys;
 import javafx.animation.FadeTransition;
 import javafx.fxml.FXML;
@@ -22,6 +23,8 @@ public class FXMLDocumentController implements Initializable {
     private static boolean isSplashLoaded = false;
 
     protected static boolean isTimeCheked = true;
+    protected MainController mc = new MainController();
+
 
     @FXML
     protected AnchorPane documentPane;

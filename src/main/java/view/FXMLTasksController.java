@@ -2,6 +2,7 @@ package view;
 
 import com.jfoenix.controls.*;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
+import controller.MainController;
 import enumerated.MapKeys;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -23,13 +24,13 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.util.Callback;
+import model.GeneralDataContainer;
 
 import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.LinkedHashMap;
-import java.util.ResourceBundle;
+import java.util.*;
+import java.util.concurrent.*;
 
 public class FXMLTasksController extends FXMLDocumentController  implements Initializable {
 
@@ -146,18 +147,41 @@ public class FXMLTasksController extends FXMLDocumentController  implements Init
 
 
     /* ТЕСТ НЕ ТРОГАТЬ*/
-    private LinkedHashMap<MapKeys, String> TESTshowGlobalInformationAboutChannel() {
-        LinkedHashMap<MapKeys, String> output = new LinkedHashMap<>();
+    MainController mainController = new MainController();
+    private ArrayList<LinkedHashMap<MapKeys, String>> TESTshowGlobalInformationAboutChannel() {
+        ArrayList<LinkedHashMap<MapKeys, String>> out = new ArrayList<>();
+        if (task == 1) {
+            for (String s :
+                    channelNames) {
+                out.add(mainController.showBaseInformationAboutChannel(s));
+            }
+        }
+        if (task == 2) {
+            for (String s :
+                    channelNames) {
+                out.add(mainController.showBaseInformationAboutChannel(s));
+            }
+        }
+        if (task == 3) {
+                out = mainController.showBaseInformationAboutChannel(channelNames.toArray(new String[channelNames.size()]));
+        }
+        if (task == 4) {
+            for (String s :
+                    channelNames) {
+                out.add(mainController.showGlobalInformationAboutChannel(s));
+            }
+        }
+        if (task == 5) {
+            for (String s :
+                    channelNames) {
+                out.add(mainController.showGlobalInformationAboutChannel(s));
+            }
+        }
+        if (task == 6) {
+                out = mainController.showGlobalInformationAboutChannels(channelNames.toArray(new String[channelNames.size()]));
+        }
 
-        output.put(MapKeys.CHANNEL_NAME, "nhzv");
-        output.put(MapKeys.PUBLISHING_DATE, formatForDateTime.format(dateNow));
-        output.put(MapKeys.SUBSCRIBERS_COUNT,"5" );
-        output.put(MapKeys.VIDEOS_COUNT, "2");
-        output.put(MapKeys.VIEWS_COUNT, "100");
-        output.put(MapKeys.COMMENTS_COUNT, "10");
-        output.put(MapKeys.CHANNEL_ID, "ky-ky");
-
-        return output;
+        return out;
     }
 
         @FXML
@@ -230,12 +254,22 @@ public class FXMLTasksController extends FXMLDocumentController  implements Init
         }
 
         private void setTableCollectionValue(){
+            ExecutorService service = Executors.newFixedThreadPool(1);
 
             json_lines.clear();
             channels.clear();
 
             //// TODO: 3/12/2018 Сюда коллекцию, или елементы для вывода в таблицу
-            channels.add(TESTshowGlobalInformationAboutChannel());
+            Callable<ArrayList<LinkedHashMap<MapKeys, String>>> callable = () -> TESTshowGlobalInformationAboutChannel();
+            Future<ArrayList<LinkedHashMap<MapKeys, String>>> future = service.submit(callable);
+
+            try {
+                channels = future.get();//TESTshowGlobalInformationAboutChannel();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
 
             for (LinkedHashMap<MapKeys, String> ch:channels)
             {
