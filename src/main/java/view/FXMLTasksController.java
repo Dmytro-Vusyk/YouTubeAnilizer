@@ -2,7 +2,10 @@ package view;
 
 import com.jfoenix.controls.*;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
+import controller.MainController;
+import controller.SettingsController;
 import enumerated.MapKeys;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ObservableValue;
@@ -27,14 +30,16 @@ import javafx.util.Callback;
 import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.ResourceBundle;
+import java.util.concurrent.*;
 
-public class FXMLTasksController extends FXMLDocumentController  implements Initializable {
+public class FXMLTasksController extends FXMLDocumentController implements Initializable {
 
-    private static int task=1;
-    private static int columns=6;
+    private static int task = 1;
+    private static int columns = 6;
     private Date dateNow = new Date();
     private SimpleDateFormat formatForTime = new SimpleDateFormat("hh:mm");
     private SimpleDateFormat formatForDateTime = new SimpleDateFormat("dd:yy hh:mm");
@@ -43,40 +48,40 @@ public class FXMLTasksController extends FXMLDocumentController  implements Init
 
 
     @FXML
-        private JFXButton btnStart;
+    private JFXButton btnStart;
 
-        @FXML
-        private JFXButton btnSettings2;
+    @FXML
+    private JFXButton btnSettings2;
 
-        @FXML
-        private Label lableTime;
+    @FXML
+    private Label lableTime;
 
-        @FXML
-        private JFXButton btnPrev;
+    @FXML
+    private JFXButton btnPrev;
 
-        @FXML
-        private GridPane testGrid;
+    @FXML
+    private GridPane testGrid;
 
-        @FXML
-        private JFXTreeTableView<Json> tableView;
+    @FXML
+    private JFXTreeTableView<Json> tableView;
 
-        @FXML
-        private JFXButton btnClear;
+    @FXML
+    private JFXButton btnClear;
 
-        @FXML
-        private JFXButton btnAdd;
+    @FXML
+    private JFXButton btnAdd;
 
-        @FXML
-        private Label lblNameOfTasks;
+    @FXML
+    private Label lblNameOfTasks;
 
-        @FXML
-        private AnchorPane leftAnchorPaneTasks;
+    @FXML
+    private AnchorPane leftAnchorPaneTasks;
 
-        @FXML
-        private JFXTextField textChannelName;
+    @FXML
+    private JFXTextField textChannelName;
 
-        @FXML
-        private JFXButton btnExit2;
+    @FXML
+    private JFXButton btnExit2;
 
     @FXML
     private GridPane gridPaneSorting;
@@ -88,157 +93,196 @@ public class FXMLTasksController extends FXMLDocumentController  implements Init
     private HBox timePane;
 
 
-
     @FXML
-    void onActionBtnExit2(ActionEvent event)  {
+    void onActionBtnExit2(ActionEvent event) {
+        SettingsController.getInstance().saveCash(mainController.getCash());
         System.exit(1);
     }
 
     @FXML
     void onActionBtnClear(ActionEvent event) {
-            textAreaChannels.clear();
-            textChannelName.clear();
-        }
+        textAreaChannels.clear();
+        textChannelName.clear();
+    }
 
 
     @FXML
     void onActionBtnAdd(ActionEvent event) {
 
-            if (textChannelName.getText().equals("") || textChannelName.getText()==null)
-                return;
+        if (textChannelName.getText().equals("") || textChannelName.getText() == null)
+            return;
 
-            if((task == 1||task==4)){
-                channelNames.clear();
-                channelNames.add(textChannelName.getText());
-            }
-            if((task == 2||task==5)&&channelNames.size()==2){
-                channelNames.remove(0);}
-
+        if ((task == 1 || task == 4)) {
+            channelNames.clear();
             channelNames.add(textChannelName.getText());
-
-            textAreaChannels.clear();
-
-            for (String s: channelNames) {
-                textAreaChannels.setText(textAreaChannels.getText() + s+"   |   ");
-            }
+        }
+        if ((task == 2 || task == 5) && channelNames.size() == 2) {
+            channelNames.remove(0);
         }
 
-        class Json extends RecursiveTreeObject<Json>{
-            StringProperty channelName;
-            StringProperty publishing_date;
-            StringProperty subscribers_count;
-            StringProperty videos_count;
-            StringProperty views_count;
-            StringProperty comments_count;
-            StringProperty channel_ID;
+        channelNames.add(textChannelName.getText());
 
-            public Json(String channelName, String publishing_date, String subscribers_count, String videos_count, String views_count, String comments_count, String channel_ID) {
-                this.channelName = new SimpleStringProperty(channelName);
-                this.publishing_date = new SimpleStringProperty(publishing_date);
-                this.subscribers_count = new SimpleStringProperty(subscribers_count);
-                this.videos_count =new SimpleStringProperty(videos_count);
-                this.views_count = new SimpleStringProperty(views_count);
-                this.comments_count = new SimpleStringProperty(comments_count);
-                this.channel_ID = new SimpleStringProperty(channel_ID);
-            }
+        textAreaChannels.clear();
+
+        for (String s : channelNames) {
+            textAreaChannels.setText(textAreaChannels.getText() + s + "   |   ");
         }
-
-
-
-    /* ТЕСТ НЕ ТРОГАТЬ*/
-    private LinkedHashMap<MapKeys, String> TESTshowGlobalInformationAboutChannel() {
-        LinkedHashMap<MapKeys, String> output = new LinkedHashMap<>();
-
-        output.put(MapKeys.CHANNEL_NAME, "nhzv");
-        output.put(MapKeys.PUBLISHING_DATE, formatForDateTime.format(dateNow));
-        output.put(MapKeys.SUBSCRIBERS_COUNT,"5" );
-        output.put(MapKeys.VIDEOS_COUNT, "2");
-        output.put(MapKeys.VIEWS_COUNT, "100");
-        output.put(MapKeys.COMMENTS_COUNT, "10");
-        output.put(MapKeys.CHANNEL_ID, "ky-ky");
-
-        return output;
     }
 
-        @FXML
-        void onActionBtnStart(ActionEvent event) {
+    class Json extends RecursiveTreeObject<Json> {
+        StringProperty channelName;
+        StringProperty publishing_date;
+        StringProperty subscribers_count;
+        StringProperty videos_count;
+        StringProperty views_count;
+        StringProperty comments_count;
+        StringProperty channel_ID;
 
-            JFXTreeTableColumn<Json, String> deptChannelName = new JFXTreeTableColumn<>("Name");
-            deptChannelName.setPrefWidth(100);
-            deptChannelName.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<Json, String>, ObservableValue<String>>() {
-                @Override
-                public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<Json, String> param) {
-                    return param.getValue().getValue().channelName;
-                }
-            });
-            JFXTreeTableColumn<Json, String> deptPublishing_date = new JFXTreeTableColumn<>("Publishing");
-            deptPublishing_date.setPrefWidth(128);
-            deptPublishing_date.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<Json, String>, ObservableValue<String>>() {
-                @Override
-                public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<Json, String> param) {
-                    return param.getValue().getValue().publishing_date;
-                }
-            });
-            JFXTreeTableColumn<Json, String> deptSubscribers_count = new JFXTreeTableColumn<>("Subscribers");
-            deptSubscribers_count.setPrefWidth(130);
-            deptSubscribers_count.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<Json, String>, ObservableValue<String>>() {
-                @Override
-                public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<Json, String> param) {
-                    return param.getValue().getValue().subscribers_count;
-                }
-            });
-            JFXTreeTableColumn<Json, String> deptVideos_count = new JFXTreeTableColumn<>("Videos");
-            deptVideos_count.setPrefWidth(105);
-            deptVideos_count.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<Json, String>, ObservableValue<String>>() {
-                @Override
-                public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<Json, String> param) {
-                    return param.getValue().getValue().videos_count;
-                }
-            });
-            JFXTreeTableColumn<Json, String> deptViews_count  = new JFXTreeTableColumn<>("Views");
-            deptViews_count.setPrefWidth(100);
-            deptViews_count.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<Json, String>, ObservableValue<String>>() {
-                @Override
-                public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<Json, String> param) {
-                    return param.getValue().getValue().views_count;
-                }
-            });
+        public Json(String channelName, String publishing_date, String subscribers_count, String videos_count, String views_count, String comments_count, String channel_ID) {
+            this.channelName = new SimpleStringProperty(channelName);
+            this.publishing_date = new SimpleStringProperty(publishing_date);
+            this.subscribers_count = new SimpleStringProperty(subscribers_count);
+            this.videos_count = new SimpleStringProperty(videos_count);
+            this.views_count = new SimpleStringProperty(views_count);
+            this.comments_count = new SimpleStringProperty(comments_count);
+            this.channel_ID = new SimpleStringProperty(channel_ID);
+        }
+    }
 
 
-            if (task>=4){
-                JFXTreeTableColumn<Json, String> deptComments_count = new JFXTreeTableColumn<>("Comments");
-                deptComments_count.setPrefWidth(110);
-                deptComments_count.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<Json, String>, ObservableValue<String>>() {
-                    @Override
-                    public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<Json, String> param) {
-                        return param.getValue().getValue().comments_count;
-                    }
-                });
-
-                tableView.getColumns().setAll(deptChannelName, deptPublishing_date, deptSubscribers_count, deptVideos_count, deptViews_count, deptComments_count);
-            }else
-            {
-                tableView.getColumns().setAll(deptChannelName, deptPublishing_date, deptSubscribers_count, deptVideos_count, deptViews_count);
+    /* ТЕСТ НЕ ТРОГАТЬ*/  //позно! мухахахахах
+    private ArrayList<LinkedHashMap<MapKeys, String>> TESTshowGlobalInformationAboutChannel() {
+        long start = System.currentTimeMillis();
+        ArrayList<LinkedHashMap<MapKeys, String>> out = new ArrayList<>();
+        if (task == 1) {
+            for (String s :
+                    channelNames) {
+                out.add(mainController.showBaseInformationAboutChannel(s));
             }
-
-            setTableCollectionValue();
-            final TreeItem<Json> root = new RecursiveTreeItem<Json>(json_lines,RecursiveTreeObject::getChildren);
-
-            tableView.setRoot(root);
-            tableView.setShowRoot(false);
-
+        }
+        if (task == 2) {
+            for (String s :
+                    channelNames) {
+                out.add(mainController.showBaseInformationAboutChannel(s));
+            }
+        }
+        if (task == 3) {
+            out = mainController.showBaseInformationAboutChannel(channelNames.toArray(new String[channelNames.size()]));
+        }
+        if (task == 4) {
+            for (String s :
+                    channelNames) {
+                out.add(mainController.showGlobalInformationAboutChannel(s));
+            }
+        }
+        if (task == 5) {
+            for (String s :
+                    channelNames) {
+                out.add(mainController.showGlobalInformationAboutChannel(s));
+            }
+        }
+        if (task == 6) {
+            out = mainController.showGlobalInformationAboutChannels(channelNames.toArray(new String[channelNames.size()]));
+        }
+        long finish = System.currentTimeMillis();
+        if (!mainController.isShowTime()) {
+            lableTime.setText(Long.toString(mainController.showTimeMeasurement(start, finish)) + "s");
         }
 
-        private void setTableCollectionValue(){
+        return out;
+    }
 
-            json_lines.clear();
-            channels.clear();
+    @FXML
+    void onActionBtnStart(ActionEvent event) {
 
-            //// TODO: 3/12/2018 Сюда коллекцию, или елементы для вывода в таблицу
-            channels.add(TESTshowGlobalInformationAboutChannel());
+        JFXTreeTableColumn<Json, String> deptChannelName = new JFXTreeTableColumn<>("Name");
+        deptChannelName.setPrefWidth(100);
+        deptChannelName.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<Json, String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<Json, String> param) {
+                return param.getValue().getValue().channelName;
+            }
+        });
+        JFXTreeTableColumn<Json, String> deptPublishing_date = new JFXTreeTableColumn<>("Publishing");
+        deptPublishing_date.setPrefWidth(128);
+        deptPublishing_date.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<Json, String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<Json, String> param) {
+                return param.getValue().getValue().publishing_date;
+            }
+        });
+        JFXTreeTableColumn<Json, String> deptSubscribers_count = new JFXTreeTableColumn<>("Subscribers");
+        deptSubscribers_count.setPrefWidth(130);
+        deptSubscribers_count.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<Json, String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<Json, String> param) {
+                return param.getValue().getValue().subscribers_count;
+            }
+        });
+        JFXTreeTableColumn<Json, String> deptVideos_count = new JFXTreeTableColumn<>("Videos");
+        deptVideos_count.setPrefWidth(105);
+        deptVideos_count.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<Json, String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<Json, String> param) {
+                return param.getValue().getValue().videos_count;
+            }
+        });
+        JFXTreeTableColumn<Json, String> deptViews_count = new JFXTreeTableColumn<>("Views");
+        deptViews_count.setPrefWidth(100);
+        deptViews_count.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<Json, String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<Json, String> param) {
+                return param.getValue().getValue().views_count;
+            }
+        });
 
-            for (LinkedHashMap<MapKeys, String> ch:channels)
-            {
+
+        if (task >= 4) {
+            JFXTreeTableColumn<Json, String> deptComments_count = new JFXTreeTableColumn<>("Comments");
+            deptComments_count.setPrefWidth(110);
+            deptComments_count.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<Json, String>, ObservableValue<String>>() {
+                @Override
+                public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<Json, String> param) {
+                    return param.getValue().getValue().comments_count;
+                }
+            });
+
+            tableView.getColumns().setAll(deptChannelName, deptPublishing_date, deptSubscribers_count, deptVideos_count, deptViews_count, deptComments_count);
+        } else {
+            tableView.getColumns().setAll(deptChannelName, deptPublishing_date, deptSubscribers_count, deptVideos_count, deptViews_count);
+        }
+
+        setTableCollectionValue();
+        final TreeItem<Json> root = new RecursiveTreeItem<Json>(json_lines, RecursiveTreeObject::getChildren);
+
+        tableView.setRoot(root);
+        tableView.setShowRoot(false);
+
+    }
+
+    static ExecutorService service = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+
+    private void setTableCollectionValue() {
+//            ExecutorService service = Executors.newFixedThreadPool(1);
+
+        json_lines.clear();
+        channels.clear();
+
+        //// TODO: 3/12/2018 Сюда коллекцию, или елементы для вывода в таблицу
+        Callable<ArrayList<LinkedHashMap<MapKeys, String>>> callable = () -> TESTshowGlobalInformationAboutChannel();
+        Future<ArrayList<LinkedHashMap<MapKeys, String>>> future = service.submit(callable);
+
+
+        Platform.runLater(() -> {
+            try {
+                channels = future.get();//TESTshowGlobalInformationAboutChannel();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
+
+            for (LinkedHashMap<MapKeys, String> ch : channels) {
                 json_lines.add(new Json(
                         ch.get(MapKeys.CHANNEL_NAME),
                         ch.get(MapKeys.PUBLISHING_DATE),
@@ -251,13 +295,14 @@ public class FXMLTasksController extends FXMLDocumentController  implements Init
 
                 ));
             }
-        }
+        });
+    }
 
 
     @FXML
     void onActionBtnPrev(ActionEvent event) {
 
-       try {
+        try {
             Pane splashPane = FXMLLoader.load(getClass().getResource("/FXMLMainScreen.fxml"));
             documentPane.getChildren().setAll(splashPane);
         } catch (IOException e1) {
@@ -281,67 +326,63 @@ public class FXMLTasksController extends FXMLDocumentController  implements Init
             Pane menuPane = FXMLLoader.load(getClass().getResource("/FXMLTasksMenu.fxml"));
             leftAnchorPaneTasks.getChildren().addAll(menuPane);
 
-            if (isTimeCheked){
+            if (isTimeChecked) {
                 timePane.setVisible(false);
-                }
-                else{
+            } else {
                 timePane.setVisible(true);
             }
 
-            lableTime.setText(formatForTime.format(dateNow));
+            //lableTime.setText(formatForTime.format(dateNow)); - шойта?
+            lableTime.setText("0s");
             lblNameOfTasks.setText("Display global information about the channel");
             btnClear.setVisible(false);
-            task=1;
+            task = 1;
 
 
-            for (Node node: menuPane.getChildren()){
-                if (node.getAccessibleText() !=null)
-                { node.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
-                    System.out.println(node.getAccessibleText());
-                    switch (node.getAccessibleText())
-                    {
-                        case "task1":
-                            lblNameOfTasks.setText("Display global information about the channel");
-                            btnClear.setVisible(false);
-                            task=1;
-                            break;
-                        case "task2":
-                            lblNameOfTasks.setText("Compare global information about channels");
-                            btnClear.setVisible(true);
-                            task=2;
-                            break;
-                        case "task3":
-                            lblNameOfTasks.setText("Sort channels by their data");
-                            btnClear.setVisible(true);
-                            task=3;
-                            break;
-                        case "task4":
-                            lblNameOfTasks.setText("Media Resonance");
-                            btnClear.setVisible(false);
-                            task=4;
-                            break;
-                        case "task5":
-                            lblNameOfTasks.setText("Compare Media Resonance");
-                            btnClear.setVisible(true);
-                            task=5;
-                            break;
-                        case "task6":
-                            lblNameOfTasks.setText("Sort by Media Resonance");
-                            btnClear.setVisible(true);
-                            task=6;
-                            break;
-                    }
-                });
+            for (Node node : menuPane.getChildren()) {
+                if (node.getAccessibleText() != null) {
+                    node.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
+                        System.out.println(node.getAccessibleText());
+                        switch (node.getAccessibleText()) {
+                            case "task1":
+                                lblNameOfTasks.setText("Display global information about the channel");
+                                btnClear.setVisible(false);
+                                task = 1;
+                                break;
+                            case "task2":
+                                lblNameOfTasks.setText("Compare global information about channels");
+                                btnClear.setVisible(true);
+                                task = 2;
+                                break;
+                            case "task3":
+                                lblNameOfTasks.setText("Sort channels by their data");
+                                btnClear.setVisible(true);
+                                task = 3;
+                                break;
+                            case "task4":
+                                lblNameOfTasks.setText("Media Resonance");
+                                btnClear.setVisible(false);
+                                task = 4;
+                                break;
+                            case "task5":
+                                lblNameOfTasks.setText("Compare Media Resonance");
+                                btnClear.setVisible(true);
+                                task = 5;
+                                break;
+                            case "task6":
+                                lblNameOfTasks.setText("Sort by Media Resonance");
+                                btnClear.setVisible(true);
+                                task = 6;
+                                break;
+                        }
+                    });
                 }
             }
-
 
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
 
 
     }

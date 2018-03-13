@@ -1,5 +1,6 @@
 package view;
 
+import controller.MainController;
 import enumerated.MapKeys;
 import javafx.animation.FadeTransition;
 import javafx.fxml.FXML;
@@ -16,12 +17,17 @@ import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.ResourceBundle;
 
-/**MainController*/
+/**
+ * MainController
+ */
 public class FXMLDocumentController implements Initializable {
 
     private static boolean isSplashLoaded = false;
 
-    protected static boolean isTimeCheked = true;
+    protected static boolean isTimeChecked = true;
+    protected static boolean isUsingCashChecked = true;
+    protected MainController mainController = MainController.getInstance();
+
 
     @FXML
     protected AnchorPane documentPane;
@@ -31,12 +37,14 @@ public class FXMLDocumentController implements Initializable {
         return channelNames;
     }
 
-    protected ArrayList<LinkedHashMap<MapKeys, String>> channels = new ArrayList<LinkedHashMap<MapKeys, String> >();
+    protected ArrayList<LinkedHashMap<MapKeys, String>> channels = new ArrayList<LinkedHashMap<MapKeys, String>>();
 
-    /** Splash Effect*/
+    /**
+     * Splash Effect
+     */
     private void loadSplashScreen() {
         try {
-            isSplashLoaded=true;
+            isSplashLoaded = true;
 
             Pane splashPane = FXMLLoader.load(getClass().getResource("/FXMLSplashWindow.fxml"));
             documentPane.getChildren().setAll(splashPane);
@@ -51,7 +59,9 @@ public class FXMLDocumentController implements Initializable {
 
             fadeTransitionIn.play();
 
-            fadeTransitionIn.setOnFinished((e) -> {fadeTransitionOut.play();});
+            fadeTransitionIn.setOnFinished((e) -> {
+                fadeTransitionOut.play();
+            });
 
             fadeTransitionOut.setOnFinished((e) -> {
                 try {

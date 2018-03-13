@@ -13,6 +13,7 @@ import java.util.*;
  * This Controller connects Model with View
  */
 public class MainController {
+    private static MainController instance;
 
     private boolean saveCash;
     private boolean showTime;
@@ -24,10 +25,24 @@ public class MainController {
 
     private QueryFromYoutube qfy = new QueryFromYoutube();
 
-    public MainController() {
+    private MainController() {
     }
 
+    public static synchronized MainController getInstance() {
+        if (instance == null) {
+            synchronized (MainController.class) {
+                if (instance == null) {
+                    instance = new MainController();
+                }
+            }
+        }
+        return instance;
+    }
 //====================================== get list with data of channels ===================================
+
+    public long showTimeMeasurement(long start, long stop) {
+        return (stop - start);
+    }
 
     /**
      * This method collects information about Channel and return it as HashMap<MapKeys,String>
@@ -155,17 +170,15 @@ public class MainController {
      */
     private LinkedHashMap<MapKeys, String> showGlobalInformationAboutChannel(GeneralDataContainer gdc) {
         LinkedHashMap<MapKeys, String> output = new LinkedHashMap<>();
-        try {
-            output.put(MapKeys.CHANNEL_NAME, gdc.getTitle());
-            output.put(MapKeys.PUBLISHING_DATE, gdc.getPublishedAt().toString());
-            output.put(MapKeys.SUBSCRIBERS_COUNT, gdc.getSubscriberCount().toString());
-            output.put(MapKeys.VIDEOS_COUNT, gdc.getVideoCount().toString());
-            output.put(MapKeys.VIEWS_COUNT, gdc.getViewCount().toString());
+        if (gdc.getTitle() == null) return output;
+        output.put(MapKeys.CHANNEL_NAME, gdc.getTitle());
+        output.put(MapKeys.PUBLISHING_DATE, gdc.getPublishedAt().toString());
+        output.put(MapKeys.SUBSCRIBERS_COUNT, gdc.getSubscriberCount().toString());
+        output.put(MapKeys.VIDEOS_COUNT, gdc.getVideoCount().toString());
+        output.put(MapKeys.VIEWS_COUNT, gdc.getViewCount().toString());
+        output.put(MapKeys.CHANNEL_ID, gdc.getId());
+        if (gdc.getCommentCount() != null)
             output.put(MapKeys.COMMENTS_COUNT, gdc.getCommentCount().toString());
-            output.put(MapKeys.CHANNEL_ID, gdc.getId());
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-        }
         return output;
     }
 
@@ -249,7 +262,7 @@ public class MainController {
         if (cash.keySet().contains(channelId)) {
             return cash.get(channelId);
         }
-        return null;
+        return new GeneralDataContainer();
     }
     //=========================================== Getters Setters ============================================
 
@@ -268,5 +281,13 @@ public class MainController {
 
     public void setShowTime(boolean showTime) {
         this.showTime = showTime;
+    }
+
+    public void setCash(LinkedHashMap<String, GeneralDataContainer> cash) {
+        this.cash = cash;
+    }
+
+    public LinkedHashMap<String, GeneralDataContainer> getCash() {
+        return cash;
     }
 }

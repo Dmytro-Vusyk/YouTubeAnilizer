@@ -40,8 +40,8 @@ public class FXMLMainScreenController extends FXMLDocumentController implements 
     }
 
 
-    static void setRotate(Circle c, boolean reverse, int angle, int duration ) {
-        RotateTransition rotateTransition = new RotateTransition(Duration.seconds(duration),c);
+    static void setRotate(Circle c, boolean reverse, int angle, int duration) {
+        RotateTransition rotateTransition = new RotateTransition(Duration.seconds(duration), c);
 
         rotateTransition.setAutoReverse(reverse);
 
@@ -50,17 +50,24 @@ public class FXMLMainScreenController extends FXMLDocumentController implements 
         rotateTransition.setRate(3);
         rotateTransition.setCycleCount(18);
         rotateTransition.play();
-}
+    }
+
+    /**
+     *
+     */
     @FXML
     void onActionbtnMainsSreenAnalitics(ActionEvent event) {
         try {
             //test thread
-//            long checkPoint = System.currentTimeMillis();
-            SettingsController.setCash(new NavigationDrawer().getCash());
+            long checkPoint = System.currentTimeMillis();
+//            if (mainController.getCash() == null)
+//            mainController.setCash(new NavigationDrawer().getCash());
+//            SettingsController.setCash(new NavigationDrawer().getCash());
+//            System.out.println(SettingsController.getCash());
 //            checkPoint = System.currentTimeMillis() - checkPoint;
 //            System.out.println(checkPoint);
-          Pane taskController = FXMLLoader.load(getClass().getResource("/FXMLTasks.fxml"));
-          documentPane.getChildren().setAll(taskController);
+            Pane taskController = FXMLLoader.load(getClass().getResource("/FXMLTasks.fxml"));
+            documentPane.getChildren().setAll(taskController);
         } catch (IOException e1) {
             e1.printStackTrace();
         }
@@ -80,13 +87,11 @@ public class FXMLMainScreenController extends FXMLDocumentController implements 
 
     @FXML
     void onActionBtnMainsSreenExit(ActionEvent event) {
-         System.exit(1);
+        if (!mainController.isSaveCash()) {
+            SettingsController.getInstance().saveCash(mainController.getCash());
+        }
+        System.exit(1);
     }
-
-
-
-
-
 
 
 }
