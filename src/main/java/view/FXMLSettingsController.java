@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class FXMLSettingsController extends FXMLDocumentController implements Initializable  {
+public class FXMLSettingsController extends FXMLDocumentController implements Initializable {
 
     @FXML
     private JFXButton btnBrowse;
@@ -32,22 +32,20 @@ public class FXMLSettingsController extends FXMLDocumentController implements In
     private JFXCheckBox isUsingCash;
 
     public void Cheked() {
-        if(isTimeChecked)
-        {
+        if (!isTimeChecked) {
             isTimeVisible.setSelected(true);
 
-        }else
-            {
-                isTimeVisible.setSelected(false);
+        } else {
+            isTimeVisible.setSelected(false);
 
-            }
-        if (isUsingCashChecked)
-        {
+        }
+        if (!isUsingCashChecked) {
             isUsingCash.setSelected(true);
         }
 
-        if (directoryChooser.getInitialDirectory()==null)
+        if (directoryChooser.getInitialDirectory() == null) {
             directoryChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+        }
 
         textFieldAdress.setText(directoryChooser.getInitialDirectory().getAbsolutePath());
     }
@@ -56,7 +54,7 @@ public class FXMLSettingsController extends FXMLDocumentController implements In
     //create object of directory chooser
     final DirectoryChooser directoryChooser = new DirectoryChooser();
 
-    //configu
+    //configure
     private void configuringDirectoryChooser(DirectoryChooser directoryChooser) {
         // Set title for DirectoryChooser
         directoryChooser.setTitle("Select Directories");
@@ -68,10 +66,10 @@ public class FXMLSettingsController extends FXMLDocumentController implements In
     @FXML
     void onActionBtnBrowse(ActionEvent event) {
         configuringDirectoryChooser(directoryChooser);
-        File dir = directoryChooser.showDialog(new Stage().getOwner());// - тут не работает!!! Аня поправь Т_т ему нужен стейдж в нутрь showDialog() X_x
+        File dir = directoryChooser.showDialog(new Stage().getOwner());// - тут не работает!!! Аня поправь Т_т ему нужен стейдж в внутрь showDialog() X_x - D.V: посмотрим читают ли менторы код ^_^
         if (dir != null) {
             textFieldAdress.setText(dir.getAbsolutePath());
-            SettingsController.getInstance().setPathToCash(textFieldAdress.toString());
+            SettingsController.getInstance().setPathToCache(textFieldAdress.toString());
         } else {
             textFieldAdress.setText(null);
         }
@@ -81,10 +79,10 @@ public class FXMLSettingsController extends FXMLDocumentController implements In
     @FXML
     void ionActionUsingCash(ActionEvent event) {
 
-        if(isTimeVisible.isSelected()){
-         isUsingCashChecked = true;
+        if (isTimeVisible.isSelected()) {
+            isUsingCashChecked = true;
         } else {
-         isUsingCashChecked = false;
+            isUsingCashChecked = false;
         }
         mainController.setSaveCash(isUsingCashChecked);
     }
@@ -92,13 +90,10 @@ public class FXMLSettingsController extends FXMLDocumentController implements In
 
     @FXML
     void onActionTimeVisible(ActionEvent event) {
-        if (isTimeVisible.isSelected())
-        {
-            isTimeChecked =true;
-        }
-        else
-        {
-           isTimeChecked =false;
+        if (isTimeVisible.isSelected()) {
+            isTimeChecked = true;
+        } else {
+            isTimeChecked = false;
         }
         mainController.setShowTime(isTimeChecked);
     }

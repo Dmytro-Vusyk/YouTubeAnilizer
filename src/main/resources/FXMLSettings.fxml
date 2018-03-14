@@ -93,7 +93,7 @@
                   <Insets left="40.0" />
                </GridPane.margin>
             </JFXCheckBox>
-            <JFXCheckBox fx:id="isUsingCash" checkedColor="#87ac9e" onAction="#ionActionUsingCash" text=" is using cash" textFill="#18313d" unCheckedColor="#226070" GridPane.rowIndex="2">
+            <JFXCheckBox fx:id="isUsingCash" checkedColor="#87ac9e" onAction="#ionActionUsingCash" text=" is using cache" textFill="#18313d" unCheckedColor="#226070" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets left="40.0" />
                </GridPane.margin>

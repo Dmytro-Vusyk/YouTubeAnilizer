@@ -1,6 +1,0 @@
-
-TODO: MainController: добавить реализацию проверки кеша и чтения из кеша при запуске метода makeRequest();
-TODO: FXMLDocumentController: уже можно брать канал; Все храняться в  protected HashSet<String> channelNames = new HashSet<String>(); getChannelNames() - доступ
-
-
-TODO: MainController: public GeneralDataContainer makeBaseRequest(String channelId) wast be public????

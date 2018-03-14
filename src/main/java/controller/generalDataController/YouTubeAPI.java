@@ -6,11 +6,7 @@ import com.mashape.unirest.http.exceptions.UnirestException;
 import model.Response;
 
 /**
- * підкапотний простір запиту в АПІ
- * Використовується методом makeQuery() в класі QueryFromYoutube
- * <p>
- * Ініціалізує UnirestSerialization
- * повертає "контейнер" джсона (пакет youTubeDataContainer) з сєрвака YouTubeAPI
+ * Contains all requests which are needed for work with YoutubeAPI
  */
 public class YouTubeAPI {
 
@@ -22,7 +18,6 @@ public class YouTubeAPI {
     static {
         new UnirestSerialization();
     }
-
 
     public static Response searchByChannelId(String channelId) throws UnirestException {
 
@@ -41,7 +36,7 @@ public class YouTubeAPI {
         HttpResponse<Response> response = Unirest.get(VIDEO_URL)
                 .queryString("key", API_KEY)
                 .queryString("part", "statistics")
-                .queryString("fields","items/statistics/commentCount")
+                .queryString("fields", "items/statistics/commentCount")
                 .queryString("id", videosId)
                 .asObject(Response.class);
         return response.getBody();
@@ -49,13 +44,12 @@ public class YouTubeAPI {
 
     }
 
-
     public static Response searchPlayListByIdAndPageToken(String playlistId, String nextPageToken) throws UnirestException {
         HttpResponse<Response> response = Unirest.get(PLAYLIST_URL)
                 .queryString("key", API_KEY)
                 .queryString("part", "contentDetails")
                 .queryString("maxResults", 25)
-                .queryString("fields","items/contentDetails/videoId,nextPageToken")
+                .queryString("fields", "items/contentDetails/videoId,nextPageToken")
                 .queryString("pageToken", nextPageToken)
                 .queryString("playlistId", playlistId)
                 .asObject(Response.class);

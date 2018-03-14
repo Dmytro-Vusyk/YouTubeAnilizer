@@ -36,9 +36,6 @@ public class FXMLTasksController extends FXMLDocumentController implements Initi
 
     private static int task = 1;
     private static int columns = 6;
-    private Date dateNow = new Date();
-    private SimpleDateFormat formatForTime = new SimpleDateFormat("hh:mm");
-    private SimpleDateFormat formatForDateTime = new SimpleDateFormat("dd:yy hh:mm");
 
     private ObservableList<Json> json_lines = FXCollections.observableArrayList();
 
@@ -91,7 +88,7 @@ public class FXMLTasksController extends FXMLDocumentController implements Initi
 
     @FXML
     void onActionBtnExit2(ActionEvent event) {
-        SettingsController.getInstance().saveCash(mainController.getCash());
+        SettingsController.getInstance().saveCache(mainController.getCache());
         System.exit(1);
     }
 
@@ -192,7 +189,7 @@ public class FXMLTasksController extends FXMLDocumentController implements Initi
         return out;
     }
 
-    //// TODO: 3/13/2018 цей метод в потік
+
     @FXML
     void onActionBtnStart(ActionEvent event) {
 
@@ -264,12 +261,9 @@ public class FXMLTasksController extends FXMLDocumentController implements Initi
     private static ExecutorService service = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
     private void setTableCollectionValue() {
-//            ExecutorService service = Executors.newFixedThreadPool(1);
 
         json_lines.clear();
         channels.clear();
-
-        //// TODO: 3/12/2018 Сюда коллекцию, или елементы для вывода в таблицу
 
         QueryThread queryThread = new QueryThread(System.currentTimeMillis(), this);
 
@@ -278,8 +272,7 @@ public class FXMLTasksController extends FXMLDocumentController implements Initi
 
         Platform.runLater(() -> {
             try {
-                channels = future.get();//TESTshowGlobalInformationAboutChannel();
-                System.out.println("11111111111111111111111111111111111");
+                channels = future.get();
                 final long checkPointFinish = System.currentTimeMillis();
                 lableTime.setText(Long.toString(mainController.showTimeMeasurement(queryThread.getCheckPoint(), checkPointFinish)) + "ms");
 
@@ -301,7 +294,6 @@ public class FXMLTasksController extends FXMLDocumentController implements Initi
                         ch.get(MapKeys.CHANNEL_ID)
                 ));
             }
-            System.out.println("222222222222222222222222222222222222222");
         });
     }
 
@@ -330,11 +322,9 @@ public class FXMLTasksController extends FXMLDocumentController implements Initi
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-
-        if (channelNames.isEmpty()){
+        if (channelNames.isEmpty()) {
             btnStart.setDisable(true);
         }
-
 
         try {
             Pane menuPane = FXMLLoader.load(getClass().getResource("/FXMLTasksMenu.fxml"));
@@ -346,8 +336,7 @@ public class FXMLTasksController extends FXMLDocumentController implements Initi
                 timePane.setVisible(true);
             }
 
-            //lableTime.setText(formatForTime.format(dateNow)); - шойта?
-            lableTime.setText("0s");
+            lableTime.setText("0ms");
             lblNameOfTasks.setText("Display global information about the channel");
             btnClear.setVisible(false);
             task = 1;

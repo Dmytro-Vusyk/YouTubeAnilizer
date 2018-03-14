@@ -1,7 +1,6 @@
 package controller.generalDataController;
 
 import com.mashape.unirest.http.exceptions.UnirestException;
-//import model.GeneralDataContainer;
 import model.Items;
 import model.Response;
 import model.GeneralDataContainer;
@@ -19,13 +18,19 @@ public class QueryFromYoutube {
 
 
     /**
+     * Creates a request for basic information about Channel
+     * - title
+     * - publishing date
+     * - views count
+     * - videos count
+     * - subscriber count
      *
-     * @param gdc
-     * @param channelName
+     * @param gdc       object of GeneralDataContainer
+     * @param channelId channel ID
      * @throws UnirestException
      */
-    public void makeBaseQuery(GeneralDataContainer gdc, String channelName) throws UnirestException{
-        Response response = YouTubeAPI.searchByChannelId(channelName);
+    public void makeBaseQuery(GeneralDataContainer gdc, String channelId) throws UnirestException {
+        Response response = YouTubeAPI.searchByChannelId(channelId);
         Items items = response.items[0];
         gdc.setTitle(items.snippet.title);
         gdc.setPublishedAt(items.snippet.publishedAt);
@@ -36,15 +41,24 @@ public class QueryFromYoutube {
         gdc.setUploads(items.contentDetails.relatedPlaylists.uploads);
         gdc.setId(response.items[0].id);
     }
-    public void makeQuery(GeneralDataContainer gdc, String channelName) throws UnirestException {
-        makeBaseQuery(gdc, channelName);
+
+    /**
+     * Creates a request for basic information about Channel with comment count
+     *
+     * @param gdc       General Data Container object
+     * @param channelId channel ID
+     * @throws UnirestException
+     */
+    public void makeQuery(GeneralDataContainer gdc, String channelId) throws UnirestException {
+        makeBaseQuery(gdc, channelId);
         gdc.setCommentCount(calculateAllCommentCount(gdc.getUploads()));
     }
 
     /**
-     *  Принимает строку айди видео и подсчитывает коментарии под видео не может принять более чем 25 айди
-     * @param videosId
-     * @return
+     * Takes a String with Video IDs and calculates comment count
+     *
+     * @param videosId String with videos ID in form "id,id,id,id....id"
+     * @return int count of comment until the videos
      * @throws UnirestException
      */
     private int calculateCommentCount(String videosId) throws UnirestException {
@@ -62,9 +76,10 @@ public class QueryFromYoutube {
 
 
     /**
-     *  принимает ссылку на плейлист всех загрузок канала и считает коментарии
-     * @param playlistId
-     * @return
+     * This method calculate count of comments until all of videos
+     *
+     * @param playlistId playlist ID
+     * @return int count of all comments on the channel
      * @throws UnirestException
      */
     private int calculateAllCommentCount(String playlistId) throws UnirestException {

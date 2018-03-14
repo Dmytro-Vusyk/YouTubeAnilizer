@@ -17,11 +17,8 @@ public class MainController {
 
     private boolean saveCash;
     private boolean showTime;
-    private LinkedHashMap<String, GeneralDataContainer> cash = new LinkedHashMap<>(); //1st level cash
+    private LinkedHashMap<String, GeneralDataContainer> cache = new LinkedHashMap<>(); //1st level cache
 
-//    public LinkedHashMap<String, GeneralDataContainer> getCash() {
-//        return cash;
-//    }
 
     private QueryFromYoutube qfy = new QueryFromYoutube();
 
@@ -48,8 +45,6 @@ public class MainController {
      * This method collects information about Channel and return it as HashMap<MapKeys,String>
      * where Keys are from Enum MapKeys and string - are values of the fields of Channel
      * **all without comment count
-     * **comment count calculate and initialize in
-     * showGlobalInformationAboutChannel() -> makeGlobalRequest() -> queryFromYoutube.makeQuery() -> calculateAllComment()
      *
      * @param channelId ChannelName
      * @return HashMap where MapKeys are from Enum and String - are channel data in
@@ -60,7 +55,15 @@ public class MainController {
         return showGlobalInformationAboutChannel(gdc);
     }
 
-    // + Array
+    /**
+     * This method collects information about Array of Channels and return it as ArrayList<HashMap<MapKeys,String>>
+     * where Keys are from Enum MapKeys and string - are values of the fields of Channel
+     * **all without comment count
+     *
+     * @param channelId ChannelName
+     * @return HashMap where MapKeys are from Enum and String - are channel data in
+     * String form
+     */
     public ArrayList<LinkedHashMap<MapKeys, String>> showBaseInformationAboutChannel(String... channelId) {
         final int LENGTH_CHANNEL = channelId.length;
         ArrayList<LinkedHashMap<MapKeys, String>> channelsDataArray = new ArrayList<>(LENGTH_CHANNEL);
@@ -75,19 +78,26 @@ public class MainController {
     /**
      * This method collects information about Channel and return it as HashMap<MapKeys,String>
      * where Keys are from Enum MapKeys and string - are values of the fields of Channel
+     * with comment count
      *
-     * @param channelId ChannelName
+     * @param channelId ChannelName[]
      * @return HashMap where MapKeys are from Enum and String - are channel data in
      * String form
      */
-
-
     public LinkedHashMap<MapKeys, String> showGlobalInformationAboutChannel(String channelId) {
         GeneralDataContainer gdc = makeGlobalRequest(channelId);
         return showGlobalInformationAboutChannel(gdc);
     }
 
-    // + Array
+    /**
+     * This method collects information about Channel and return it as ArrayList<HashMap<MapKeys,String>>
+     * where Keys are from Enum MapKeys and string - are values of the fields of Channel
+     * with comment count
+     *
+     * @param channelId ChannelName[]
+     * @return HashMap where MapKeys are from Enum and String - are channel data in
+     * String form
+     */
     public ArrayList<LinkedHashMap<MapKeys, String>> showGlobalInformationAboutChannels(String... channelId) {
         final int LENGTH_CHANNEL = channelId.length;
         ArrayList<LinkedHashMap<MapKeys, String>> channelsDataArray = new ArrayList<>(LENGTH_CHANNEL);
@@ -101,9 +111,11 @@ public class MainController {
 
 
 //=========================================== Sort ============================================
+    //in our program we using standard sorting of object in table >> View
+    // i just left this method to show you that we can make comparators
 
     /**
-     * This method compare GDC objects
+     * This method sort Channels by comparator "Comparators"
      *
      * @param idArray    array with id
      * @param comparator
@@ -112,7 +124,7 @@ public class MainController {
     public ArrayList<LinkedHashMap<MapKeys, String>> sortChannels(String[] idArray, Comparators comparator) {
         //output ArrayList
         ArrayList<LinkedHashMap<MapKeys, String>> output = new ArrayList<>();
-        //Array list for founded
+        //Array list for founded channels
         ArrayList<GeneralDataContainer> channelsList = new ArrayList<>();
         for (int i = 0; i < idArray.length; i++) {
             GeneralDataContainer gdc = makeGlobalRequest(idArray[i]);
@@ -163,10 +175,10 @@ public class MainController {
 //--------------------------------------------private ------------------------------------------
 
     /**
-     * put all data from gdc into linkedMap
+     * Parse GeneralDataContainer object to String values in LinkedHashMap
      *
-     * @param gdc
-     * @return LinkedMap
+     * @param gdc GeneralDataContainer object
+     * @return LinkedMap with Enum MapKeys and string values of GDC fields
      */
     private LinkedHashMap<MapKeys, String> showGlobalInformationAboutChannel(GeneralDataContainer gdc) {
         LinkedHashMap<MapKeys, String> output = new LinkedHashMap<>();
@@ -183,26 +195,11 @@ public class MainController {
     }
 
     /**
-     * accepts
+     * This method take channelId and make request for data in cache and youtube
+     * without all comments count
      *
-     * @param idArray - array of channel id.
-     *                <p>
-     *                make request, and
-     * @return ArrayList with GeneralDataContainer data
-     */
-    private ArrayList<GeneralDataContainer> arrayGDCmaker(String[] idArray) {
-        ArrayList<GeneralDataContainer> channelsList = new ArrayList<>();
-        for (int i = 0; i < idArray.length; i++) {
-            GeneralDataContainer gdc = makeGlobalRequest(idArray[i]);
-            if (gdc.getTitle() != null) {
-                channelsList.add(gdc);
-            }
-        }
-        return channelsList;
-    }
-
-    /**
-     * This method take channelId and make request for data in cash and youtube
+     * @param channelId channel id
+     * @return GeneralDataContainer object
      */
     private GeneralDataContainer makeBaseRequest(String channelId) {
         GeneralDataContainer gdc;
@@ -221,13 +218,19 @@ public class MainController {
 
 
         if (saveCash && gdc != null) {
-            cash.put(channelId, gdc);
+            cache.put(channelId, gdc);
         }
 
         return gdc;
     }
 
-
+    /**
+     * This method take channelId and make request for data in cache and youtube
+     * with comments count
+     *
+     * @param channelId channel id
+     * @return GeneralDataContainer objec
+     */
     private GeneralDataContainer makeGlobalRequest(String channelId) {
         GeneralDataContainer gdc;
         if (saveCash) {
@@ -246,21 +249,21 @@ public class MainController {
         }
 
         if (saveCash) {
-            cash.put(channelId, gdc);
+            cache.put(channelId, gdc);
         }
 
         return gdc;
     }
 
     /**
-     * Check if Object with channel id is in cash
+     * Check if Object with channel id is in cache
      *
      * @param channelId channel ID
-     * @return GeneralDataContainer;
+     * @return GeneralDataContainer object;
      */
     private GeneralDataContainer checkIdInCash(String channelId) {
-        if (cash.keySet().contains(channelId)) {
-            return cash.get(channelId);
+        if (cache.keySet().contains(channelId)) {
+            return cache.get(channelId);
         }
         return new GeneralDataContainer();
     }
@@ -283,11 +286,11 @@ public class MainController {
         this.showTime = showTime;
     }
 
-    public void setCash(LinkedHashMap<String, GeneralDataContainer> cash) {
-        this.cash = cash;
+    public void setCache(LinkedHashMap<String, GeneralDataContainer> cache) {
+        this.cache = cache;
     }
 
-    public LinkedHashMap<String, GeneralDataContainer> getCash() {
-        return cash;
+    public LinkedHashMap<String, GeneralDataContainer> getCache() {
+        return cache;
     }
 }

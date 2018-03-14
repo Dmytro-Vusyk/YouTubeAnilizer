@@ -2,14 +2,12 @@ package controller;
 
 
 import com.alibaba.fastjson.JSON;
-import enumerated.MapKeys;
 import model.GeneralDataContainer;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -17,19 +15,19 @@ import java.util.stream.Collectors;
 
 
 public class SettingsController {
+
     private static SettingsController instance;
-    private String pathToCash;
+    private String pathToCache;
     private static final char SEPAR = File.separatorChar;
     private static final String DEFAULT_PATH = String.format("src%cmain%cjava%ccash%csaveCash.txt", SEPAR, SEPAR, SEPAR, SEPAR);
     private static final String PATH_TO_PATH_FOLDER = String.format("src%cmain%cjava%cstore%cpath.txt", SEPAR, SEPAR, SEPAR, SEPAR);
 
-
-    // This method initializes the path to the file//
+    /**
+     * Constructor initialize default path to cache file if null
+     */
     private SettingsController() {
-        if (pathToCash == null || pathToCash.equals("")) {
-            this.pathToCash = DEFAULT_PATH;
-        } else {
-            this.pathToCash = pathToCash;
+        if (pathToCache == null || pathToCache.equals("")) {
+            this.pathToCache = DEFAULT_PATH;
         }
     }
 
@@ -46,8 +44,12 @@ public class SettingsController {
     }
 
 
-//This method reads the cache from the folder and returns it as a String//
-    private String readCash() {
+    /**
+     * Reads cache on hard drive and returns it as json
+     *
+     * @return json with cache
+     */
+    private String readCache() {
         String json = "";
 
         try {
@@ -57,12 +59,12 @@ public class SettingsController {
             }
             List<String> list = Files.lines(Paths.get(PATH_TO_PATH_FOLDER), StandardCharsets.UTF_8)
                     .collect(Collectors.toList());
-            setPathToCash(list.get(0));
+            setPathToCache(list.get(0));
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        File file = new File(getPathToCash());
+        File file = new File(getPathToCache());
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             StringBuilder sb = new StringBuilder();
             String line = reader.readLine();
@@ -82,16 +84,20 @@ public class SettingsController {
     }
 
 
-//This method saves the cache to the specified folder//
-    public void saveCash(LinkedHashMap<String, GeneralDataContainer> cash) {
-        String input = JSON.toJSONString(cash);
+    /**
+     * This method saves the cache to the specified folder and link on it
+     *
+     * @param cache
+     */
+    public void saveCache(LinkedHashMap<String, GeneralDataContainer> cache) {
+        String input = JSON.toJSONString(cache);
 
-        try (FileWriter fileWriter = new FileWriter(pathToCash);
+        try (FileWriter fileWriter = new FileWriter(pathToCache);
              FileWriter pathWriter = new FileWriter(PATH_TO_PATH_FOLDER)) {
             fileWriter.write(input);
             fileWriter.flush();
             fileWriter.close();
-            pathWriter.write(getPathToCash());
+            pathWriter.write(getPathToCache());
             pathWriter.flush();
             pathWriter.close();
         } catch (IOException e) {
@@ -101,17 +107,21 @@ public class SettingsController {
     }
 
 
-// This method is parsed from a file using readCash and returns LinkedHashMap//
+    /**
+     * This method is parsed from a file using readCache and returns LinkedHashMap
+     *
+     * @return LinkedHashMap
+     */
     public LinkedHashMap<String, GeneralDataContainer> parseFromJson() {
-        return JSON.parseObject(readCash(), LinkedHashMap.class);
+        return JSON.parseObject(readCache(), LinkedHashMap.class);
     }
 
-    public String getPathToCash() {
-        return pathToCash;
+    public String getPathToCache() {
+        return pathToCache;
     }
 
-    public void setPathToCash(String pathToCash) {
-        this.pathToCash = pathToCash;
+    public void setPathToCache(String pathToCache) {
+        this.pathToCache = pathToCache;
     }
 
 }
