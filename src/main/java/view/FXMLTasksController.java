@@ -88,7 +88,9 @@ public class FXMLTasksController extends FXMLDocumentController implements Initi
 
     @FXML
     void onActionBtnExit2(ActionEvent event) {
-        SettingsController.getInstance().saveCache(mainController.getCache());
+        if (!mainController.isSaveCash()) {
+            SettingsController.getInstance().saveCache(mainController.getCache());
+        }
         System.exit(1);
     }
 

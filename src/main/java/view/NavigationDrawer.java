@@ -1,5 +1,6 @@
 package view;
 
+import controller.MainController;
 import controller.SettingsController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -28,6 +29,7 @@ public class NavigationDrawer extends Application {
         primaryStage.initStyle(StageStyle.UNDECORATED);
         primaryStage.setResizable(false);
         primaryStage.show();
+        MainController.getInstance().setCache(SettingsController.getInstance().parseFromJson());
     }
 
     static private Future<LinkedHashMap<String, GeneralDataContainer>> dataContainerFutureTask;

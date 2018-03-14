@@ -46,7 +46,7 @@
                   </ImageView>
                </children>
             </HBox>
-            <Label text="Cash" textFill="#18313d" GridPane.rowIndex="1">
+            <Label text="Cache" textFill="#18313d" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets left="20.0" />
                </GridPane.margin>
@@ -88,12 +88,12 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <JFXCheckBox fx:id="isTimeVisible" checkedColor="#87ac9e" onAction="#onActionTimeVisible" text="is time visible" textFill="#18313d" unCheckedColor="#226070" GridPane.rowIndex="8">
+            <JFXCheckBox fx:id="isTimeVisible" checkedColor="#87ac9e" onAction="#onActionTimeVisible" text=" time is visible" textFill="#18313d" unCheckedColor="#226070" GridPane.rowIndex="8">
                <GridPane.margin>
                   <Insets left="40.0" />
                </GridPane.margin>
             </JFXCheckBox>
-            <JFXCheckBox fx:id="isUsingCash" checkedColor="#87ac9e" onAction="#ionActionUsingCash" text=" is using cache" textFill="#18313d" unCheckedColor="#226070" GridPane.rowIndex="2">
+            <JFXCheckBox fx:id="isUsingCash" checkedColor="#87ac9e" onAction="#ionActionUsingCash" text=" save cache" textFill="#18313d" unCheckedColor="#226070" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets left="40.0" />
                </GridPane.margin>

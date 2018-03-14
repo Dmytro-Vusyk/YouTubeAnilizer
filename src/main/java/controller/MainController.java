@@ -1,7 +1,6 @@
 package controller;
 
 import com.mashape.unirest.http.exceptions.UnirestException;
-//import com.sun.tools.doclets.formats.html.SourceToHTMLConverter;
 import enumerated.Comparators;
 import enumerated.MapKeys;
 import controller.generalDataController.QueryFromYoutube;
@@ -15,10 +14,9 @@ import java.util.*;
 public class MainController {
     private static MainController instance;
 
-    private boolean saveCash;
+    private boolean saveCash = true;
     private boolean showTime;
     private LinkedHashMap<String, GeneralDataContainer> cache = new LinkedHashMap<>(); //1st level cache
-
 
     private QueryFromYoutube qfy = new QueryFromYoutube();
 
@@ -203,11 +201,9 @@ public class MainController {
      */
     private GeneralDataContainer makeBaseRequest(String channelId) {
         GeneralDataContainer gdc;
-        if (saveCash) {
+
             gdc = checkIdInCash(channelId);
-        } else {
-            gdc = new GeneralDataContainer();
-        }
+
         try {
             qfy.makeBaseQuery(gdc, channelId);
         } catch (UnirestException e) {
@@ -217,7 +213,7 @@ public class MainController {
         }
 
 
-        if (saveCash && gdc != null) {
+        if (gdc != null) {
             cache.put(channelId, gdc);
         }
 
@@ -233,11 +229,9 @@ public class MainController {
      */
     private GeneralDataContainer makeGlobalRequest(String channelId) {
         GeneralDataContainer gdc;
-        if (saveCash) {
+
             gdc = checkIdInCash(channelId);
-        } else {
-            gdc = new GeneralDataContainer();
-        }
+
         if (gdc != null && gdc.getCommentCount() == null) {
             try {
                 qfy.makeQuery(gdc, channelId);
@@ -248,7 +242,7 @@ public class MainController {
             }
         }
 
-        if (saveCash) {
+        if (gdc != null) {
             cache.put(channelId, gdc);
         }
 

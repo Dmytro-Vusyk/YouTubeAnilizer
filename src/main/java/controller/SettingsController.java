@@ -2,6 +2,8 @@ package controller;
 
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
+import com.oracle.javafx.jmx.json.JSONDocument;
 import model.GeneralDataContainer;
 
 import java.io.*;
@@ -19,8 +21,9 @@ public class SettingsController {
     private static SettingsController instance;
     private String pathToCache;
     private static final char SEPAR = File.separatorChar;
-    private static final String DEFAULT_PATH = String.format("src%cmain%cjava%ccash%csaveCash.txt", SEPAR, SEPAR, SEPAR, SEPAR);
+    private static final String DEFAULT_PATH = String.format("src%cmain%cjava%ccash%ccache.txt", SEPAR, SEPAR, SEPAR, SEPAR);
     private static final String PATH_TO_PATH_FOLDER = String.format("src%cmain%cjava%cstore%cpath.txt", SEPAR, SEPAR, SEPAR, SEPAR);
+    private static String CACHE_NAME = "cache.txt";
 
     /**
      * Constructor initialize default path to cache file if null
@@ -59,7 +62,7 @@ public class SettingsController {
             }
             List<String> list = Files.lines(Paths.get(PATH_TO_PATH_FOLDER), StandardCharsets.UTF_8)
                     .collect(Collectors.toList());
-            setPathToCache(list.get(0));
+            pathToCache = list.get(0);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -97,7 +100,7 @@ public class SettingsController {
             fileWriter.write(input);
             fileWriter.flush();
             fileWriter.close();
-            pathWriter.write(getPathToCache());
+            pathWriter.write(pathToCache);
             pathWriter.flush();
             pathWriter.close();
         } catch (IOException e) {
@@ -113,7 +116,9 @@ public class SettingsController {
      * @return LinkedHashMap
      */
     public LinkedHashMap<String, GeneralDataContainer> parseFromJson() {
-        return JSON.parseObject(readCache(), LinkedHashMap.class);
+        TypeReference<LinkedHashMap<String, GeneralDataContainer>> typeReference
+                = new TypeReference<LinkedHashMap<String, GeneralDataContainer>>(){};
+        return JSON.parseObject(readCache(),typeReference.getType());
     }
 
     public String getPathToCache() {
@@ -121,7 +126,9 @@ public class SettingsController {
     }
 
     public void setPathToCache(String pathToCache) {
-        this.pathToCache = pathToCache;
+        StringBuilder sb = new StringBuilder();
+        sb.append(pathToCache).append(SEPAR).append(CACHE_NAME);
+        this.pathToCache = sb.toString();
     }
 
 }

@@ -34,13 +34,17 @@ public class FXMLSettingsController extends FXMLDocumentController implements In
     public void Cheked() {
         if (!isTimeChecked) {
             isTimeVisible.setSelected(true);
-
+            // mainController.setShowTime(true);
         } else {
             isTimeVisible.setSelected(false);
-
+            //   mainController.setShowTime(false);
         }
         if (!isUsingCashChecked) {
             isUsingCash.setSelected(true);
+            //     mainController.setSaveCash(true);
+        } else {
+            isUsingCash.setSelected(false);
+            //       mainController.setSaveCash(false);
         }
 
         if (directoryChooser.getInitialDirectory() == null) {
@@ -69,7 +73,7 @@ public class FXMLSettingsController extends FXMLDocumentController implements In
         File dir = directoryChooser.showDialog(new Stage().getOwner());// - тут не работает!!! Аня поправь Т_т ему нужен стейдж в внутрь showDialog() X_x - D.V: посмотрим читают ли менторы код ^_^
         if (dir != null) {
             textFieldAdress.setText(dir.getAbsolutePath());
-            SettingsController.getInstance().setPathToCache(textFieldAdress.toString());
+            SettingsController.getInstance().setPathToCache(dir.getAbsolutePath());
         } else {
             textFieldAdress.setText(null);
         }
@@ -79,7 +83,7 @@ public class FXMLSettingsController extends FXMLDocumentController implements In
     @FXML
     void ionActionUsingCash(ActionEvent event) {
 
-        if (isTimeVisible.isSelected()) {
+        if (!isUsingCash.isSelected()) {
             isUsingCashChecked = true;
         } else {
             isUsingCashChecked = false;
@@ -90,7 +94,7 @@ public class FXMLSettingsController extends FXMLDocumentController implements In
 
     @FXML
     void onActionTimeVisible(ActionEvent event) {
-        if (isTimeVisible.isSelected()) {
+        if (!isTimeVisible.isSelected()) {
             isTimeChecked = true;
         } else {
             isTimeChecked = false;
