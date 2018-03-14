@@ -116,9 +116,22 @@ public class SettingsController {
      * @return LinkedHashMap
      */
     public LinkedHashMap<String, GeneralDataContainer> parseFromJson() {
-        TypeReference<LinkedHashMap<String, GeneralDataContainer>> typeReference
-                = new TypeReference<LinkedHashMap<String, GeneralDataContainer>>(){};
-        return JSON.parseObject(readCache(),typeReference.getType());
+        List<String> list = null;
+        try {
+            list = Files.lines(Paths.get(PATH_TO_PATH_FOLDER), StandardCharsets.UTF_8)
+                    .collect(Collectors.toList());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        pathToCache = list.get(0);
+        File file = new File(pathToCache);
+        if (file.exists() && file.isFile()) {
+            TypeReference<LinkedHashMap<String, GeneralDataContainer>> typeReference
+                    = new TypeReference<LinkedHashMap<String, GeneralDataContainer>>(){};
+            return JSON.parseObject(readCache(),typeReference.getType());
+        }
+
+        return new LinkedHashMap<String,GeneralDataContainer>();
     }
 
     public String getPathToCache() {
