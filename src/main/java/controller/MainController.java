@@ -117,9 +117,9 @@ public class MainController {
     /**
      * This method sort Channels by comparator "Comparators"
      *
-     * @param idArray    array with id
-     * @param comparator
-     * @return
+     * @param idArray    array with id's of channels
+     * @param comparator type of comparator
+     * @return sorted ArrayList
      */
     public ArrayList<LinkedHashMap<MapKeys, String>> sortChannels(String[] idArray, Comparators comparator) {
         //output ArrayList
