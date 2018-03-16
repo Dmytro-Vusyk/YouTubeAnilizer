@@ -142,7 +142,7 @@ public class FXMLTasksController extends FXMLDocumentController implements Initi
         StringProperty comments_count;
         StringProperty channel_ID;
 
-        public Json(String channelName, String publishing_date, String subscribers_count, String videos_count, String views_count, String comments_count, String channel_ID) {
+        Json(String channelName, String publishing_date, String subscribers_count, String videos_count, String views_count, String comments_count, String channel_ID) {
             this.channelName = new SimpleStringProperty(channelName);
             this.publishing_date = new SimpleStringProperty(publishing_date);
             this.subscribers_count = new SimpleStringProperty(subscribers_count);
@@ -155,7 +155,7 @@ public class FXMLTasksController extends FXMLDocumentController implements Initi
 
 
     /* ТЕСТ НЕ ТРОГАТЬ*/  //позно! мухахахахах
-    protected ArrayList<LinkedHashMap<MapKeys, String>> TESTshowGlobalInformationAboutChannel() {
+    ArrayList<LinkedHashMap<MapKeys, String>> TESTshowGlobalInformationAboutChannel() {
         ArrayList<LinkedHashMap<MapKeys, String>> out = new ArrayList<>();
         if (task == 1) {
             for (String s :
@@ -263,28 +263,10 @@ public class FXMLTasksController extends FXMLDocumentController implements Initi
     private static ExecutorService service = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
     private void setTableCollectionValue() {
-
-        json_lines.clear();
-        channels.clear();
-
-        QueryThread queryThread = new QueryThread(System.currentTimeMillis(), this);
-
-        Future<ArrayList<LinkedHashMap<MapKeys, String>>> future = service.submit(queryThread);
-
-
-        Platform.runLater(() -> {
-            try {
-                channels = future.get();
-                final long checkPointFinish = System.currentTimeMillis();
-                lableTime.setText(Long.toString(mainController.showTimeMeasurement(queryThread.getCheckPoint(), checkPointFinish)) + "ms");
-
-                System.out.println(System.currentTimeMillis() - queryThread.getCheckPoint());
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (ExecutionException e) {
-                e.printStackTrace();
-            }
-
+        new Thread(() -> {
+            json_lines.clear();
+            channels.clear();
+            channels = TESTshowGlobalInformationAboutChannel();
             for (LinkedHashMap<MapKeys, String> ch : channels) {
                 json_lines.add(new Json(
                         ch.get(MapKeys.CHANNEL_NAME),
@@ -296,7 +278,7 @@ public class FXMLTasksController extends FXMLDocumentController implements Initi
                         ch.get(MapKeys.CHANNEL_ID)
                 ));
             }
-        });
+        }).start();
     }
 
 

@@ -8,7 +8,7 @@ import model.Response;
 /**
  * Contains all requests which are needed for work with YoutubeAPI
  */
-public class YouTubeAPI {
+class YouTubeAPI {
 
     private static final String API_KEY = "AIzaSyDBVpCaXdSwREU9b5UeervX2eCUbqYLTcU";
     private static final String CHANNEL_URL = "https://www.googleapis.com/youtube/v3/channels";
@@ -19,7 +19,7 @@ public class YouTubeAPI {
         new UnirestSerialization();
     }
 
-    public static Response searchByChannelId(String channelId) throws UnirestException {
+    static Response searchByChannelId(String channelId) throws UnirestException {
 
         HttpResponse<Response> response = Unirest.get(CHANNEL_URL)
                 .queryString("key", API_KEY)
@@ -31,8 +31,7 @@ public class YouTubeAPI {
 
     }
 
-    public static Response searchByVideoId(String videosId) throws UnirestException {
-
+    static Response searchByVideoId(String videosId) throws UnirestException {
         HttpResponse<Response> response = Unirest.get(VIDEO_URL)
                 .queryString("key", API_KEY)
                 .queryString("part", "statistics")
@@ -40,11 +39,9 @@ public class YouTubeAPI {
                 .queryString("id", videosId)
                 .asObject(Response.class);
         return response.getBody();
-
-
     }
 
-    public static Response searchPlayListByIdAndPageToken(String playlistId, String nextPageToken) throws UnirestException {
+    static Response searchPlayListByIdAndPageToken(String playlistId, String nextPageToken) throws UnirestException {
         HttpResponse<Response> response = Unirest.get(PLAYLIST_URL)
                 .queryString("key", API_KEY)
                 .queryString("part", "contentDetails")

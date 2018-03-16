@@ -3,7 +3,7 @@ package controller;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
-import com.oracle.javafx.jmx.json.JSONDocument;
+//import com.oracle.javafx.jmx.json.JSONDocument;
 import model.GeneralDataContainer;
 
 import java.io.*;
@@ -90,7 +90,6 @@ public class SettingsController {
     /**
      * This method saves the cache to the specified folder and link on it
      *
-     * @param cache
      */
     public void saveCache(LinkedHashMap<String, GeneralDataContainer> cache) {
         String input = JSON.toJSONString(cache);
@@ -131,10 +130,10 @@ public class SettingsController {
             return JSON.parseObject(readCache(),typeReference.getType());
         }
 
-        return new LinkedHashMap<String,GeneralDataContainer>();
+        return new LinkedHashMap<>();
     }
 
-    public String getPathToCache() {
+    private String getPathToCache() {
         return pathToCache;
     }
 
