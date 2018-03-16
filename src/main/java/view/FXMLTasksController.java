@@ -133,7 +133,7 @@ public class FXMLTasksController extends FXMLDocumentController implements Initi
         }
     }
 
-     static class Json extends RecursiveTreeObject<Json> {
+    static class Json extends RecursiveTreeObject<Json> {
         StringProperty channelName;
         StringProperty publishing_date;
         StringProperty subscribers_count;
@@ -252,10 +252,9 @@ public class FXMLTasksController extends FXMLDocumentController implements Initi
             tableView.getColumns().setAll(deptChannelName, deptPublishing_date, deptSubscribers_count, deptVideos_count, deptViews_count);
         }
 
-        final long CHECKPOINT = System.currentTimeMillis();
+//        final long CHECKPOINT = System.currentTimeMillis();
         setTableCollectionValue();
-        lableTime.setText(Long.toString(mainController.showTimeMeasurement(CHECKPOINT, System.currentTimeMillis())) + "ms");
-        System.out.println(System.currentTimeMillis() - CHECKPOINT);
+//        lableTime.setText(Long.toString(mainController.showTimeMeasurement(CHECKPOINT, System.currentTimeMillis())) + "ms");
         final TreeItem<Json> root = new RecursiveTreeItem<Json>(json_lines, RecursiveTreeObject::getChildren);
 
         tableView.setRoot(root);

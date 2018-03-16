@@ -25,7 +25,7 @@ public class RunnableResponceAndShow implements Runnable {
     }
     @Override
     public void run() {
-//        final long checkPointStart = System.currentTimeMillis();
+        final long checkPointStart = System.currentTimeMillis();
         json_lines.clear();
         channels.clear();
         channels = thisFXMLTask.TESTshowGlobalInformationAboutChannel();
@@ -40,8 +40,9 @@ public class RunnableResponceAndShow implements Runnable {
                     ch.get(MapKeys.CHANNEL_ID)
             ));
         }
-//        Platform.runLater(()->
-//                labelTime.setText(Long.toString(thisFXMLTask.mainController.showTimeMeasurement(checkPointStart, System.currentTimeMillis())) + "ms")
-//        );
+        Platform.runLater(()->{
+                labelTime.setText(Long.toString(thisFXMLTask.mainController.showTimeMeasurement(checkPointStart, System.currentTimeMillis())) + "ms");
+            System.out.println("From runnable" + (checkPointStart - System.currentTimeMillis()));
+    });
     }
 }
