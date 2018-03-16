@@ -37,7 +37,7 @@ public class FXMLTasksController extends FXMLDocumentController implements Initi
     private static int task = 1;
     private static int columns = 6;
 
-    private ObservableList<Json> json_lines = FXCollections.observableArrayList();
+    protected ObservableList<Json> json_lines = FXCollections.observableArrayList();
 
 
     @FXML
@@ -47,7 +47,7 @@ public class FXMLTasksController extends FXMLDocumentController implements Initi
     private JFXButton btnSettings2;
 
     @FXML
-    private Label lableTime;
+    protected Label lableTime;
 
     @FXML
     private JFXButton btnPrev;
@@ -133,7 +133,7 @@ public class FXMLTasksController extends FXMLDocumentController implements Initi
         }
     }
 
-    class Json extends RecursiveTreeObject<Json> {
+     static class Json extends RecursiveTreeObject<Json> {
         StringProperty channelName;
         StringProperty publishing_date;
         StringProperty subscribers_count;
@@ -142,7 +142,7 @@ public class FXMLTasksController extends FXMLDocumentController implements Initi
         StringProperty comments_count;
         StringProperty channel_ID;
 
-        Json(String channelName, String publishing_date, String subscribers_count, String videos_count, String views_count, String comments_count, String channel_ID) {
+       Json(String channelName, String publishing_date, String subscribers_count, String videos_count, String views_count, String comments_count, String channel_ID) {
             this.channelName = new SimpleStringProperty(channelName);
             this.publishing_date = new SimpleStringProperty(publishing_date);
             this.subscribers_count = new SimpleStringProperty(subscribers_count);
@@ -252,7 +252,10 @@ public class FXMLTasksController extends FXMLDocumentController implements Initi
             tableView.getColumns().setAll(deptChannelName, deptPublishing_date, deptSubscribers_count, deptVideos_count, deptViews_count);
         }
 
+        final long CHECKPOINT = System.currentTimeMillis();
         setTableCollectionValue();
+        lableTime.setText(Long.toString(mainController.showTimeMeasurement(CHECKPOINT, System.currentTimeMillis())) + "ms");
+        System.out.println(System.currentTimeMillis() - CHECKPOINT);
         final TreeItem<Json> root = new RecursiveTreeItem<Json>(json_lines, RecursiveTreeObject::getChildren);
 
         tableView.setRoot(root);
@@ -260,25 +263,24 @@ public class FXMLTasksController extends FXMLDocumentController implements Initi
 
     }
 
-    private static ExecutorService service = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
-
     private void setTableCollectionValue() {
-        new Thread(() -> {
-            json_lines.clear();
-            channels.clear();
-            channels = TESTshowGlobalInformationAboutChannel();
-            for (LinkedHashMap<MapKeys, String> ch : channels) {
-                json_lines.add(new Json(
-                        ch.get(MapKeys.CHANNEL_NAME),
-                        ch.get(MapKeys.PUBLISHING_DATE),
-                        ch.get(MapKeys.SUBSCRIBERS_COUNT),
-                        ch.get(MapKeys.VIDEOS_COUNT),
-                        ch.get(MapKeys.VIEWS_COUNT),
-                        ch.get(MapKeys.COMMENTS_COUNT),
-                        ch.get(MapKeys.CHANNEL_ID)
-                ));
-            }
-        }).start();
+        new Thread(new RunnableResponceAndShow(this)).start();
+//        new Thread(() -> {
+//            json_lines.clear();
+//            channels.clear();
+//            channels = TESTshowGlobalInformationAboutChannel();
+//            for (LinkedHashMap<MapKeys, String> ch : channels) {
+//                json_lines.add(new Json(
+//                        ch.get(MapKeys.CHANNEL_NAME),
+//                        ch.get(MapKeys.PUBLISHING_DATE),
+//                        ch.get(MapKeys.SUBSCRIBERS_COUNT),
+//                        ch.get(MapKeys.VIDEOS_COUNT),
+//                        ch.get(MapKeys.VIEWS_COUNT),
+//                        ch.get(MapKeys.COMMENTS_COUNT),
+//                        ch.get(MapKeys.CHANNEL_ID)
+//                ));
+//            }
+//        }).start();
     }
 
 
